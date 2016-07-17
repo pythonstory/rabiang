@@ -1,6 +1,8 @@
 apply plugin: 'java'
 apply plugin: 'war'
 apply plugin: 'eclipse-wtp'
+apply plugin: 'idea'
+apply plugin: 'org.akhikhl.gretty'
 
 compileJava.options.encoding = 'UTF-8'
 sourceCompatibility = 1.8
@@ -12,10 +14,31 @@ repositories {
 }
 
 dependencies {
-	compile group: 'org.springframework', name: 'spring-context', version: '4.3.1.RELEASE'
+	compile group: 'org.springframework', name: 'spring-webmvc', version: '4.3.1.RELEASE'
 	compile group: 'javax.servlet', name: 'jstl', version: '1.2'
+	providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
 }
 
 eclipse {
 	project.natures 'org.springsource.ide.eclipse.gradle.core.nature'
+}
+
+//Gretty Embedded Jetty
+buildscript {
+	repositories {
+		jcenter()
+	}
+
+	dependencies {
+		classpath 'org.akhikhl.gretty:gretty:+'
+	}
+}
+
+// Don't use Jetty8, even it's a servlet 3.0+ container, 
+// but not support non-jar WebApplicationInitializer scanning.
+// It will cause "No Spring WebApplicationInitializer types detected on classpath"
+gretty {
+	port = 8080
+	contextPath = 'project'
+	servletContainer = 'jetty9' //tomcat7 or tomcat8
 }
