@@ -49,6 +49,8 @@
 	</bean>
 	
 	<jpa:repositories base-package="net.rabiang.repository"/>
+	
+	<context:component-scan base-package="net.rabiang.service" />
 
 	<!-- enables scanning for @Transactional annotations -->
     <tx:annotation-driven/>
