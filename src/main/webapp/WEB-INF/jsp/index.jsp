@@ -6,6 +6,6 @@
 <title>Hello</title>
 </head>
 <body>
-Hi 한글
+${greeting} 한글
 </body>
 </html>
