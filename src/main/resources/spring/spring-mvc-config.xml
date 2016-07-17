@@ -10,14 +10,34 @@
 		http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context
 		http://www.springframework.org/schema/context/spring-context.xsd">
-		
-	<mvc:annotation-driven></mvc:annotation-driven>
-	
-	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
-		<property name="prefix" value="/WEB-INF/jsp/"></property>
-		<property name="suffix" value=".jsp"></property>
-	</bean>
-	
-	<context:component-scan base-package="net.rabiang.controllers"></context:component-scan>
+
+	<mvc:annotation-driven />
+
+	<context:component-scan base-package="net.rabiang.web" />
+
+	<!-- 
+	- The ContentNegotiatingViewResolver delegates to the InternalResourceViewResolver 
+	- and BeanNameViewResolver, - and uses the requested media type (determined 
+    - by the path extension) to pick a matching view.
+    - When the media type is 'text/html', it will delegate to the InternalResourceViewResolver's JstlView, 
+	- otherwise to the BeanNameViewResolver. -->
+	<mvc:view-resolvers>
+		<mvc:content-negotiation use-not-acceptable="true">
+			<mvc:default-views>
+				<bean class="org.springframework.web.servlet.view.JstlView">
+					<property name="url" value="" />
+				</bean>
+			</mvc:default-views>
+		</mvc:content-negotiation>
+
+		<!-- Registering BeanNameViewResolver and InternalViewResolver -->
+		<mvc:bean-name />
+		<mvc:jsp prefix="/WEB-INF/jsp/" suffix=".jsp" />
+	</mvc:view-resolvers>
+
+	<!--
+	- All resources inside folder src/main/webapp/resources are mapped 
+	- so they can be refered to inside JSP files. -->
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+	<mvc:resources mapping="/vendors/**" location="/vendors/" />
 </beans>
