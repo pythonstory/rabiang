@@ -14,7 +14,6 @@ public class MainController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index(Model model) {
-
 		logger.debug("main.index");
 
 		model.addAttribute("greeting", "Hello");
@@ -22,4 +21,8 @@ public class MainController {
 		return "index";
 	}
 
+	@RequestMapping(value = "/post", method = RequestMethod.GET)
+	public String post(Model model) {
+		return "redirect:/post/index";
+	}
 }
