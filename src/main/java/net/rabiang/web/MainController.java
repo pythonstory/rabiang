@@ -23,6 +23,6 @@ public class MainController {
 
 	@RequestMapping(value = "/post", method = RequestMethod.GET)
 	public String post(Model model) {
-		return "redirect:/post/index";
+		return "redirect:/post/";
 	}
 }

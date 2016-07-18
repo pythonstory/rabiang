@@ -65,7 +65,7 @@ public class PostController {
 
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
 	public String deleteAction(@PathVariable("id") int id, Model model) {
-		return "redirect:/post/index";
+		return "redirect:/post/";
 	}
 
 }
