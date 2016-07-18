@@ -21,6 +21,7 @@ ext {
 	hibernateVersion = '5.2.1.Final'
 	dbcpVersion = '2.1.1'
 	h2Version = '1.4.192'
+	tilesVersion = '3.0.5'
 	
 	junitVersion = '4.12'
 	
@@ -44,6 +45,8 @@ dependencies {
 	compile('org.hibernate:hibernate-core:' + hibernateVersion)
 	compile('org.apache.commons:commons-dbcp2:' + dbcpVersion)	
 	compile('com.h2database:h2:' + h2Version)
+	compile('org.apache.tiles:tiles-jsp:' + tilesVersion)
+	
 	
 	// Testing
 	testCompile('junit:junit:' + junitVersion)	

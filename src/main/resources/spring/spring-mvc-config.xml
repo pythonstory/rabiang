@@ -22,19 +22,19 @@
 	    - When the media type is 'text/html', it will delegate to the InternalResourceViewResolver's JstlView, 
 		- otherwise to the BeanNameViewResolver. -->
 	<mvc:view-resolvers>
-		<mvc:content-negotiation use-not-acceptable="true">
+		<mvc:content-negotiation use-not-acceptable="true">			
 			<mvc:default-views>
 				<bean class="org.springframework.web.servlet.view.JstlView">
-					<property name="url" value="" />
+					<property name="url" value=""/>
 				</bean>
-			</mvc:default-views>
+			</mvc:default-views>			
 		</mvc:content-negotiation>
 
 		<!-- Registering BeanNameViewResolver and InternalViewResolver -->
 		<mvc:bean-name />
-		<mvc:jsp prefix="/WEB-INF/jsp/" suffix=".jsp" />
+		<mvc:jsp prefix="/WEB-INF/jsp/" suffix=".jsp"/>
 	</mvc:view-resolvers>
-
+	
 	<!--
 		- All resources inside folder src/main/webapp/resources are mapped 
 		- so they can be refered to inside JSP files. -->
