@@ -10,7 +10,13 @@ import net.rabiang.model.Post;
 public interface PostRepository extends Repository<Post, Long> {
 
 	public Collection<Post> findAll() throws DataAccessException;
-	
+
+	public Post findById(Long id) throws DataAccessException;
+
+	public Post findBySlug(String slug) throws DataAccessException;
+
 	public Post save(Post post) throws DataAccessException;
+
+	public void delete(Long id) throws DataAccessException;
 
 }

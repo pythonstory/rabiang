@@ -1,4 +1,4 @@
-package project;
+package net.rabiang;
 
 import static org.junit.Assert.assertEquals;
 
@@ -19,12 +19,23 @@ public class PostRepositoryTest {
 	private PostRepository postRepository;
 
 	@Test
-	public void testCreatePost() {
+	public void testCRUD() {
 		Post actual = new Post();
 		actual.setTitle("Test Post");
-		Post expected = postRepository.save(actual);
+		actual.setSlug("test-post");
 
+		Post expected = postRepository.save(actual);
 		assertEquals("created", expected.getTitle(), "Test Post");
+
+		expected = postRepository.findById(1L);
+		assertEquals("retrieved by id", expected.getTitle(), "Test Post");
+
+		expected = postRepository.findBySlug("test-post");
+		assertEquals("retrieved by slug", expected.getTitle(), "Test Post");
+
+		postRepository.delete(expected.getId());
+		expected = postRepository.findById(1L);
+		assertEquals("deleted", null, expected);
 	}
 
 }
