@@ -24,22 +24,22 @@ public class PostController {
 	public String index(Model model) {
 		this.postService.findPosts();
 
-		return "post/index";
+		return "default/post/index";
 	}
 
 	@RequestMapping(value = "/{slug}", method = RequestMethod.GET)
 	public String detail(@PathVariable String slug, Model model) {
-		return "post/detail";
+		return "default/post/detail";
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public String detail(@PathVariable("id") int id, Model model) {
-		return "post/detail";
+		return "default/post/detail";
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public String create(Model model) {
-		return "post/create";
+		return "default/post/create";
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
@@ -50,7 +50,7 @@ public class PostController {
 
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
 	public String edit(@PathVariable("id") int id, Model model) {
-		return "post/edit";
+		return "default/post/edit";
 	}
 
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
@@ -60,7 +60,7 @@ public class PostController {
 
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
 	public String delete(@PathVariable("id") int id, Model model) {
-		return "post/delete";
+		return "default/post/delete";
 	}
 
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)

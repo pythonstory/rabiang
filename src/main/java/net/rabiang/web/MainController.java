@@ -18,7 +18,7 @@ public class MainController {
 
 		model.addAttribute("greeting", "Hello");
 
-		return "index";
+		return "default/index";
 	}
 
 	@RequestMapping(value = "/post", method = RequestMethod.GET)
