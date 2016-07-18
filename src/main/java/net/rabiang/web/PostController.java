@@ -12,44 +12,60 @@ import net.rabiang.service.PostService;
 @Controller
 @RequestMapping("/post")
 public class PostController {
-	
+
 	private final PostService postService;
 
-    @Autowired
-    public PostController(PostService postService) {
-        this.postService = postService;
-    }
+	@Autowired
+	public PostController(PostService postService) {
+		this.postService = postService;
+	}
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String postIndex(Model model) {
+	public String index(Model model) {
 		this.postService.findPosts();
-		
+
 		return "post/index";
 	}
 
 	@RequestMapping(value = "/{slug}", method = RequestMethod.GET)
-	public String postDetailSlug(@PathVariable String slug, Model model) {
+	public String detail(@PathVariable String slug, Model model) {
 		return "post/detail";
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public String postDetailId(@PathVariable("id") int id, Model model) {
+	public String detail(@PathVariable("id") int id, Model model) {
 		return "post/detail";
 	}
 
-	@RequestMapping(value = "/create", method = { RequestMethod.GET, RequestMethod.POST })
-	public String postCreate(Model model) {
+	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	public String create(Model model) {
 		return "post/create";
 	}
 
-	@RequestMapping(value = "/edit/{id}", method = { RequestMethod.GET, RequestMethod.POST })
-	public String postEdit(@PathVariable("id") int id, Model model) {
+	@RequestMapping(value = "/create", method = RequestMethod.POST)
+	public String createAction(Model model) {
+		int id = 1;
+		return "redirect:/post/detail/" + id;
+	}
+
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+	public String edit(@PathVariable("id") int id, Model model) {
 		return "post/edit";
 	}
 
-	@RequestMapping(value = "/delete/{id}", method = { RequestMethod.GET, RequestMethod.POST })
-	public String postDelete(@PathVariable("id") int id, Model model) {
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
+	public String editAction(@PathVariable("id") int id, Model model) {
+		return "redirect:/post/detail/" + id;
+	}
+
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+	public String delete(@PathVariable("id") int id, Model model) {
 		return "post/delete";
+	}
+
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
+	public String deleteAction(@PathVariable("id") int id, Model model) {
+		return "redirect:/post/index";
 	}
 
 }
