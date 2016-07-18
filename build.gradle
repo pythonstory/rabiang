@@ -13,30 +13,45 @@ repositories {
     mavenCentral()
 }
 
+ext {
+	logbackVersion = '1.1.7'
+	jstlVersion = '1.2'
+	springVersion = '4.3.1.RELEASE'
+	jpaVersion = '1.10.2.RELEASE'
+	hibernateVersion = '5.2.1.Final'
+	dbcpVersion = '2.1.1'
+	h2Version = '1.4.192'
+	
+	junitVersion = '4.12'
+	
+	jspVersion = '2.3.1'
+	servletVersion = '3.1.0'
+}
+
 configurations.all {
 	exclude group: "commons-logging", module: "commons-logging"
 }
 
 dependencies {
-	compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.7'
-	compile group: 'javax.servlet', name: 'jstl', version: '1.2'
-	compile group: 'org.springframework', name: 'spring-webmvc', version: '4.3.1.RELEASE'
-	compile group: 'org.springframework', name: 'spring-orm', version: '4.3.1.RELEASE'
-	compile group: 'org.springframework', name: 'spring-jdbc', version: '4.3.1.RELEASE'
-	compile group: 'org.springframework', name: 'spring-tx', version: '4.3.1.RELEASE'
-	// spring-data-jpa relies on old version of spring-orm, spring-jdbc, spring-tx
-	compile group: 'org.springframework.data', name: 'spring-data-jpa', version: '1.10.2.RELEASE'
-	compile group: 'org.hibernate', name: 'hibernate-core', version: '5.2.1.Final'
-	compile group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.1.1'	
-	compile group: 'com.h2database', name: 'h2', version: '1.4.192'
+	// Bundle
+	compile('ch.qos.logback:logback-classic:' + logbackVersion)
+	compile('javax.servlet:jstl:' + jstlVersion)	
+	compile('org.springframework:spring-webmvc:' + springVersion)
+	compile('org.springframework:spring-orm:' + springVersion)
+	compile('org.springframework:spring-tx:' + springVersion)
+	compile('org.springframework:spring-jdbc:' + springVersion)
+	compile('org.springframework.data:spring-data-jpa:' + jpaVersion)
+	compile('org.hibernate:hibernate-core:' + hibernateVersion)
+	compile('org.apache.commons:commons-dbcp2:' + dbcpVersion)	
+	compile('com.h2database:h2:' + h2Version)
 	
 	// Testing
-	testCompile group: 'junit', name: 'junit', version: '4.12'	
-	testCompile group: 'org.springframework', name: 'spring-test', version: '4.3.1.RELEASE'
+	testCompile('junit:junit:' + junitVersion)	
+	testCompile('org.springframework:spring-test:' + springVersion)
 
-	// The followings are provided by containers such as Tomcat.
-	providedCompile group: 'javax.servlet.jsp', name: 'javax.servlet.jsp-api', version: '2.3.1'	
-	providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
+	// Provided by containers such as Tomcat.
+	providedCompile('javax.servlet.jsp:javax.servlet.jsp-api:' + jspVersion)	
+	providedCompile('javax.servlet:javax.servlet-api:' + servletVersion)
 }
 
 eclipse {

@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import net.rabiang.model.Post;
 import net.rabiang.repository.PostRepository;
@@ -19,6 +20,7 @@ public class PostRepositoryTest {
 	private PostRepository postRepository;
 
 	@Test
+	@Transactional
 	public void testCRUD() {
 		Post actual = new Post();
 		actual.setTitle("Test Post");
