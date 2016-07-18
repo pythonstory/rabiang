@@ -38,9 +38,9 @@ dependencies {
 	compile('javax.servlet:jstl:' + jstlVersion)	
 	compile('org.springframework:spring-webmvc:' + springVersion)
 	compile('org.springframework:spring-orm:' + springVersion)
-	compile('org.springframework:spring-tx:' + springVersion)
-	compile('org.springframework:spring-jdbc:' + springVersion)
-	compile('org.springframework.data:spring-data-jpa:' + jpaVersion)
+	compile('org.springframework.data:spring-data-jpa:' + jpaVersion) {
+		exclude group: 'org.springframework'
+	}
 	compile('org.hibernate:hibernate-core:' + hibernateVersion)
 	compile('org.apache.commons:commons-dbcp2:' + dbcpVersion)	
 	compile('com.h2database:h2:' + h2Version)
