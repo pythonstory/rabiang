@@ -4,7 +4,8 @@ blog, forum, and e-commerce based on Spring Web MVC
 
 ## Requirements
 
-* jstl / jsp
-* spring-webmvc
-* spring-data-jpa
-* logback / slf4j
+* JSTL / JSP
+* Spring-WebMVC
+* Spring-Data-JPA
+* Logback / Slf4j
+* Gradle
