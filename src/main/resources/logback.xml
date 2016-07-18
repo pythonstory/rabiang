@@ -14,11 +14,11 @@
 		<appender-ref ref="STDOUT" />
 	</logger>
 	
-	<logger name="org.hibernate.SQL" level="debug" additivity="false">
+	<logger name="org.hibernate.SQL" level="warn" additivity="false">
 		<appender-ref ref="STDOUT" />
 	</logger>
 	
-	<logger name="org.hibernate.type" level="trace" additivity="false">
+	<logger name="org.hibernate.type" level="warn" additivity="false">
 		<appender-ref ref="STDOUT" />
 	</logger>
 
