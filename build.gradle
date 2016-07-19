@@ -19,7 +19,7 @@ ext {
 	springVersion = '4.3.1.RELEASE'
 	jpaVersion = '1.10.2.RELEASE'
 	hibernateVersion = '5.2.1.Final'
-	dbcpVersion = '2.1.1'
+	dbcp2Version = '2.1.1'
 	h2Version = '1.4.192'
 	tilesVersion = '3.0.5'
 	
@@ -43,11 +43,10 @@ dependencies {
 		exclude group: 'org.springframework'
 	}
 	compile('org.hibernate:hibernate-core:' + hibernateVersion)
-	compile('org.apache.commons:commons-dbcp2:' + dbcpVersion)	
+	compile('org.apache.commons:commons-dbcp2:' + dbcp2Version)	
 	compile('com.h2database:h2:' + h2Version)
 	compile('org.apache.tiles:tiles-jsp:' + tilesVersion)
-	
-	
+
 	// Testing
 	testCompile('junit:junit:' + junitVersion)	
 	testCompile('org.springframework:spring-test:' + springVersion)

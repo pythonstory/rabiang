@@ -1,0 +1,46 @@
+/*
+Styles for HTML Tags
+*/
+body {
+    font-family: "Malgun Gothic", Helvetica, arial, sans-serif;
+    padding-top: 70px;
+    padding-bottom: 20px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: bold;
+    -webkit-font-smoothing: antialiased;
+    cursor: text;
+    /*position: relative;*/
+}
+
+h1 {
+    font-size: 28px;
+    color: black;
+}
+
+h2 {
+    font-size: 24px;
+    color: black;
+}
+
+h3 {
+    font-size: 20px;
+}
+
+h4 {
+    font-size: 18px;
+}
+
+h5 {
+    font-size: 16px;
+}
+
+h6 {
+    color: #777777;
+    font-size: 14px;
+}
+
+span a {
+    color: #eeeeee;
+}

@@ -1,0 +1,54 @@
+/*
+Styles for Layout and Theme
+*/
+
+.spacer-bottom-5 {
+    margin-bottom: 5px;
+}
+
+.spacer-bottom-10 {
+    margin-bottom: 10px;
+}
+
+.spacer-bottom-20 {
+    margin-bottom: 20px;
+}
+
+.spacer-bottom-50 {
+    margin-bottom: 50px;
+}
+
+.spacer-left-5 {
+    margin-left: 5px;
+}
+
+.spacer-left-10 {
+    margin-left: 10px;
+}
+
+.spacer-left-20 {
+    margin-left: 20px;
+}
+
+.spacer-left-50 {
+    margin-left: 50px;
+}
+
+.sidebar .list_outer {
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+.sidebar .list {
+    list-style-type: none;
+    padding-left: 20px;
+    margin-top: 5px;
+}
+
+.sidebar li {
+    margin-bottom: 5px;
+}
+
+.sidebar .well h4 {
+    margin-top: 0;
+}
