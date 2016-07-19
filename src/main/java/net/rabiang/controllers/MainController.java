@@ -1,4 +1,4 @@
-package net.rabiang.web;
+package net.rabiang.controllers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

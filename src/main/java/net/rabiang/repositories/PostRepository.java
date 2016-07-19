@@ -1,11 +1,11 @@
-package net.rabiang.repository;
+package net.rabiang.repositories;
 
 import java.util.Collection;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.repository.Repository;
 
-import net.rabiang.model.Post;
+import net.rabiang.models.Post;
 
 public interface PostRepository extends Repository<Post, Long> {
 

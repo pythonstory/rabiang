@@ -1,4 +1,4 @@
-package net.rabiang.web;
+package net.rabiang.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import net.rabiang.service.PostService;
+import net.rabiang.services.PostService;
 
 @Controller
 @RequestMapping("/post")

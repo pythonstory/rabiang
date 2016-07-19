@@ -1,4 +1,4 @@
-package net.rabiang.model;
+package net.rabiang.models;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

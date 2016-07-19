@@ -1,4 +1,4 @@
-package net.rabiang.form;
+package net.rabiang.forms;
 
 public class PostForm {
 	private String title;

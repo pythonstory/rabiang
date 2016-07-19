@@ -1,4 +1,4 @@
-package net.rabiang.service;
+package net.rabiang.services;
 
 import java.util.Collection;
 
@@ -7,8 +7,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import net.rabiang.model.Post;
-import net.rabiang.repository.PostRepository;
+import net.rabiang.models.Post;
+import net.rabiang.repositories.PostRepository;
 
 @Service
 public class PostService {

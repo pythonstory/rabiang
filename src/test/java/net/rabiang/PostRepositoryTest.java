@@ -9,8 +9,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import net.rabiang.model.Post;
-import net.rabiang.repository.PostRepository;
+import net.rabiang.models.Post;
+import net.rabiang.repositories.PostRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "classpath:spring/spring-mvc-config.xml", "classpath:spring/business-config.xml" })

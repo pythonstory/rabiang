@@ -13,7 +13,7 @@
 
 	<mvc:annotation-driven />
 
-	<context:component-scan base-package="net.rabiang.web" />
+	<context:component-scan base-package="net.rabiang.controllers" />
 
 	<!-- 
 		- The ContentNegotiatingViewResolver delegates to the InternalResourceViewResolver 
@@ -32,7 +32,7 @@
 
 		<!-- Registering BeanNameViewResolver and InternalViewResolver -->
 		<mvc:bean-name />
-		<mvc:jsp prefix="/WEB-INF/jsp/" suffix=".jsp"/>
+		<mvc:jsp prefix="/WEB-INF/views/" suffix=".jsp"/>
 	</mvc:view-resolvers>
 	
 	<!--
