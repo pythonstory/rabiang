@@ -9,3 +9,4 @@ blog, forum, and e-commerce based on Spring Web MVC
 * Spring-Data-JPA
 * Logback / Slf4j
 * Gradle
+* AlloyUI

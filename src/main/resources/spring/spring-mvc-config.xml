@@ -30,10 +30,15 @@
 			</mvc:default-views>			
 		</mvc:content-negotiation>
 
-		<!-- Registering BeanNameViewResolver and InternalViewResolver -->
-		<mvc:bean-name />
+		<!-- Registering ViewResolvers -->
+		<mvc:tiles/>
+		<mvc:bean-name/>
 		<mvc:jsp prefix="/WEB-INF/views/" suffix=".jsp"/>
 	</mvc:view-resolvers>
+	
+	<mvc:tiles-configurer check-refresh="true" validate-definitions="true">
+		<mvc:definitions location="/WEB-INF/tiles/tiles.xml" />
+	</mvc:tiles-configurer>
 	
 	<!--
 		- All resources inside folder src/main/webapp/resources are mapped 
@@ -42,7 +47,7 @@
 	<mvc:resources mapping="/vendors/**" location="/vendors/" cache-period="0"/>
 	
 	<!--
-        - Message source for this context, loaded from localized "messages_xx" files.
+        - i18n Message source for this context, loaded from localized "messages_xx" files.
         - Files are stored inside src/main/resources
     -->
     <bean id="messageSource"
