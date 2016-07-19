@@ -27,7 +27,7 @@
 				<bean class="org.springframework.web.servlet.view.JstlView">
 					<property name="url" value=""/>
 				</bean>
-			</mvc:default-views>			
+			</mvc:default-views>
 		</mvc:content-negotiation>
 
 		<!-- Registering ViewResolvers -->
@@ -37,7 +37,7 @@
 	</mvc:view-resolvers>
 	
 	<mvc:tiles-configurer check-refresh="true" validate-definitions="true">
-		<mvc:definitions location="/WEB-INF/tiles/tiles.xml" />
+		<mvc:definitions location="/WEB-INF/tiles/tiles-defs.xml" />
 	</mvc:tiles-configurer>
 	
 	<!--

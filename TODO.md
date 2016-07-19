@@ -10,4 +10,4 @@
 * ~~AlloyUI~~
 * 폼, 검증
 * spring-security
-* 캐시
+* 캐시 (리소스,  디비)
