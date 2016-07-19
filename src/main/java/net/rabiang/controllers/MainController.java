@@ -16,7 +16,7 @@ public class MainController {
 	public String index(Model model) {
 		logger.debug("main.index");
 
-		model.addAttribute("greeting", "Hello");
+		model.addAttribute("title", "Rabiang.net");
 
 		return "default/index";
 	}

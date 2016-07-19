@@ -4,33 +4,27 @@
 <tiles-definitions>
 
 	<!-- 1 Column Definition -->
-	<definition name="1-cols-main-definition" template="/WEB-INF/tiles/layouts/columns_1.jsp">
-		<put-attribute name="title" value="" />
+	<definition name="1-cols-definition" template="/WEB-INF/tiles/layouts/columns_1.jsp">
 		<put-attribute name="navigation" value="/WEB-INF/tiles/templates/navigation.jsp" />
-		<put-attribute name="body" value="" />
 		<put-attribute name="footer" value="/WEB-INF/tiles/templates/footer.jsp" />
 	</definition>
 	
-	<!-- 2 Column Definition for Blog -->
-	<definition name="2-cols-blog-definition" template="/WEB-INF/tiles/layouts/columns_2.jsp">
-		<put-attribute name="title" value="" />
+	<!-- 2 Column Definition -->
+	<definition name="2-cols-definition" template="/WEB-INF/tiles/layouts/columns_2.jsp">
 		<put-attribute name="navigation" value="/WEB-INF/tiles/templates/navigation.jsp" />
 		<put-attribute name="breadcrumb" value="/WEB-INF/tiles/templates/breadcrumb.jsp" />
-		<put-attribute name="sidebar" value="/WEB-INF/tiles/templates/sidebar.jsp" />
-		<put-attribute name="body" value="" />
 		<put-attribute name="footer" value="/WEB-INF/tiles/templates/footer.jsp" />
 	</definition>
 	
 	<!-- Home Page -->
-	<definition name="home" extends="1-cols-main-definition">
-		<put-attribute name="title" value="Welcome" />
-		<put-attribute name="body" value="/WEB-INF/index.jsp" />
+	<definition name="*/index" extends="1-cols-definition">
+		<put-attribute name="body" value="/WEB-INF/views/{1}/index.jsp" />
 	</definition>
 
 	<!-- Blog Page -->
-	<definition name="blog" extends="2-cols-blog-definition">
-		<put-attribute name="title" value="Welcome" />
-		<put-attribute name="body" value="/WEB-INF/pages/home.jsp" />
+	<definition name="*/post/*" extends="2-cols-definition">
+		<put-attribute name="body" value="/WEB-INF/views/{1}/post/{2}.jsp" />
+		<put-attribute name="sidebar" value="/WEB-INF/tiles/templates/blog_sidebar.jsp" />		
 	</definition>
 
 </tiles-definitions>

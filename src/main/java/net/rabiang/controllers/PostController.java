@@ -23,6 +23,8 @@ public class PostController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index(Model model) {
 		this.postService.findPosts();
+		
+		model.addAttribute("title", "Blog - Rabiang.net");
 
 		return "default/post/index";
 	}
