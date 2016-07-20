@@ -4,27 +4,27 @@
 <tiles-definitions>
 
 	<!-- 1 Column Definition -->
-	<definition name="1-cols-definition" template="/WEB-INF/tiles/layouts/columns_1.jsp">
-		<put-attribute name="navigation" value="/WEB-INF/tiles/templates/navigation.jsp" />
-		<put-attribute name="footer" value="/WEB-INF/tiles/templates/footer.jsp" />
+	<definition name="*.1-cols-definition" template="/WEB-INF/views/{1}/layouts/columns_1.jsp">
+		<put-attribute name="navigation" value="/WEB-INF/views/{1}/templates/navigation.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/{1}/templates/footer.jsp" />
 	</definition>
 	
 	<!-- 2 Column Definition -->
-	<definition name="2-cols-definition" template="/WEB-INF/tiles/layouts/columns_2.jsp">
-		<put-attribute name="navigation" value="/WEB-INF/tiles/templates/navigation.jsp" />
-		<put-attribute name="breadcrumb" value="/WEB-INF/tiles/templates/breadcrumb.jsp" />
-		<put-attribute name="footer" value="/WEB-INF/tiles/templates/footer.jsp" />
+	<definition name="*.2-cols-definition" template="/WEB-INF/views/{1}/layouts/columns_2.jsp">
+		<put-attribute name="navigation" value="/WEB-INF/views/{1}/templates/navigation.jsp" />
+		<put-attribute name="breadcrumb" value="/WEB-INF/views/{1}/templates/breadcrumb.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/{1}/templates/footer.jsp" />
 	</definition>
 	
 	<!-- Home Page -->
-	<definition name="*/index" extends="1-cols-definition">
+	<definition name="*/index" extends="{1}.1-cols-definition">
 		<put-attribute name="body" value="/WEB-INF/views/{1}/index.jsp" />
 	</definition>
 
 	<!-- Blog Page -->
-	<definition name="*/post/*" extends="2-cols-definition">
+	<definition name="*/post/*" extends="{1}.2-cols-definition">
 		<put-attribute name="body" value="/WEB-INF/views/{1}/post/{2}.jsp" />
-		<put-attribute name="sidebar" value="/WEB-INF/tiles/templates/blog_sidebar.jsp" />		
+		<put-attribute name="sidebar" value="/WEB-INF/views/{1}/templates/blog_sidebar.jsp" />		
 	</definition>
 
 </tiles-definitions>
