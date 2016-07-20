@@ -34,7 +34,7 @@ public class PostController {
 	}
 
 	@RequestMapping(value = "/post/{id}", method = RequestMethod.GET)
-	public String detail(@PathVariable("id") int id, Model model) {
+	public String detail(@PathVariable("id") long id, Model model) {
 		return "default/pages/post/detail";
 	}
 
@@ -50,22 +50,22 @@ public class PostController {
 	}
 
 	@RequestMapping(value = "/post/edit/{id}", method = RequestMethod.GET)
-	public String edit(@PathVariable("id") int id, Model model) {
+	public String edit(@PathVariable("id") long id, Model model) {
 		return "default/pages/post/edit";
 	}
 
 	@RequestMapping(value = "/post/edit/{id}", method = RequestMethod.POST)
-	public String editAction(@PathVariable("id") int id, Model model) {
+	public String editAction(@PathVariable("id") long id, Model model) {
 		return "redirect:/post/detail/" + id;
 	}
 
 	@RequestMapping(value = "/post/delete/{id}", method = RequestMethod.GET)
-	public String delete(@PathVariable("id") int id, Model model) {
+	public String delete(@PathVariable("id") long id, Model model) {
 		return "default/pages/post/delete";
 	}
 
 	@RequestMapping(value = "/post/delete/{id}", method = RequestMethod.POST)
-	public String deleteAction(@PathVariable("id") int id, Model model) {
+	public String deleteAction(@PathVariable("id") long id, Model model) {
 		return "redirect:/post/";
 	}
 }

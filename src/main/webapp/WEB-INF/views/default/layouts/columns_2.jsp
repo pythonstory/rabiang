@@ -48,7 +48,7 @@
         <div class="col-sm-8">
 			<tiles:insertAttribute name="body"/>       
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-4 sidebar">
         	<tiles:insertAttribute name="sidebar"/>        	
         </div>
     </div>
