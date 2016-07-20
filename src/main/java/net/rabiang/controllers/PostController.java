@@ -1,71 +1,109 @@
 package net.rabiang.controllers;
 
+import java.util.Locale;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import net.rabiang.forms.PostForm;
+import net.rabiang.models.Post;
 import net.rabiang.services.BlogService;
 
 @Controller
 public class PostController {
 
-	private final BlogService postService;
+	private final Logger logger = LoggerFactory.getLogger(PostController.class);
+
+	private final BlogService blogService;
+
+	@Autowired
+	private MessageSource messageSource;
+
+	private String siteName = "Rabiang.net";
 
 	@Autowired
 	public PostController(BlogService postService) {
-		this.postService = postService;
+		this.blogService = postService;
 	}
 
-	@RequestMapping(value = "/post", method = RequestMethod.GET)
-	public String index(Model model) {
-		this.postService.findPosts();
+	@RequestMapping(value = { "/post", "/post/index" }, method = RequestMethod.GET)
+	public String index(Locale locale, @RequestParam(value = "q", required = false) String q, ModelMap model) {
+		logger.debug(q);
 
-		model.addAttribute("title", "Blog - Rabiang.net");
+		this.blogService.findPosts();
+
+		model.put("title", String.format("%s - %s", messageSource.getMessage("blog", null, locale), siteName));
 
 		return "default/pages/post/index";
 	}
 
 	@RequestMapping(value = "/post/{slug}", method = RequestMethod.GET)
-	public String detail(@PathVariable String slug, Model model) {
+	public String detail(Locale locale, @PathVariable String slug, ModelMap model) {
+		Post post = this.blogService.findPostBySlug(slug);
+
+		model.put("title", String.format("%s - %s", post.getTitle(), siteName));
+
 		return "default/pages/post/detail";
 	}
 
-	@RequestMapping(value = "/post/{id}", method = RequestMethod.GET)
-	public String detail(@PathVariable("id") long id, Model model) {
+	@RequestMapping(value = "/post/detail/{id}", method = RequestMethod.GET)
+	public String detail(Locale locale, @PathVariable("id") long id, ModelMap model) {
+		Post post = this.blogService.findPostById(id);
+
+		model.put("title", String.format("%s - %s", post.getTitle(), siteName));
+
 		return "default/pages/post/detail";
 	}
 
 	@RequestMapping(value = "/post/create", method = RequestMethod.GET)
-	public String create(Model model) {
+	public String create(Locale locale, ModelMap model) {
+		model.put("post", new Post());
+		
+		model.put("title", String.format("%s - %s", messageSource.getMessage("blog", null, locale), siteName));
+
 		return "default/pages/post/create";
 	}
 
 	@RequestMapping(value = "/post/create", method = RequestMethod.POST)
-	public String createAction(Model model) {
-		int id = 1;
-		return "redirect:/post/detail/" + id;
+	public String createAction(@ModelAttribute PostForm postForm, BindingResult result, ModelMap model) {
+		Post post = this.blogService.savePost(postForm);
+		
+		logger.debug(postForm.getTitle());
+
+		return "redirect:/post/detail/" + post.getId();
 	}
 
 	@RequestMapping(value = "/post/edit/{id}", method = RequestMethod.GET)
-	public String edit(@PathVariable("id") long id, Model model) {
+	public String edit(Locale locale, @PathVariable("id") long id, ModelMap model) {
+		model.put("title", String.format("%s - %s", messageSource.getMessage("blog", null, locale), siteName));
+
 		return "default/pages/post/edit";
 	}
 
 	@RequestMapping(value = "/post/edit/{id}", method = RequestMethod.POST)
-	public String editAction(@PathVariable("id") long id, Model model) {
+	public String editAction(@PathVariable("id") long id, ModelMap model) {
 		return "redirect:/post/detail/" + id;
 	}
 
 	@RequestMapping(value = "/post/delete/{id}", method = RequestMethod.GET)
-	public String delete(@PathVariable("id") long id, Model model) {
+	public String delete(Locale locale, @PathVariable("id") long id, ModelMap model) {
+		model.put("title", String.format("%s - %s", messageSource.getMessage("blog", null, locale), siteName));
+
 		return "default/pages/post/delete";
 	}
 
 	@RequestMapping(value = "/post/delete/{id}", method = RequestMethod.POST)
-	public String deleteAction(@PathVariable("id") long id, Model model) {
+	public String deleteAction(@PathVariable("id") long id, ModelMap model) {
 		return "redirect:/post/";
 	}
 }

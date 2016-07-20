@@ -1,4 +1,5 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
+<%@ include file="common/inc.jspf"%>
 <!-- Blog Search Well -->
 <div class="well">
     <h4>블로그 검색</h4>

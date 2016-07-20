@@ -2,9 +2,14 @@ package net.rabiang.forms;
 
 public class PostForm {
 	private String title;
+
 	private String slug;
-	private int status;
+
 	private String body;
+
+	private int status;
+
+	private int format;
 
 	public String getTitle() {
 		return title;
@@ -22,6 +27,14 @@ public class PostForm {
 		this.slug = slug;
 	}
 
+	public String getBody() {
+		return body;
+	}
+
+	public void setBody(String body) {
+		this.body = body;
+	}
+
 	public int getStatus() {
 		return status;
 	}
@@ -30,12 +43,12 @@ public class PostForm {
 		this.status = status;
 	}
 
-	public String getBody() {
-		return body;
+	public int getFormat() {
+		return format;
 	}
 
-	public void setBody(String body) {
-		this.body = body;
+	public void setFormat(int format) {
+		this.format = format;
 	}
 
 }
