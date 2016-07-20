@@ -2,6 +2,8 @@ package net.rabiang.controllers;
 
 import java.util.Locale;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +69,7 @@ public class PostController {
 
 	@RequestMapping(value = "/post/create", method = RequestMethod.GET)
 	public String create(Locale locale, ModelMap model) {
-		model.put("post", new Post());
+		model.put("form", new PostForm());
 		
 		model.put("title", String.format("%s - %s", messageSource.getMessage("blog", null, locale), siteName));
 
@@ -75,12 +77,16 @@ public class PostController {
 	}
 
 	@RequestMapping(value = "/post/create", method = RequestMethod.POST)
-	public String createAction(@ModelAttribute PostForm postForm, BindingResult result, ModelMap model) {
-		Post post = this.blogService.savePost(postForm);
-		
-		logger.debug(postForm.getTitle());
+	public String createAction(@Valid @ModelAttribute PostForm form, BindingResult result, ModelMap model) {		
+		if (result.hasErrors()) {
+			model.put("form", form);
+			
+			return "default/pages/post/create";
+		} else {
+			Post post = this.blogService.savePost(form);
 
-		return "redirect:/post/detail/" + post.getId();
+			return "redirect:/post/detail/" + post.getId();			
+		}
 	}
 
 	@RequestMapping(value = "/post/edit/{id}", method = RequestMethod.GET)

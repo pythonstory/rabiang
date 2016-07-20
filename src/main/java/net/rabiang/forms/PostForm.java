@@ -1,6 +1,10 @@
 package net.rabiang.forms;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class PostForm {
+	
+	@NotEmpty
 	private String title;
 
 	private String slug;
