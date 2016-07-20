@@ -7,67 +7,65 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import net.rabiang.services.PostService;
+import net.rabiang.services.BlogService;
 
 @Controller
-@RequestMapping("/post")
 public class PostController {
 
-	private final PostService postService;
+	private final BlogService postService;
 
 	@Autowired
-	public PostController(PostService postService) {
+	public PostController(BlogService postService) {
 		this.postService = postService;
 	}
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "/post", method = RequestMethod.GET)
 	public String index(Model model) {
 		this.postService.findPosts();
-		
+
 		model.addAttribute("title", "Blog - Rabiang.net");
 
-		return "default/post/index";
+		return "default/pages/post/index";
 	}
 
-	@RequestMapping(value = "/{slug}", method = RequestMethod.GET)
+	@RequestMapping(value = "/post/{slug}", method = RequestMethod.GET)
 	public String detail(@PathVariable String slug, Model model) {
-		return "default/post/detail";
+		return "default/pages/post/detail";
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/post/{id}", method = RequestMethod.GET)
 	public String detail(@PathVariable("id") int id, Model model) {
-		return "default/post/detail";
+		return "default/pages/post/detail";
 	}
 
-	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	@RequestMapping(value = "/post/create", method = RequestMethod.GET)
 	public String create(Model model) {
-		return "default/post/create";
+		return "default/pages/post/create";
 	}
 
-	@RequestMapping(value = "/create", method = RequestMethod.POST)
+	@RequestMapping(value = "/post/create", method = RequestMethod.POST)
 	public String createAction(Model model) {
 		int id = 1;
 		return "redirect:/post/detail/" + id;
 	}
 
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/post/edit/{id}", method = RequestMethod.GET)
 	public String edit(@PathVariable("id") int id, Model model) {
-		return "default/post/edit";
+		return "default/pages/post/edit";
 	}
 
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
+	@RequestMapping(value = "/post/edit/{id}", method = RequestMethod.POST)
 	public String editAction(@PathVariable("id") int id, Model model) {
 		return "redirect:/post/detail/" + id;
 	}
 
-	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/post/delete/{id}", method = RequestMethod.GET)
 	public String delete(@PathVariable("id") int id, Model model) {
-		return "default/post/delete";
+		return "default/pages/post/delete";
 	}
 
-	@RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
+	@RequestMapping(value = "/post/delete/{id}", method = RequestMethod.POST)
 	public String deleteAction(@PathVariable("id") int id, Model model) {
 		return "redirect:/post/";
 	}
-
 }
