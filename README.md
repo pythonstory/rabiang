@@ -22,6 +22,7 @@ blog, forum, and e-commerce based on Spring Web MVC
 * Servlet 3.1, JSTL 1.2, JSP 2.3
 * Spring Web MVC Framework 4.3
 * Spring Data JPA 1.10, Hibernate 5.2
+* Validation 1.1 & Hibernate Validator 5.2 
 * Spring Security 4.1
 * Spring Test Framework 4.3, JUnit 4
 * Apache Tiles 3

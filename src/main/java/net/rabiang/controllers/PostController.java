@@ -1,8 +1,5 @@
 package net.rabiang.controllers;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import net.rabiang.forms.PostForm;
 import net.rabiang.models.Post;
 import net.rabiang.services.BlogService;
+import net.rabiang.utils.helpers.Breadcrumb;
 
 @Controller
 public class PostController {
@@ -49,22 +47,13 @@ public class PostController {
 
 		this.blogService.findPosts();
 
-		List<HashMap<String, String>> breadcrumb = new ArrayList<HashMap<String, String>>();
+		Breadcrumb breadcrumb = new Breadcrumb();
 
-		HashMap<String, String> link;
+		breadcrumb.add(messageSource.getMessage("home", null, locale), request.getContextPath());
+		breadcrumb.add(messageSource.getMessage("blog", null, locale), null);
 
-		link = new HashMap<String, String>();
-		link.put("text", messageSource.getMessage("home", null, locale));
-		link.put("href", request.getContextPath());
-		breadcrumb.add(link);
-
-		link = new HashMap<String, String>();
-		link.put("text", messageSource.getMessage("blog", null, locale));
-		link.put("href", null);
-		breadcrumb.add(link);
-
-		model.put("breadcrumb", breadcrumb);
 		model.put("title", String.format("%s - %s", messageSource.getMessage("blog", null, locale), siteName));
+		model.put("breadcrumb", breadcrumb.getBreadcrumb());
 
 		return "default/pages/post/index";
 	}
