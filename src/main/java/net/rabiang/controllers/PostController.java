@@ -1,7 +1,11 @@
 package net.rabiang.controllers;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -39,11 +43,27 @@ public class PostController {
 	}
 
 	@RequestMapping(value = { "/post", "/post/index" }, method = RequestMethod.GET)
-	public String index(Locale locale, @RequestParam(value = "q", required = false) String q, ModelMap model) {
+	public String index(HttpServletRequest request, Locale locale,
+			@RequestParam(value = "q", required = false) String q, ModelMap model) {
 		logger.debug(q);
 
 		this.blogService.findPosts();
 
+		List<HashMap<String, String>> breadcrumb = new ArrayList<HashMap<String, String>>();
+
+		HashMap<String, String> link;
+
+		link = new HashMap<String, String>();
+		link.put("text", messageSource.getMessage("home", null, locale));
+		link.put("href", request.getContextPath());
+		breadcrumb.add(link);
+
+		link = new HashMap<String, String>();
+		link.put("text", messageSource.getMessage("blog", null, locale));
+		link.put("href", null);
+		breadcrumb.add(link);
+
+		model.put("breadcrumb", breadcrumb);
 		model.put("title", String.format("%s - %s", messageSource.getMessage("blog", null, locale), siteName));
 
 		return "default/pages/post/index";
@@ -70,22 +90,22 @@ public class PostController {
 	@RequestMapping(value = "/post/create", method = RequestMethod.GET)
 	public String create(Locale locale, ModelMap model) {
 		model.put("form", new PostForm());
-		
+
 		model.put("title", String.format("%s - %s", messageSource.getMessage("blog", null, locale), siteName));
 
 		return "default/pages/post/create";
 	}
 
 	@RequestMapping(value = "/post/create", method = RequestMethod.POST)
-	public String createAction(@Valid @ModelAttribute PostForm form, BindingResult result, ModelMap model) {		
+	public String createAction(@Valid @ModelAttribute PostForm form, BindingResult result, ModelMap model) {
 		if (result.hasErrors()) {
 			model.put("form", form);
-			
+
 			return "default/pages/post/create";
 		} else {
 			Post post = this.blogService.savePost(form);
 
-			return "redirect:/post/detail/" + post.getId();			
+			return "redirect:/post/detail/" + post.getId();
 		}
 	}
 

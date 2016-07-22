@@ -1,11 +1,20 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ include file="common/inc.jspf"%>
-<div class="container">
-	<ol class="breadcrumb">
-
-		<li><a href="/">홈</a></li>
-
-		<li>블로그</li>
-
-	</ol>
-</div>
+<c:if test="${not empty breadcrumb}">
+	<div class="container">
+		<ol class="breadcrumb">
+			<c:forEach var="link" items="${breadcrumb}">
+				<li>
+					<c:choose>
+						<c:when test="${not empty link['href']}">
+							<a href="<c:out value="${link['href']}"/>"><c:out value="${link['text']}"/></a>
+						</c:when>
+						<c:otherwise>
+							<c:out value="${link['text']}"/>
+						</c:otherwise>
+					</c:choose>
+				</li>
+			</c:forEach>
+		</ol>
+	</div>
+</c:if>
