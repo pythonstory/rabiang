@@ -1,7 +1,7 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ include file="../../common/inc.jspf"%>
-<spring:url value="/post/create" htmlEscape="true" var="createActionUrl"/>
-<form:form method="post" action="${createActionUrl}" modelAttribute="form" cssClass="form-horizontal">
+<spring:url value="/post/save" htmlEscape="true" var="saveActionUrl"/>
+<form:form method="post" action="${saveActionUrl}" modelAttribute="form" cssClass="form-horizontal">
 	<form:hidden path="id" />
 	<div class="form-group">
 		<form:label path="title" cssClass="col-sm-1 control-label">title</form:label>

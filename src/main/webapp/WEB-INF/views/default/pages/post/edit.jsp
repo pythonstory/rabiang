@@ -1,7 +1,7 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ include file="../../common/inc.jspf"%>
-<spring:url value="/post/edit/${form.id}" htmlEscape="true" var="createActionUrl"/>
-<form:form method="post" action="${createActionUrl}" modelAttribute="form" cssClass="form-horizontal">
+<spring:url value="/post/save" htmlEscape="true" var="saveActionUrl"/>
+<form:form method="post" action="${saveActionUrl}" modelAttribute="form" cssClass="form-horizontal">
 	<form:hidden path="id" />
 	<div class="form-group">
 		<form:label path="title" cssClass="col-sm-1 control-label">title</form:label>
@@ -35,7 +35,7 @@
 	</div>
 	<div class="form-group">
 		<div class="col-sm-offset-1 col-sm-11">
-			<button type="submit" class="btn btn-primary">Edit</button>
+			<button type="submit" class="btn btn-primary">save</button>
 			<a href="<spring:url value="/post/index" htmlEscape="true"/>" class="btn btn-default">cancel</a>
 		</div>
 	</div>

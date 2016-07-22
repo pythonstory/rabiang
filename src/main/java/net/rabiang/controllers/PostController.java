@@ -96,8 +96,8 @@ public class PostController {
 		return "default/pages/post/create";
 	}
 
-	@RequestMapping(value = "/post/create", method = RequestMethod.POST)
-	public String createAction(@Valid @ModelAttribute PostForm form, BindingResult result, ModelMap model) {
+	@RequestMapping(value = "/post/save", method = RequestMethod.POST)
+	public String saveAction(@Valid @ModelAttribute PostForm form, BindingResult result, ModelMap model) {
 		if (result.hasErrors()) {
 			model.put("form", form);
 
@@ -126,19 +126,6 @@ public class PostController {
 		model.put("title", String.format("%s - %s", messageSource.getMessage("blog", null, locale), SITE_NAME));
 
 		return "default/pages/post/edit";
-	}
-
-	@RequestMapping(value = "/post/edit/{id}", method = RequestMethod.POST)
-	public String editAction(@PathVariable("id") long id, @Valid @ModelAttribute PostForm form, BindingResult result, ModelMap model) {		
-		if (result.hasErrors()) {
-			model.put("form", form);
-
-			return "default/pages/post/edit";
-		} else {
-			this.blogService.savePost(form);
-
-			return "redirect:/post/detail/" + id;
-		}
 	}
 
 	@RequestMapping(value = "/post/delete/{id}", method = RequestMethod.GET)
