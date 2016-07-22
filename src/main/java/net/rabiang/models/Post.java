@@ -1,5 +1,7 @@
 package net.rabiang.models;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,6 +23,10 @@ public class Post {
 	private int status;
 
 	private int format;
+	
+	private Date createdDate;
+	
+	private Date modifiedDate;
 
 	public long getId() {
 		return id;
@@ -68,6 +74,22 @@ public class Post {
 
 	public void setFormat(int format) {
 		this.format = format;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public Date getModifiedDate() {
+		return modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
 	}
 
 	@Override

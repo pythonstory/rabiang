@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -33,7 +34,7 @@ public class PostController {
 	@Autowired
 	private MessageSource messageSource;
 
-	private String siteName = "Rabiang.net";
+	public static final String SITE_NAME = "Rabiang.net";
 
 	@Autowired
 	public PostController(BlogService postService) {
@@ -42,27 +43,38 @@ public class PostController {
 
 	@RequestMapping(value = { "/post", "/post/index" }, method = RequestMethod.GET)
 	public String index(HttpServletRequest request, Locale locale,
+			@RequestParam(value = "p", required = false, defaultValue = "1") int p,
 			@RequestParam(value = "q", required = false) String q, ModelMap model) {
+		Page<Post> page = this.blogService.findPosts(p, q);
+		
 		logger.debug(q);
-
-		this.blogService.findPosts();
+		logger.debug(Integer.toString(page.getSize()));
+		logger.debug(Integer.toString(page.getTotalPages()));
+		logger.debug(Long.toString(page.getTotalElements()));
 
 		Breadcrumb breadcrumb = new Breadcrumb();
 
 		breadcrumb.add(messageSource.getMessage("home", null, locale), request.getContextPath());
 		breadcrumb.add(messageSource.getMessage("blog", null, locale), null);
 
-		model.put("title", String.format("%s - %s", messageSource.getMessage("blog", null, locale), siteName));
+		model.put("title", String.format("%s - %s", messageSource.getMessage("blog", null, locale), SITE_NAME));
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
 
 		return "default/pages/post/index";
 	}
 
 	@RequestMapping(value = "/post/{slug}", method = RequestMethod.GET)
-	public String detail(Locale locale, @PathVariable String slug, ModelMap model) {
+	public String detail(HttpServletRequest request, Locale locale, @PathVariable String slug, ModelMap model) {
 		Post post = this.blogService.findPostBySlug(slug);
 
-		model.put("title", String.format("%s - %s", post.getTitle(), siteName));
+		Breadcrumb breadcrumb = new Breadcrumb();
+
+		breadcrumb.add(messageSource.getMessage("home", null, locale), request.getContextPath());
+		breadcrumb.add(messageSource.getMessage("blog", null, locale), request.getContextPath() + "/post");
+		breadcrumb.add(post.getTitle(), null);
+
+		model.put("title", String.format("%s - %s", post.getTitle(), SITE_NAME));
+		model.put("breadcrumb", breadcrumb.getBreadcrumb());
 
 		return "default/pages/post/detail";
 	}
@@ -71,7 +83,7 @@ public class PostController {
 	public String detail(Locale locale, @PathVariable("id") long id, ModelMap model) {
 		Post post = this.blogService.findPostById(id);
 
-		model.put("title", String.format("%s - %s", post.getTitle(), siteName));
+		model.put("title", String.format("%s - %s", post.getTitle(), SITE_NAME));
 
 		return "default/pages/post/detail";
 	}
@@ -80,7 +92,7 @@ public class PostController {
 	public String create(Locale locale, ModelMap model) {
 		model.put("form", new PostForm());
 
-		model.put("title", String.format("%s - %s", messageSource.getMessage("blog", null, locale), siteName));
+		model.put("title", String.format("%s - %s", messageSource.getMessage("blog", null, locale), SITE_NAME));
 
 		return "default/pages/post/create";
 	}
@@ -100,7 +112,7 @@ public class PostController {
 
 	@RequestMapping(value = "/post/edit/{id}", method = RequestMethod.GET)
 	public String edit(Locale locale, @PathVariable("id") long id, ModelMap model) {
-		model.put("title", String.format("%s - %s", messageSource.getMessage("blog", null, locale), siteName));
+		model.put("title", String.format("%s - %s", messageSource.getMessage("blog", null, locale), SITE_NAME));
 
 		return "default/pages/post/edit";
 	}
@@ -112,7 +124,7 @@ public class PostController {
 
 	@RequestMapping(value = "/post/delete/{id}", method = RequestMethod.GET)
 	public String delete(Locale locale, @PathVariable("id") long id, ModelMap model) {
-		model.put("title", String.format("%s - %s", messageSource.getMessage("blog", null, locale), siteName));
+		model.put("title", String.format("%s - %s", messageSource.getMessage("blog", null, locale), SITE_NAME));
 
 		return "default/pages/post/delete";
 	}
