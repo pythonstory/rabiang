@@ -34,7 +34,7 @@ public class BlogService {
 		Specifications<Post> spec = null;
 
 		if (keyword != null && keyword.trim().length() > 0) {
-			spec = Specifications.where(PostSpecs.titleLike(keyword)).and(PostSpecs.bodyLike(keyword));
+			spec = Specifications.where(PostSpecs.titleLike(keyword)).or(PostSpecs.bodyLike(keyword));
 		}
 
 		Pageable pageable = new PageRequest(page - 1, PAGE_SIZE, Sort.Direction.DESC, "createdDate");
