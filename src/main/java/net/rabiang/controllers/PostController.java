@@ -46,7 +46,7 @@ public class PostController {
 			@RequestParam(value = "p", required = false, defaultValue = "1") int p,
 			@RequestParam(value = "q", required = false) String q, ModelMap model) {
 		Page<Post> page = this.blogService.findPosts(p, q);
-		
+
 		logger.debug(q);
 		logger.debug(Integer.toString(page.getSize()));
 		logger.debug(Integer.toString(page.getTotalPages()));
@@ -91,7 +91,6 @@ public class PostController {
 	@RequestMapping(value = "/post/create", method = RequestMethod.GET)
 	public String create(Locale locale, ModelMap model) {
 		model.put("form", new PostForm());
-
 		model.put("title", String.format("%s - %s", messageSource.getMessage("blog", null, locale), SITE_NAME));
 
 		return "default/pages/post/create";
@@ -111,15 +110,35 @@ public class PostController {
 	}
 
 	@RequestMapping(value = "/post/edit/{id}", method = RequestMethod.GET)
-	public String edit(Locale locale, @PathVariable("id") long id, ModelMap model) {
+	public String edit(HttpServletRequest request, Locale locale, @PathVariable("id") long id, ModelMap model) {
+		Post post = this.blogService.findPostById(id);
+
+		PostForm form = new PostForm();
+
+		form.setId(post.getId());
+		form.setTitle(post.getTitle());
+		form.setSlug(post.getSlug());
+		form.setBody(post.getBody());
+		form.setStatus(post.getStatus());
+		form.setFormat(post.getFormat());
+
+		model.put("form", form);
 		model.put("title", String.format("%s - %s", messageSource.getMessage("blog", null, locale), SITE_NAME));
 
 		return "default/pages/post/edit";
 	}
 
 	@RequestMapping(value = "/post/edit/{id}", method = RequestMethod.POST)
-	public String editAction(@PathVariable("id") long id, ModelMap model) {
-		return "redirect:/post/detail/" + id;
+	public String editAction(@PathVariable("id") long id, @Valid @ModelAttribute PostForm form, BindingResult result, ModelMap model) {		
+		if (result.hasErrors()) {
+			model.put("form", form);
+
+			return "default/pages/post/edit";
+		} else {
+			this.blogService.savePost(form);
+
+			return "redirect:/post/detail/" + id;
+		}
 	}
 
 	@RequestMapping(value = "/post/delete/{id}", method = RequestMethod.GET)

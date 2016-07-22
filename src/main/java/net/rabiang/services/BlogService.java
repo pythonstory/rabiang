@@ -52,14 +52,20 @@ public class BlogService {
 
 	@Transactional(readOnly = false)
 	public Post savePost(PostForm postForm) throws DataAccessException {
-		Post post = new Post();
+		Post post;
+
+		if (postForm.getId() == 0) {
+			post = new Post();
+			post.setCreatedDate(new Date());
+		} else {
+			post = this.findPostById(postForm.getId());
+		}
 
 		post.setTitle(postForm.getTitle());
 		post.setSlug(postForm.getSlug());
 		post.setBody(postForm.getBody());
 		post.setStatus(postForm.getStatus());
 		post.setFormat(postForm.getFormat());
-		post.setCreatedDate(new Date());
 		post.setModifiedDate(new Date());
 
 		return this.postRepository.save(post);

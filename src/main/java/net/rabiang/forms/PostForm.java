@@ -3,7 +3,9 @@ package net.rabiang.forms;
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class PostForm {
-	
+
+	private long id;
+
 	@NotEmpty
 	private String title;
 
@@ -14,6 +16,14 @@ public class PostForm {
 	private int status;
 
 	private int format;
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
 
 	public String getTitle() {
 		return title;
