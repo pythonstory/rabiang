@@ -93,7 +93,7 @@ public class PostController {
 		model.put("form", new PostForm());
 		model.put("title", String.format("%s - %s", messageSource.getMessage("blog", null, locale), SITE_NAME));
 
-		return "default/pages/post/create";
+		return "default/pages/post/create_or_edit";
 	}
 
 	@RequestMapping(value = "/post/save", method = RequestMethod.POST)
@@ -101,7 +101,7 @@ public class PostController {
 		if (result.hasErrors()) {
 			model.put("form", form);
 
-			return "default/pages/post/create";
+			return "default/pages/post/create_or_edit";
 		} else {
 			Post post = this.blogService.savePost(form);
 
@@ -125,7 +125,7 @@ public class PostController {
 		model.put("form", form);
 		model.put("title", String.format("%s - %s", messageSource.getMessage("blog", null, locale), SITE_NAME));
 
-		return "default/pages/post/edit";
+		return "default/pages/post/create_or_edit";
 	}
 
 	@RequestMapping(value = "/post/delete/{id}", method = RequestMethod.GET)
