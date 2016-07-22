@@ -1,5 +1,5 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
-<%@ include file="common/inc.jspf"%>
+<%@ include file="../common/inc.jspf"%>
 <c:if test="${not empty breadcrumb}">
 	<div class="container">
 		<ol class="breadcrumb">

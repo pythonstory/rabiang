@@ -1,5 +1,5 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
-<%@ include file="common/inc.jspf"%>
+<%@ include file="../common/inc.jspf"%>
 <!-- Navigation -->
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 	<div class="container">

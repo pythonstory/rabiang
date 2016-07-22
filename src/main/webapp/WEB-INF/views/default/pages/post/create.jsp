@@ -1,5 +1,5 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
-<%@ include file="common/inc.jspf"%>
+<%@ include file="../../common/inc.jspf"%>
 <spring:url value="/post/create" htmlEscape="true" var="createActionUrl"/>
 <form:form method="post" action="${createActionUrl}" modelAttribute="form" cssClass="form-horizontal">
 	<form:hidden path="id" />
