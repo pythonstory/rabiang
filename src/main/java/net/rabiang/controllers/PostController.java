@@ -2,7 +2,6 @@ package net.rabiang.controllers;
 
 import java.util.Locale;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -42,8 +41,7 @@ public class PostController {
 	}
 
 	@RequestMapping(value = { "/post", "/post/index" }, method = RequestMethod.GET)
-	public String index(HttpServletRequest request, Locale locale,
-			@RequestParam(value = "p", required = false, defaultValue = "1") int p,
+	public String index(Locale locale, @RequestParam(value = "p", required = false, defaultValue = "1") int p,
 			@RequestParam(value = "q", required = false) String q, ModelMap model) {
 		Page<Post> page = this.blogService.findPosts(p, q);
 
@@ -54,7 +52,7 @@ public class PostController {
 
 		Breadcrumb breadcrumb = new Breadcrumb();
 
-		breadcrumb.add(messageSource.getMessage("home", null, locale), request.getContextPath());
+		breadcrumb.add(messageSource.getMessage("home", null, locale), "/");
 		breadcrumb.add(messageSource.getMessage("blog", null, locale), null);
 
 		model.put("title", String.format("%s - %s", messageSource.getMessage("blog", null, locale), SITE_NAME));
@@ -65,17 +63,18 @@ public class PostController {
 	}
 
 	@RequestMapping(value = "/post/{slug}", method = RequestMethod.GET)
-	public String detail(HttpServletRequest request, Locale locale, @PathVariable String slug, ModelMap model) {
+	public String detail(Locale locale, @PathVariable String slug, ModelMap model) {
 		Post post = this.blogService.findPostBySlug(slug);
 
 		Breadcrumb breadcrumb = new Breadcrumb();
 
-		breadcrumb.add(messageSource.getMessage("home", null, locale), request.getContextPath());
-		breadcrumb.add(messageSource.getMessage("blog", null, locale), request.getContextPath() + "/post");
+		breadcrumb.add(messageSource.getMessage("home", null, locale), "/");
+		breadcrumb.add(messageSource.getMessage("blog", null, locale), "/post");
 		breadcrumb.add(post.getTitle(), null);
 
 		model.put("title", String.format("%s - %s", post.getTitle(), SITE_NAME));
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
+		model.put("post", post);
 
 		return "default/pages/post/detail";
 	}
@@ -84,7 +83,15 @@ public class PostController {
 	public String detail(Locale locale, @PathVariable("id") long id, ModelMap model) {
 		Post post = this.blogService.findPostById(id);
 
+		Breadcrumb breadcrumb = new Breadcrumb();
+
+		breadcrumb.add(messageSource.getMessage("home", null, locale), "/");
+		breadcrumb.add(messageSource.getMessage("blog", null, locale), "/post");
+		breadcrumb.add(post.getTitle(), null);
+
 		model.put("title", String.format("%s - %s", post.getTitle(), SITE_NAME));
+		model.put("breadcrumb", breadcrumb.getBreadcrumb());
+		model.put("post", post);
 
 		return "default/pages/post/detail";
 	}
@@ -111,7 +118,7 @@ public class PostController {
 	}
 
 	@RequestMapping(value = "/post/edit/{id}", method = RequestMethod.GET)
-	public String edit(HttpServletRequest request, Locale locale, @PathVariable("id") long id, ModelMap model) {
+	public String edit(Locale locale, @PathVariable("id") long id, ModelMap model) {
 		Post post = this.blogService.findPostById(id);
 
 		PostForm form = new PostForm();

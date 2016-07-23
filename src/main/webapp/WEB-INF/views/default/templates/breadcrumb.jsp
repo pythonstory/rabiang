@@ -7,7 +7,7 @@
 				<li>
 					<c:choose>
 						<c:when test="${not empty link['href']}">
-							<a href="<c:out value="${link['href']}"/>"><c:out value="${link['text']}"/></a>
+							<a href="<spring:url value="${link['href']}" htmlEscape="true"/>"><c:out value="${link['text']}"/></a>
 						</c:when>
 						<c:otherwise>
 							<c:out value="${link['text']}"/>
