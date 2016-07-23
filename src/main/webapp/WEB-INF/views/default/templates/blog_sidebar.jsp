@@ -3,9 +3,9 @@
 <!-- Blog Search Well -->
 <div class="well">
 	<h4><spring:message code="blog.search" text="Search"/></h4>
-	<form action="/page/index" method="get" class="form-inline">
+	<form action="<spring:url value="/post/index" htmlEscape="true"/>" method="get" class="form-inline">
 		<div class="input-group">
-			<input type="text" class="form-control" name="q" value="">
+			<input type="text" class="form-control" name="q" value="${param.q}">
 			<span class="input-group-btn">
 				<button class="btn btn-default" type="submit">
 					<span class="glyphicon glyphicon-search"></span>
