@@ -12,7 +12,7 @@ public interface PostRepository extends Repository<Post, Long> {
 
 	public Page<Post> findAll(Specification<Post> spec, Pageable pageable) throws DataAccessException;
 
-	public Post findById(long id) throws DataAccessException;
+	public Post findById(Long id) throws DataAccessException;
 
 	public Post findBySlug(String slug) throws DataAccessException;
 

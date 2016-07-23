@@ -10,24 +10,16 @@
 		        ${post.createdDate}
 		    </li>
 		    <li><i class="fa fa-user" aria-hidden="true"></i>
-		        <a href="<spring:url value="/post/user/" htmlEscape="true"/>">
-		            username
-		        </a>
+		        <a href="<spring:url value="/post/user/" htmlEscape="true"/>">username</a>
 		    </li>
 		    <li><i class="fa fa-folder-open-o" aria-hidden="true"></i>
-		        <a href="<spring:url value="/post/category/" htmlEscape="true"/>">
-		            category name
-		        </a>
+		        <a href="<spring:url value="/post/category/" htmlEscape="true"/>">category name</a>
 		    </li>
 		    <li><i class="fa fa-comments" aria-hidden="true"></i>
-		        <a href="<spring:url value="/post/${post.slug}" htmlEscape="true"/>#comments">
-		            19
-		        </a>
+		        <a href="<spring:url value="/post/${post.slug}" htmlEscape="true"/>#comments">19</a>
 		    </li>
 		    <li><i class="fa fa-link" aria-hidden="true"></i>
-		        <a href="<spring:url value="/post/detail/${post.id}" htmlEscape="true"/>">
-		            permalink
-		        </a>
+		        <a href="<spring:url value="/post/detail/${post.id}" htmlEscape="true"/>">permalink</a>
 		    </li>
 		</ul>
 	</p>

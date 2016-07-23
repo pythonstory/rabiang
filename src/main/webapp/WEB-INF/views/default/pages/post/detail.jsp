@@ -1,64 +1,54 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ include file="../../common/inc.jspf" %>
 <!-- Title -->
-<h1>{{ post.title }}</h1>
+<h1>${post.title}</h1>
 
 <!-- Date/Time, Author, Categories, Tags, ... -->
 <p class="lead">
 <ul class="list-inline post_head">
-    <li><i class="fa fa-calendar" aria-hidden="true"></i>
-        {{ post.created_timestamp | datetimeformat(format='short') }}
+    <li>
+    	<i class="fa fa-calendar" aria-hidden="true"></i>
+    	${post.createdDate}
     </li>
-    <li><i class="fa fa-user" aria-hidden="true"></i>
-        <a href="{{ url_for('page.post_user_index', username=post.author.username) }}">
-            {{ post.author.username }}
-        </a>
+    <li>
+    	<i class="fa fa-user" aria-hidden="true"></i>
+        <a href="<spring:url value="/post/user/" htmlEscape="true"/>">username</a>
     </li>
-    <li><i class="fa fa-folder-open-o" aria-hidden="true"></i>
-        <a href="{{ url_for('page.category_detail', category_name=post.category.name) }}">
-            {{ post.category.name }}
-        </a>
+    <li>
+    	<i class="fa fa-folder-open-o" aria-hidden="true"></i>
+        <a href="<spring:url value="/post/category/" htmlEscape="true"/>">category.name</a>
     </li>
-    <li><i class="fa fa-comments" aria-hidden="true"></i>
-        <a href="{{ url_for('page.post_detail_slug', slug=post.slug) }}#comments">
-            {{ post.comments.count() }}
-        </a>
+    <li>
+    	<i class="fa fa-comments" aria-hidden="true"></i>
+        <a href="<spring:url value="/post/${post.slug}" htmlEscape="true"/>#comments">19</a>
     </li>
-    <li><i class="fa fa-link" aria-hidden="true"></i>
-        <a href="{{ url_for('page.post_detail_id', post_id=post.id) }}">
-            permalink
-        </a>
+    <li>
+    	<i class="fa fa-link" aria-hidden="true"></i>
+        <a href="<spring:url value="/post/detail/${post.id}" htmlEscape="true"/>">permalink</a>
     </li>
 </ul>
 </p>
-{% include 'default/page/inc/post_tags.html' %}
+
+<p>
+	<i class="fa fa-tag" aria-hidden="true"></i>
+	    
+	<a href="{{ url_for('page.tag_detail', tag_name=tag.name) }}" class="label label-default">tag-name</a>
+	    
+</p>
+	
 <hr>
 
 <!-- Post Content -->
 <div class="page">
-    {% if post.format == Post.FORMAT_MARKDOWN %}
-        {{ post.body | markdown }}
-    {% elif post.format == Post.FORMAT_HTML %}
-        {{ post.body | safe }}
-    {% endif %}
+    ${post.body}
 </div>
 
 <hr>
 
 <div>
-    {% if current_user.is_authenticated %}
-        <a class="btn btn-primary btn-sm"
-           href="{{ url_for('page.post_edit', post_id=post.id) }}">
-            {{ _('Edit') }}
-        </a>
-        <a class="btn btn-danger btn-sm"
-           href="{{ url_for('page.post_delete', post_id=post.id) }}">
-            {{ _('Delete') }}
-        </a>
-    {% endif %}
-    <a class="btn btn-info btn-sm" href="{{ url_for('page.post_index') }}">
-        {{ _('List') }}
-    </a>
+	<a class="btn btn-primary btn-sm" href="{{ url_for('page.post_edit', post_id=post.id) }}">Edit</a>
+	<a class="btn btn-danger btn-sm" href="{{ url_for('page.post_delete', post_id=post.id) }}">Delete</a>
+    <a class="btn btn-info btn-sm" href="{{ url_for('page.post_index') }}">List</a>
 </div>
 <hr>
 

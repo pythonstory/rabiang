@@ -43,28 +43,21 @@
 <div class="well">
 	<h4><spring:message code="blog.recent_posts" text="Recent posts"/></h4>
 	<ul class="list_outer">
-		<li>
-			<a href="/page/tttt"><i class="fa fa-angle-double-right"></i> tttt</a>
-		</li>
-		<li>
-			<a href="/page/%EB%B8%94%EB%A1%9C%EA%B7%B8-%EC%86%8C%EA%B0%9C"><i class="fa fa-angle-double-right"></i> 블로그 소개</a>
-		</li>
-		<li>
-			<a href="/page/markdown"><i class="fa fa-angle-double-right"></i> markdown</a>
-		</li>
-		<li>
-			<a href="/page/ddd"><i class="fa fa-angle-double-right"></i> ddd</a>
-		</li>
-		<li>
-			<a href="/page/test"><i class="fa fa-angle-double-right"></i> test</a>
-		</li>
+		<c:forEach var="post" items="${recentPosts.content}">
+			<li>
+				<a href="<spring:url value="/post/${post.slug}" htmlEscape="true"/>">
+				<i class="fa fa-angle-double-right"></i> ${post.title}</a>
+			</li>
+		</c:forEach>
 	</ul>
 </div>
 
 <div class="well">
 	<h4><spring:message code="blog.recent_comments" text="Recent comments"/></h4>
 	<ul class="list_outer">
-
+		<li>
+			<a href="/page/tttt"><i class="fa fa-angle-double-right"></i> tttt</a>
+		</li>
 	</ul>
 </div>
 

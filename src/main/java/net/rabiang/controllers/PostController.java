@@ -1,5 +1,6 @@
 package net.rabiang.controllers;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.validation.Valid;
@@ -8,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -26,14 +26,16 @@ import net.rabiang.utils.helpers.Breadcrumb;
 @Controller
 public class PostController {
 
+	public static final String SITE_NAME = "Rabiang.net";
+
+	public static final int RECENT_POSTS = 5;
+
 	private final Logger logger = LoggerFactory.getLogger(PostController.class);
 
 	private final BlogService blogService;
 
 	@Autowired
 	private MessageSource messageSource;
-
-	public static final String SITE_NAME = "Rabiang.net";
 
 	@Autowired
 	public PostController(BlogService postService) {
@@ -43,13 +45,6 @@ public class PostController {
 	@RequestMapping(value = { "/post", "/post/index" }, method = RequestMethod.GET)
 	public String index(Locale locale, @RequestParam(value = "p", required = false, defaultValue = "1") int p,
 			@RequestParam(value = "q", required = false) String q, ModelMap model) {
-		Page<Post> page = this.blogService.findPosts(p, q);
-
-		logger.debug(q);
-		logger.debug(Integer.toString(page.getSize()));
-		logger.debug(Integer.toString(page.getTotalPages()));
-		logger.debug(Long.toString(page.getTotalElements()));
-
 		Breadcrumb breadcrumb = new Breadcrumb();
 
 		breadcrumb.add(messageSource.getMessage("home", null, locale), "/");
@@ -57,7 +52,8 @@ public class PostController {
 
 		model.put("title", String.format("%s - %s", messageSource.getMessage("blog", null, locale), SITE_NAME));
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
-		model.put("page", page);
+		model.put("page", this.blogService.findPosts(p, q));
+		model.put("recentPosts", this.blogService.findRecentPosts(RECENT_POSTS));
 
 		return "default/pages/post/index";
 	}

@@ -42,6 +42,12 @@ public class BlogService {
 		return this.postRepository.findAll(spec, pageable);
 	}
 
+	public Page<Post> findRecentPosts(int limit) throws DataAccessException {
+		Pageable pageable = new PageRequest(0, limit, Sort.Direction.DESC, "createdDate");
+
+		return this.postRepository.findAll(null, pageable);
+	}
+
 	public Post findPostById(long id) {
 		return this.postRepository.findById(id);
 	}
