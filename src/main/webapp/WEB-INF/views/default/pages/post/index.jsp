@@ -43,7 +43,8 @@
 	<p>${post.body}</p>
 	<p class="lead">
 	    <a class="btn btn-info btn-sm" href="<spring:url value="/post/${post.slug}" htmlEscape="true"/>">
-			Read More <span class="glyphicon glyphicon-chevron-right"></span>
+			<spring:message code="blog.read_more" text="Read more"/>
+			<span class="glyphicon glyphicon-chevron-right"></span>
 		</a>
 	</p>
 	<hr>

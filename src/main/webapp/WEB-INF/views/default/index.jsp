@@ -2,6 +2,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 
-<a href="<spring:url value="/" htmlEscape="true"/>">홈</a>
+<a href="<spring:url value="/" htmlEscape="true"/>"><spring:message code="home" text="Home"/></a>
 
 홈페이지 시작화면

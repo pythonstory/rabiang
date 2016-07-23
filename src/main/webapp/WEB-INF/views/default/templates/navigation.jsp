@@ -18,11 +18,14 @@
 		<div class="collapse navbar-collapse"
 			id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="<spring:url value="/post/index" htmlEscape="true"/>">블로그</a>
+				<li>
+					<a href="<spring:url value="/post/index" htmlEscape="true"/>"><spring:message code="blog" text="Blog"/></a>
 				</li>
-				<li><a href="<spring:url value="/auth/login" htmlEscape="true"/>">로그인</a>
+				<li>
+					<a href="<spring:url value="/auth/login" htmlEscape="true"/>"><spring:message code="site.login" text="Login"/></a>
 				</li>
-				<li><a href="<spring:url value="/auth/register" htmlEscape="true"/>">회원가입</a>
+				<li>
+					<a href="<spring:url value="/auth/register" htmlEscape="true"/>"><spring:message code="site.sign_up" text="Sign up"/></a>
 				</li>
 			</ul>
 		</div>
