@@ -3,16 +3,9 @@ package net.rabiang.models;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 @Entity
-public class Post {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+public class Post extends BaseEntity {
 
 	private String title;
 
@@ -23,18 +16,10 @@ public class Post {
 	private int status;
 
 	private int format;
-	
+
 	private Date createdDate;
-	
+
 	private Date modifiedDate;
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	public String getTitle() {
 		return title;

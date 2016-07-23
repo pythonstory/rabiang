@@ -10,8 +10,8 @@
 * ~~spring-data-jpa~~
 * ~~Tiles, 테마, 레이아웃 구조~~
 * ~~AlloyUI~~
+* ~~폼, 검증~~
 * 테마 인터셉터
-* 폼, 검증
 * spring-security
 * 캐시 (리소스,  디비)
 
@@ -20,6 +20,6 @@
 - 블로그 상세보기 퍼블리싱 추가
 - 블로그 목록 정렬/검색/페이징 서비스 추가
 
-- create + update form 하나로 완료 -> 저장 or 수정 버튼 이름 처리
 - 필드별로 값 설정하는 것 개선 방안 찾기
 - edit에서 데이터 없을 때 404 예외 처리
+- BaseEntity, NamedEntity
