@@ -1,0 +1,62 @@
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
+<%@ include file="../../../common/inc.jspf" %>
+<!-- Pagination -->
+<nav class="text-center">
+    <ul class="pagination">
+    	<c:set var="currentIndex" value="${page.number + 1}"/>
+    	<c:set var="beginIndex" value="${current - 5 > 0 ? current - 5 : 1}"/>
+    	<c:set var="endIndex" value="${begin + 10 < page.totalPages ? begin + 10 : page.totalPages}"/>
+    	
+    	<c:choose>
+    		<c:when test="${currentIndex == 1}">
+    			<li class="disabled">
+	                <a href="#" aria-label="First"><span aria-hidden="true">First</span></a>
+	            </li>
+	            <li class="disabled">
+	                <a href="#" aria-label="Previous"><span aria-hidden="true">Prev</span></a>
+	            </li>
+    		</c:when>
+    		<c:otherwise>
+    			<li>
+	                <a href="{{ url_for('page.post_index', page_num=1) }}" aria-label="First">
+	                    <span aria-hidden="true">First${begin} ${end}</span>
+	                </a>
+	            </li>
+	            <li>
+	                <a href="{{ url_for('page.post_index', page_num=posts.prev_num) }}" aria-label="Previous">
+	                    <span aria-hidden="true">Prev</span>
+	                </a>
+	            </li>
+    		</c:otherwise>    		
+    	</c:choose>
+    	
+    	<c:forEach var="i" begin="${beginIndex}" end="${endIndex}">
+            <spring:url var="pageUrl" value="/post/index">
+            	<spring:param name="p" value="${i}"/>
+            </spring:url>
+            <c:choose>
+                <c:when test="${i == currentIndex}">
+                    <li class="active"><a href="${pageUrl}"><c:out value="${i}" /> <span class="sr-only">(current)</span></a></li>
+                </c:when>
+                <c:otherwise>
+                    <li><a href="${pageUrl}"><c:out value="${i}" /></a></li>
+                </c:otherwise>
+            </c:choose>
+        </c:forEach>
+
+        <c:choose>
+    		<c:when test="${currentIndex == page.totalPages}">
+    			<li class="disabled">
+	                <a href="#" aria-label="Next"><span aria-hidden="true">Next</span></a>
+	            </li>
+    		</c:when>
+    		<c:otherwise>
+    			<li>
+	                <a href="{{ url_for('page.post_index', page_num=posts.next_num) }}" aria-label="Next">
+	                    <span aria-hidden="true">Next</span>
+	                </a>
+	            </li>
+    		</c:otherwise>
+    	</c:choose>
+    </ul>
+</nav>

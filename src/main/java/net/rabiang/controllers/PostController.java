@@ -59,6 +59,7 @@ public class PostController {
 
 		model.put("title", String.format("%s - %s", messageSource.getMessage("blog", null, locale), SITE_NAME));
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
+		model.put("page", page);
 
 		return "default/pages/post/index";
 	}
