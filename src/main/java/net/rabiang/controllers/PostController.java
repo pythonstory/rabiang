@@ -57,6 +57,7 @@ public class PostController {
 		Post post = this.blogService.findPostBySlug(slug);
 
 		if (post == null) {
+			logger.debug("Post not found");
 			throw new PostNotFoundException();
 		}
 
@@ -79,6 +80,7 @@ public class PostController {
 		Post post = this.blogService.findPostById(id);
 
 		if (post == null) {
+			logger.debug("Post not found");
 			throw new PostNotFoundException();
 		}
 
@@ -172,6 +174,7 @@ public class PostController {
 		Post post = this.blogService.findPostById(id);
 
 		if (post == null) {
+			logger.debug("Post not found");
 			throw new PostNotFoundException();
 		}
 
@@ -182,12 +185,13 @@ public class PostController {
 
 	@RequestMapping(value = "/post/delete/{id}", method = RequestMethod.POST)
 	public String deleteAction(@PathVariable("id") Long id, ModelMap model) {
-
 		Post post = this.blogService.findPostById(id);
 
 		if (post == null) {
+			logger.debug("Post not found");
 			throw new PostNotFoundException();
 		}
+
 		return "redirect:/post/";
 	}
 }
