@@ -18,13 +18,13 @@
 	<div class="form-group">
 		<form:label path="status" cssClass="col-sm-2 control-label"><spring:message code="blog.status" text="Status"/></form:label>
 		<div class="col-sm-10">
-			<form:input path="status" cssClass="form-control"/>
+			<form:select path="status" items="${statusList}" cssClass="form-control"/>
 		</div>
 	</div>
 	<div class="form-group">
 		<form:label path="format" cssClass="col-sm-2 control-label"><spring:message code="blog.format" text="Format"/></form:label>
 		<div class="col-sm-10">
-			<form:input path="format" cssClass="form-control"/>
+			<form:select path="format" items="${formatList}" cssClass="form-control"/>
 		</div>
 	</div>
 	<div class="form-group">

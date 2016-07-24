@@ -19,5 +19,4 @@
 - edit에서 데이터 없을 때 404 예외 처리
 - 폼 검증 에러 출력
 - slug 중복 검사
-- status, format selectbox 처리
 - 카테고리

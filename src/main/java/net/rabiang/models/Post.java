@@ -14,6 +14,13 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 public class Post extends BaseEntity {
+	public static final int STATUS_DRAFT = 0;
+	public static final int STATUS_PUBLIC = 1;
+	public static final int STATUS_DELETED = 2;
+
+	public static final int FORMAT_TEXT = 0;
+	public static final int FORMAT_HTML = 1;
+	public static final int FORMAT_MARKDOWN = 2;
 
 	@NotEmpty
 	private String title;

@@ -1,6 +1,8 @@
 package net.rabiang.controllers;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -87,30 +89,66 @@ public class PostController {
 
 	@RequestMapping(value = "/post/create", method = RequestMethod.GET)
 	public String create(Locale locale, ModelMap model) {
-		model.put("post", new Post());
+		Post post = new Post();
+
+		Map<Integer, String> statusList = new HashMap<Integer, String>();
+		statusList.put(Post.STATUS_DRAFT, messageSource.getMessage("blog.draft", null, locale));
+		statusList.put(Post.STATUS_PUBLIC, messageSource.getMessage("blog.public", null, locale));
+
+		Map<Integer, String> formatList = new HashMap<Integer, String>();
+		formatList.put(Post.FORMAT_TEXT, messageSource.getMessage("blog.format_text", null, locale));
+		formatList.put(Post.FORMAT_HTML, messageSource.getMessage("blog.format_html", null, locale));
+		formatList.put(Post.FORMAT_MARKDOWN, messageSource.getMessage("blog.format_markdown", null, locale));
+
+		model.put("post", post);
+		model.put("statusList", statusList);
+		model.put("formatList", formatList);
 		model.put("title", messageSource.getMessage("blog", null, locale));
 
 		return "default/pages/post/create_or_edit";
 	}
 
 	@RequestMapping(value = "/post/save", method = RequestMethod.POST)
-	public String saveAction(@Valid @ModelAttribute Post post, BindingResult result, ModelMap model) {
-		if (result.hasErrors()) {
-			model.put("post", post);
-
-			return "default/pages/post/create_or_edit";
-		} else {
+	public String saveAction(Locale locale, @Valid @ModelAttribute Post post, BindingResult result, ModelMap model) {
+		if (!result.hasErrors()) {
 			this.blogService.savePost(post);
 
 			return "redirect:/post/detail/" + post.getId();
 		}
+
+		Map<Integer, String> statusList = new HashMap<Integer, String>();
+		statusList.put(Post.STATUS_DRAFT, messageSource.getMessage("blog.draft", null, locale));
+		statusList.put(Post.STATUS_PUBLIC, messageSource.getMessage("blog.public", null, locale));
+
+		Map<Integer, String> formatList = new HashMap<Integer, String>();
+		formatList.put(Post.FORMAT_TEXT, messageSource.getMessage("blog.format_text", null, locale));
+		formatList.put(Post.FORMAT_HTML, messageSource.getMessage("blog.format_html", null, locale));
+		formatList.put(Post.FORMAT_MARKDOWN, messageSource.getMessage("blog.format_markdown", null, locale));
+
+		model.put("post", post);
+		model.put("statusList", statusList);
+		model.put("formatList", formatList);
+		model.put("title", messageSource.getMessage("blog", null, locale));
+
+		return "default/pages/post/create_or_edit";
 	}
 
 	@RequestMapping(value = "/post/edit/{id}", method = RequestMethod.GET)
 	public String edit(Locale locale, @PathVariable("id") Long id, ModelMap model) {
 		Post post = this.blogService.findPostById(id);
 
+		Map<Integer, String> statusList = new HashMap<Integer, String>();
+		statusList.put(Post.STATUS_DRAFT, messageSource.getMessage("blog.draft", null, locale));
+		statusList.put(Post.STATUS_PUBLIC, messageSource.getMessage("blog.public", null, locale));
+
+		Map<Integer, String> formatList = new HashMap<Integer, String>();
+		formatList.put(Post.FORMAT_TEXT, messageSource.getMessage("blog.format_text", null, locale));
+		formatList.put(Post.FORMAT_HTML, messageSource.getMessage("blog.format_html", null, locale));
+		formatList.put(Post.FORMAT_MARKDOWN, messageSource.getMessage("blog.format_markdown", null, locale));
+
 		model.put("post", post);
+		model.put("statusList", statusList);
+		model.put("formatList", formatList);
 		model.put("title", messageSource.getMessage("blog", null, locale));
 
 		return "default/pages/post/create_or_edit";
