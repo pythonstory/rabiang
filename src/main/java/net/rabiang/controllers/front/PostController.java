@@ -1,4 +1,4 @@
-package net.rabiang.controllers;
+package net.rabiang.controllers.front;
 
 import java.util.HashMap;
 import java.util.Locale;
