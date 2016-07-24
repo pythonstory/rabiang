@@ -24,34 +24,27 @@ import net.rabiang.utils.helpers.Breadcrumb;
 
 @Controller
 public class PostController {
-
-	public static final String SITE_NAME = "Rabiang.net";
-
 	public static final int RECENT_POSTS = 5;
 
 	private final Logger logger = LoggerFactory.getLogger(PostController.class);
 
-	private final BlogService blogService;
+	@Autowired
+	private BlogService blogService;
 
 	@Autowired
 	private MessageSource messageSource;
 
-	@Autowired
-	public PostController(BlogService postService) {
-		this.blogService = postService;
-	}
-
 	@RequestMapping(value = { "/post", "/post/index" }, method = RequestMethod.GET)
-	public String index(Locale locale, @RequestParam(value = "p", required = false, defaultValue = "1") int p,
+	public String index(Locale locale, @RequestParam(value = "p", required = false, defaultValue = "1") Integer p,
 			@RequestParam(value = "q", required = false) String q, ModelMap model) {
 		Breadcrumb breadcrumb = new Breadcrumb();
 
 		breadcrumb.add(messageSource.getMessage("home", null, locale), "/");
 		breadcrumb.add(messageSource.getMessage("blog", null, locale), null);
 
-		model.put("title", String.format("%s - %s", messageSource.getMessage("blog", null, locale), SITE_NAME));
-		model.put("breadcrumb", breadcrumb.getBreadcrumb());
 		model.put("page", this.blogService.findPosts(p, q));
+		model.put("title", messageSource.getMessage("blog", null, locale));
+		model.put("breadcrumb", breadcrumb.getBreadcrumb());
 		model.put("recentPosts", this.blogService.findRecentPosts(RECENT_POSTS));
 
 		return "default/pages/post/index";
@@ -67,15 +60,16 @@ public class PostController {
 		breadcrumb.add(messageSource.getMessage("blog", null, locale), "/post");
 		breadcrumb.add(post.getTitle(), null);
 
-		model.put("title", String.format("%s - %s", post.getTitle(), SITE_NAME));
-		model.put("breadcrumb", breadcrumb.getBreadcrumb());
 		model.put("post", post);
+		model.put("title", post.getTitle());
+		model.put("breadcrumb", breadcrumb.getBreadcrumb());
+		model.put("recentPosts", this.blogService.findRecentPosts(RECENT_POSTS));
 
 		return "default/pages/post/detail";
 	}
 
 	@RequestMapping(value = "/post/detail/{id}", method = RequestMethod.GET)
-	public String detail(Locale locale, @PathVariable("id") long id, ModelMap model) {
+	public String detail(Locale locale, @PathVariable("id") Long id, ModelMap model) {
 		Post post = this.blogService.findPostById(id);
 
 		Breadcrumb breadcrumb = new Breadcrumb();
@@ -84,9 +78,10 @@ public class PostController {
 		breadcrumb.add(messageSource.getMessage("blog", null, locale), "/post");
 		breadcrumb.add(post.getTitle(), null);
 
-		model.put("title", String.format("%s - %s", post.getTitle(), SITE_NAME));
-		model.put("breadcrumb", breadcrumb.getBreadcrumb());
 		model.put("post", post);
+		model.put("title", post.getTitle());
+		model.put("breadcrumb", breadcrumb.getBreadcrumb());
+		model.put("recentPosts", this.blogService.findRecentPosts(RECENT_POSTS));
 
 		return "default/pages/post/detail";
 	}
@@ -94,7 +89,7 @@ public class PostController {
 	@RequestMapping(value = "/post/create", method = RequestMethod.GET)
 	public String create(Locale locale, ModelMap model) {
 		model.put("form", new PostForm());
-		model.put("title", String.format("%s - %s", messageSource.getMessage("blog", null, locale), SITE_NAME));
+		model.put("title", messageSource.getMessage("blog", null, locale));
 
 		return "default/pages/post/create_or_edit";
 	}
@@ -113,7 +108,7 @@ public class PostController {
 	}
 
 	@RequestMapping(value = "/post/edit/{id}", method = RequestMethod.GET)
-	public String edit(Locale locale, @PathVariable("id") long id, ModelMap model) {
+	public String edit(Locale locale, @PathVariable("id") Long id, ModelMap model) {
 		Post post = this.blogService.findPostById(id);
 
 		PostForm form = new PostForm();
@@ -126,14 +121,14 @@ public class PostController {
 		form.setFormat(post.getFormat());
 
 		model.put("form", form);
-		model.put("title", String.format("%s - %s", messageSource.getMessage("blog", null, locale), SITE_NAME));
+		model.put("title", messageSource.getMessage("blog", null, locale));
 
 		return "default/pages/post/create_or_edit";
 	}
 
 	@RequestMapping(value = "/post/delete/{id}", method = RequestMethod.GET)
 	public String delete(Locale locale, @PathVariable("id") long id, ModelMap model) {
-		model.put("title", String.format("%s - %s", messageSource.getMessage("blog", null, locale), SITE_NAME));
+		model.put("title", messageSource.getMessage("blog", null, locale));
 
 		return "default/pages/post/delete";
 	}

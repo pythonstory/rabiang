@@ -21,6 +21,28 @@
 				<li>
 					<a href="<spring:url value="/post/index" htmlEscape="true"/>"><spring:message code="blog" text="Blog"/></a>
 				</li>
+				<li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        username <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                    	<li>
+							<a href="{{ url_for('auth.logout') }}"><spring:message code="site.logout" text="Logout"/></a>
+						</li>
+						<li>
+							<a href="{{ url_for('auth.change_password') }}"><spring:message code="site.change_password" text="Change password"/></a>
+						</li>
+						<li>
+							<a href="{{ url_for('auth.unregister') }}"><spring:message code="site.unregister" text="Delete account"/></a>
+						</li>
+						<li>
+							<a href="<spring:url value="/post/create" htmlEscape="true"/>"><spring:message code="blog.new_post" text="Write a new post"/></a>
+						</li>
+						<li>
+							<a href="{{ url_for('page.category_create') }}"><spring:message code="blog.edit_categories" text="Edit categories"/></a>
+						</li>
+					</ul>
+                </li>
 				<li>
 					<a href="<spring:url value="/auth/login" htmlEscape="true"/>"><spring:message code="site.login" text="Login"/></a>
 				</li>

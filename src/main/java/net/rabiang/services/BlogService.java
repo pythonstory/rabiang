@@ -58,7 +58,7 @@ public class BlogService {
 		return query.getResultList();
 	}
 
-	public Post findPostById(long id) {
+	public Post findPostById(Long id) {
 		return this.postRepository.findById(id);
 	}
 
@@ -88,7 +88,7 @@ public class BlogService {
 	}
 
 	@Transactional(readOnly = false)
-	public void deletePost(long id) throws DataAccessException {
+	public void deletePost(Long id) throws DataAccessException {
 		this.postRepository.delete(id);
 	}
 }
