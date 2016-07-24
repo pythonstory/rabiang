@@ -17,7 +17,6 @@ import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import net.rabiang.forms.PostForm;
 import net.rabiang.models.Post;
 import net.rabiang.models.specs.PostSpecs;
 import net.rabiang.repositories.PostRepository;
@@ -67,21 +66,11 @@ public class BlogService {
 	}
 
 	@Transactional(readOnly = false)
-	public Post savePost(PostForm postForm) throws DataAccessException {
-		Post post;
-
-		if (postForm.getId() == 0) {
-			post = new Post();
+	public Post savePost(Post post) throws DataAccessException {
+		if (post.isNew()) {
 			post.setCreatedDate(new Date());
-		} else {
-			post = this.findPostById(postForm.getId());
 		}
 
-		post.setTitle(postForm.getTitle());
-		post.setSlug(postForm.getSlug());
-		post.setBody(postForm.getBody());
-		post.setStatus(postForm.getStatus());
-		post.setFormat(postForm.getFormat());
 		post.setModifiedDate(new Date());
 
 		return this.postRepository.save(post);

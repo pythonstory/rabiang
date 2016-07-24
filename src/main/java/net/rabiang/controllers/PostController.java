@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import net.rabiang.forms.PostForm;
 import net.rabiang.models.Post;
 import net.rabiang.services.BlogService;
 import net.rabiang.utils.helpers.Breadcrumb;
@@ -88,20 +87,20 @@ public class PostController {
 
 	@RequestMapping(value = "/post/create", method = RequestMethod.GET)
 	public String create(Locale locale, ModelMap model) {
-		model.put("form", new PostForm());
+		model.put("post", new Post());
 		model.put("title", messageSource.getMessage("blog", null, locale));
 
 		return "default/pages/post/create_or_edit";
 	}
 
 	@RequestMapping(value = "/post/save", method = RequestMethod.POST)
-	public String saveAction(@Valid @ModelAttribute PostForm form, BindingResult result, ModelMap model) {
+	public String saveAction(@Valid @ModelAttribute Post post, BindingResult result, ModelMap model) {
 		if (result.hasErrors()) {
-			model.put("form", form);
+			model.put("post", post);
 
 			return "default/pages/post/create_or_edit";
 		} else {
-			Post post = this.blogService.savePost(form);
+			this.blogService.savePost(post);
 
 			return "redirect:/post/detail/" + post.getId();
 		}
@@ -111,16 +110,7 @@ public class PostController {
 	public String edit(Locale locale, @PathVariable("id") Long id, ModelMap model) {
 		Post post = this.blogService.findPostById(id);
 
-		PostForm form = new PostForm();
-
-		form.setId(post.getId());
-		form.setTitle(post.getTitle());
-		form.setSlug(post.getSlug());
-		form.setBody(post.getBody());
-		form.setStatus(post.getStatus());
-		form.setFormat(post.getFormat());
-
-		model.put("form", form);
+		model.put("post", post);
 		model.put("title", messageSource.getMessage("blog", null, locale));
 
 		return "default/pages/post/create_or_edit";

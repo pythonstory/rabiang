@@ -10,13 +10,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 @Entity
 public class Post extends BaseEntity {
 
+	@NotEmpty
 	private String title;
 
+	@NotEmpty
 	private String slug;
 
+	@NotEmpty
 	private String body;
 
 	private int status;
