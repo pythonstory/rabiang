@@ -1,6 +1,11 @@
 package net.rabiang.services;
 
 import java.util.Date;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -20,6 +25,9 @@ import net.rabiang.repositories.PostRepository;
 @Service
 @Transactional(readOnly = true)
 public class BlogService {
+
+	@PersistenceContext
+	private EntityManager em;
 
 	private PostRepository postRepository;
 
@@ -42,10 +50,12 @@ public class BlogService {
 		return this.postRepository.findAll(spec, pageable);
 	}
 
-	public Page<Post> findRecentPosts(int limit) throws DataAccessException {
-		Pageable pageable = new PageRequest(0, limit, Sort.Direction.DESC, "createdDate");
+	public List<Post> findRecentPosts(int limit) throws DataAccessException {
+		TypedQuery<Post> query = em.createQuery("SELECT p FROM Post p ORDER BY p.createdDate DESC", Post.class);
 
-		return this.postRepository.findAll(null, pageable);
+		query.setMaxResults(limit);
+
+		return query.getResultList();
 	}
 
 	public Post findPostById(long id) {

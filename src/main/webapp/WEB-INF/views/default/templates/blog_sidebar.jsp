@@ -43,7 +43,7 @@
 <div class="well">
 	<h4><spring:message code="blog.recent_posts" text="Recent posts"/></h4>
 	<ul class="list_outer">
-		<c:forEach var="post" items="${recentPosts.content}">
+		<c:forEach var="post" items="${recentPosts}">
 			<li>
 				<a href="<spring:url value="/post/${post.slug}" htmlEscape="true"/>">
 				<i class="fa fa-angle-double-right"></i> ${post.title}</a>

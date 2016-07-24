@@ -48,7 +48,7 @@
 			</props>
 		</property>
 	</bean>
-	
+
 	<jpa:repositories base-package="net.rabiang.repositories"/>
 	
 	<context:component-scan base-package="net.rabiang.services" />

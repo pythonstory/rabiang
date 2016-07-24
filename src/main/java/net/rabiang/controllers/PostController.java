@@ -1,6 +1,5 @@
 package net.rabiang.controllers;
 
-import java.util.List;
 import java.util.Locale;
 
 import javax.validation.Valid;
