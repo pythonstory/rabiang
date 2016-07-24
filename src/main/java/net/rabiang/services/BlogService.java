@@ -50,6 +50,7 @@ public class BlogService {
 	}
 
 	public List<Post> findRecentPosts(int limit) throws DataAccessException {
+		// FindAll(Pageable pageable) method runs an unnecessary "count".
 		TypedQuery<Post> query = em.createQuery("SELECT p FROM Post p ORDER BY p.createdDate DESC", Post.class);
 
 		query.setMaxResults(limit);
@@ -61,7 +62,8 @@ public class BlogService {
 		return this.postRepository.findById(id);
 	}
 
-	public Post findPostBySlug(String slug) {
+	public Post findPostBySlug(String slug) {		
+		// TODO: returns null in controller, no problem in jsp view why?
 		return this.postRepository.findBySlug(slug);
 	}
 

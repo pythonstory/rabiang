@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import net.rabiang.models.Post;
 import net.rabiang.services.BlogService;
+import net.rabiang.utils.exceptions.PostNotFoundException;
 import net.rabiang.utils.helpers.Breadcrumb;
 
 @Controller
@@ -55,6 +56,10 @@ public class PostController {
 	public String detail(Locale locale, @PathVariable String slug, ModelMap model) {
 		Post post = this.blogService.findPostBySlug(slug);
 
+		if (post == null) {
+			throw new PostNotFoundException();
+		}
+
 		Breadcrumb breadcrumb = new Breadcrumb();
 
 		breadcrumb.add(messageSource.getMessage("home", null, locale), "/");
@@ -72,6 +77,10 @@ public class PostController {
 	@RequestMapping(value = "/post/detail/{id}", method = RequestMethod.GET)
 	public String detail(Locale locale, @PathVariable("id") Long id, ModelMap model) {
 		Post post = this.blogService.findPostById(id);
+
+		if (post == null) {
+			throw new PostNotFoundException();
+		}
 
 		Breadcrumb breadcrumb = new Breadcrumb();
 
@@ -137,6 +146,10 @@ public class PostController {
 	public String edit(Locale locale, @PathVariable("id") Long id, ModelMap model) {
 		Post post = this.blogService.findPostById(id);
 
+		if (post == null) {
+			throw new PostNotFoundException();
+		}
+
 		Map<Integer, String> statusList = new HashMap<Integer, String>();
 		statusList.put(Post.STATUS_DRAFT, messageSource.getMessage("blog.draft", null, locale));
 		statusList.put(Post.STATUS_PUBLIC, messageSource.getMessage("blog.public", null, locale));
@@ -155,14 +168,26 @@ public class PostController {
 	}
 
 	@RequestMapping(value = "/post/delete/{id}", method = RequestMethod.GET)
-	public String delete(Locale locale, @PathVariable("id") long id, ModelMap model) {
+	public String delete(Locale locale, @PathVariable("id") Long id, ModelMap model) {
+		Post post = this.blogService.findPostById(id);
+
+		if (post == null) {
+			throw new PostNotFoundException();
+		}
+
 		model.put("title", messageSource.getMessage("blog", null, locale));
 
 		return "default/pages/post/delete";
 	}
 
 	@RequestMapping(value = "/post/delete/{id}", method = RequestMethod.POST)
-	public String deleteAction(@PathVariable("id") long id, ModelMap model) {
+	public String deleteAction(@PathVariable("id") Long id, ModelMap model) {
+
+		Post post = this.blogService.findPostById(id);
+
+		if (post == null) {
+			throw new PostNotFoundException();
+		}
 		return "redirect:/post/";
 	}
 }
