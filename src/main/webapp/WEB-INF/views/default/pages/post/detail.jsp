@@ -46,9 +46,9 @@
 <hr>
 
 <div>
-	<a class="btn btn-primary btn-sm" href="{{ url_for('page.post_edit', post_id=post.id) }}">Edit</a>
-	<a class="btn btn-danger btn-sm" href="{{ url_for('page.post_delete', post_id=post.id) }}">Delete</a>
-    <a class="btn btn-info btn-sm" href="{{ url_for('page.post_index') }}">List</a>
+	<a class="btn btn-primary btn-sm" href="<spring:url value="/post/edit/${post.id}" htmlEscape="true"/>">Edit</a>
+	<a class="btn btn-danger btn-sm" href="<spring:url value="/post/delete/${post.id}" htmlEscape="true"/>">Delete</a>
+    <a class="btn btn-info btn-sm" href="<spring:url value="/post/index" htmlEscape="true"/>">List</a>
 </div>
 <hr>
 

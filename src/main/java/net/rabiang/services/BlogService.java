@@ -63,7 +63,6 @@ public class BlogService {
 	}
 
 	public Post findPostBySlug(String slug) {		
-		// TODO: returns null in controller, no problem in jsp view why?
 		return this.postRepository.findBySlug(slug);
 	}
 
