@@ -18,6 +18,6 @@ public interface PostRepository extends Repository<Post, Long> {
 
 	public Post save(Post post) throws DataAccessException;
 
-	public void delete(Long id) throws DataAccessException;
+	public void delete(Post post) throws DataAccessException;
 
 }

@@ -71,7 +71,7 @@ public class BlogService {
 	}
 
 	@Transactional(readOnly = false)
-	public void deletePost(Long id) throws DataAccessException {
-		this.postRepository.delete(id);
+	public void deletePost(Post post) throws DataAccessException {
+		this.postRepository.delete(post);
 	}
 }
