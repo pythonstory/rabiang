@@ -22,11 +22,12 @@ public class PostForm {
 	private int format;
 
 	private String tag;
-	
+
+	private String category;
+
 	public PostForm() {
-		
 	}
-	
+
 	public PostForm(Post post) {
 		this.id = post.getId();
 		this.title = post.getTitle();
@@ -92,4 +93,11 @@ public class PostForm {
 		this.tag = tag;
 	}
 
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
 }
