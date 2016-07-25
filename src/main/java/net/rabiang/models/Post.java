@@ -1,5 +1,7 @@
 package net.rabiang.models;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -36,9 +38,9 @@ public class Post extends BaseEntity {
 
 	private Date modifiedDate;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(joinColumns = @JoinColumn(name = "post_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
-	private List<Tag> tags;
+	private List<Tag> tags = new ArrayList<Tag>();
 
 	public String getTitle() {
 		return title;
@@ -103,12 +105,28 @@ public class Post extends BaseEntity {
 		this.body = form.getBody();
 		this.stage = form.getStage();
 		this.format = form.getFormat();
+		
+		List<String> tagList = Arrays.asList(form.getTag().split("\\s*(,\\s*)+"));
+		
+		for (String tagName : tagList) {
+			Tag tag = new Tag();
+			tag.setName(tagName);
+			this.getTags().add(tag);
+		}
 
 		this.modifiedDate = new Date();
 		
 		if (this.isNew()) {
 			this.createdDate = new Date();
 		}
+	}
+
+	public List<Tag> getTags() {
+		return tags;
+	}
+
+	public void setTags(List<Tag> tags) {
+		this.tags = tags;
 	}
 
 	@Override
