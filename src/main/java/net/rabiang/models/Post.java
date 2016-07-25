@@ -36,24 +36,6 @@ public class Post extends BaseEntity {
 
 	private Date modifiedDate;
 
-	public Post() {
-	}
-
-	public Post(PostForm form) {
-		this.id = form.getId();
-		this.title = form.getTitle();
-		this.slug = form.getSlug();
-		this.body = form.getBody();
-		this.status = form.getStatus();
-		this.format = form.getFormat();
-
-		this.modifiedDate = new Date();
-		
-		if (this.isNew()) {
-			this.createdDate = new Date();
-		}
-	}
-
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(joinColumns = @JoinColumn(name = "post_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
 	private List<Tag> tags;
@@ -114,9 +96,23 @@ public class Post extends BaseEntity {
 		this.modifiedDate = modifiedDate;
 	}
 
+	public void populate(PostForm form) {
+		this.id = form.getId();
+		this.title = form.getTitle();
+		this.slug = form.getSlug();
+		this.body = form.getBody();
+		this.status = form.getStatus();
+		this.format = form.getFormat();
+
+		this.modifiedDate = new Date();
+		
+		if (this.isNew()) {
+			this.createdDate = new Date();
+		}
+	}
+
 	@Override
 	public String toString() {
 		return "Post [id=" + id + ", title=" + title + "]";
 	}
-
 }

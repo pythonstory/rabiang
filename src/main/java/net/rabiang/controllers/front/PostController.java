@@ -123,6 +123,7 @@ public class PostController {
 		model.put("formatList", formatList);
 		model.put("title", messageSource.getMessage("blog", null, locale));
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
+		model.put("recentPosts", this.blogService.findRecentPosts(RECENT_POSTS));
 
 		return "default/pages/post/create_or_edit";
 	}
@@ -131,7 +132,15 @@ public class PostController {
 	public String saveAction(Locale locale, @Valid @ModelAttribute PostForm form, BindingResult result,
 			ModelMap model) {
 		if (!result.hasErrors()) {
-			Post post = new Post(form);
+			Post post;
+
+			if (form.getId() == null) {
+				post = new Post();
+			} else {
+				post = this.blogService.findPostById(form.getId());
+			}
+
+			post.populate(form);
 
 			post = this.blogService.savePost(post);
 
@@ -146,11 +155,19 @@ public class PostController {
 		formatList.put(Post.FORMAT_TEXT, messageSource.getMessage("blog.format_text", null, locale));
 		formatList.put(Post.FORMAT_HTML, messageSource.getMessage("blog.format_html", null, locale));
 		formatList.put(Post.FORMAT_MARKDOWN, messageSource.getMessage("blog.format_markdown", null, locale));
+		
+		Breadcrumb breadcrumb = new Breadcrumb();
+
+		breadcrumb.add(messageSource.getMessage("home", null, locale), "/");
+		breadcrumb.add(messageSource.getMessage("blog", null, locale), "/post");
+		breadcrumb.add(messageSource.getMessage("blog.write", null, locale), null);
 
 		model.put("form", form);
 		model.put("statusList", statusList);
 		model.put("formatList", formatList);
 		model.put("title", messageSource.getMessage("blog", null, locale));
+		model.put("breadcrumb", breadcrumb.getBreadcrumb());
+		model.put("recentPosts", this.blogService.findRecentPosts(RECENT_POSTS));
 
 		return "default/pages/post/create_or_edit";
 	}
