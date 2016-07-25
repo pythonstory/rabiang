@@ -3,7 +3,6 @@
 <spring:url value="/post/save" htmlEscape="true" var="saveActionUrl"/>
 <form:form method="post" action="${saveActionUrl}" modelAttribute="form" cssClass="form-horizontal">
 	<form:hidden path="id" />
-	
 	<spring:bind path="title">
 		<div class="form-group">
 			<form:label path="title" cssClass="col-sm-2 control-label">
@@ -12,7 +11,7 @@
 			<div class="col-sm-10${status.error ? ' has-error' : ''}">
 				<form:input path="title" cssClass="form-control"/>
 				<c:if test="${status.error}">
-					<span class="help-block"><form:errors path="title" /></span>
+					<form:errors path="title" cssClass="help-block"/>
 				</c:if>
 			</div>
 		</div>
@@ -25,37 +24,27 @@
 			<div class="col-sm-10${status.error ? ' has-error' : ''}">
 				<form:input path="slug" cssClass="form-control"/>
 				<c:if test="${status.error}">
-					<span class="help-block"><form:errors path="slug" /></span>
+					<form:errors path="slug" cssClass="help-block"/>
 				</c:if>
 			</div>
 		</div>
 	</spring:bind>
-	<spring:bind path="category">
-		<div class="form-group">
-			<form:label path="category" cssClass="col-sm-2 control-label">
-				<spring:message code="blog.category" text="Category"/>
-			</form:label>
-			<div class="col-sm-10${status.error ? ' has-error' : ''}">
-				<form:input path="category" cssClass="form-control"/>
-				<c:if test="${status.error}">
-					<span class="help-block"><form:errors path="category" /></span>
-				</c:if>
-			</div>
+	<div class="form-group">
+		<form:label path="category" cssClass="col-sm-2 control-label">
+			<spring:message code="blog.category" text="Category"/>
+		</form:label>
+		<div class="col-sm-10">
+			<form:input path="category" cssClass="form-control"/>
 		</div>
-	</spring:bind>
-	<spring:bind path="stage">
-		<div class="form-group">
-			<form:label path="stage" cssClass="col-sm-2 control-label">
-				<spring:message code="blog.status" text="status"/>
-			</form:label>
-			<div class="col-sm-10${status.error ? ' has-error' : ''}">
-				<form:select path="stage" items="${statusList}" cssClass="form-control"/>
-				<c:if test="${status.error}">
-					<span class="help-block"><form:errors path="stage" /></span>
-				</c:if>
-			</div>
+	</div>
+	<div class="form-group">
+		<form:label path="stage" cssClass="col-sm-2 control-label">
+			<spring:message code="blog.stage" text="stage"/>
+		</form:label>
+		<div class="col-sm-10">
+			<form:select path="stage" items="${statusList}" cssClass="form-control"/>
 		</div>
-	</spring:bind>
+	</div>
 	<div class="form-group">
 		<form:label path="format" cssClass="col-sm-2 control-label">
 			<spring:message code="blog.format" text="Format"/>
@@ -72,25 +61,19 @@
 			<div class="col-sm-10${status.error ? ' has-error' : ''}">
 				<form:textarea path="body" rows="10" cssClass="form-control"/>
 				<c:if test="${status.error}">
-					<span class="help-block"><form:errors path="body" /></span>
-				</c:if>			
-			</div>
-		</div>
-	</spring:bind>
-	<spring:bind path="tag">
-		<div class="form-group">
-			<form:label path="title" cssClass="col-sm-2 control-label">
-				<spring:message code="blog.tags" text="Tags"/>
-			</form:label>
-			<div class="col-sm-10${status.error ? ' has-error' : ''}">
-				<form:input path="tag" cssClass="form-control"/>
-				<c:if test="${status.error}">
-					<span class="help-block"><form:errors path="tag" /></span>
+					<form:errors path="body" cssClass="help-block"/>
 				</c:if>
 			</div>
 		</div>
 	</spring:bind>
-	
+	<div class="form-group">
+		<form:label path="title" cssClass="col-sm-2 control-label">
+			<spring:message code="blog.tags" text="Tags"/>
+		</form:label>
+		<div class="col-sm-10">
+			<form:input path="tag" cssClass="form-control"/>
+		</div>
+	</div>
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-10">
 			<button type="submit" class="btn btn-primary">

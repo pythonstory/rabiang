@@ -111,7 +111,7 @@ public class PostController {
 		formatList.put(Post.FORMAT_TEXT, messageSource.getMessage("blog.format_text", null, locale));
 		formatList.put(Post.FORMAT_HTML, messageSource.getMessage("blog.format_html", null, locale));
 		formatList.put(Post.FORMAT_MARKDOWN, messageSource.getMessage("blog.format_markdown", null, locale));
-		
+
 		Breadcrumb breadcrumb = new Breadcrumb();
 
 		breadcrumb.add(messageSource.getMessage("home", null, locale), "/");
@@ -129,7 +129,7 @@ public class PostController {
 	}
 
 	@RequestMapping(value = "/post/save", method = RequestMethod.POST)
-	public String saveAction(Locale locale, @Valid @ModelAttribute PostForm form, BindingResult result,
+	public String saveAction(Locale locale, @ModelAttribute("form") @Valid PostForm form, BindingResult result,
 			ModelMap model) {
 		if (!result.hasErrors()) {
 			Post post;
@@ -155,7 +155,7 @@ public class PostController {
 		formatList.put(Post.FORMAT_TEXT, messageSource.getMessage("blog.format_text", null, locale));
 		formatList.put(Post.FORMAT_HTML, messageSource.getMessage("blog.format_html", null, locale));
 		formatList.put(Post.FORMAT_MARKDOWN, messageSource.getMessage("blog.format_markdown", null, locale));
-		
+
 		Breadcrumb breadcrumb = new Breadcrumb();
 
 		breadcrumb.add(messageSource.getMessage("home", null, locale), "/");
@@ -190,7 +190,7 @@ public class PostController {
 		formatList.put(Post.FORMAT_TEXT, messageSource.getMessage("blog.format_text", null, locale));
 		formatList.put(Post.FORMAT_HTML, messageSource.getMessage("blog.format_html", null, locale));
 		formatList.put(Post.FORMAT_MARKDOWN, messageSource.getMessage("blog.format_markdown", null, locale));
-		
+
 		Breadcrumb breadcrumb = new Breadcrumb();
 
 		breadcrumb.add(messageSource.getMessage("home", null, locale), "/");
@@ -214,12 +214,12 @@ public class PostController {
 			logger.debug("Post not found");
 			throw new PostNotFoundException();
 		}
-		
+
 		Breadcrumb breadcrumb = new Breadcrumb();
 
 		breadcrumb.add(messageSource.getMessage("home", null, locale), "/");
 		breadcrumb.add(messageSource.getMessage("blog", null, locale), "/post");
-		breadcrumb.add(messageSource.getMessage("blog.delete", null, locale), null);		
+		breadcrumb.add(messageSource.getMessage("blog.delete", null, locale), null);
 
 		model.put("post", post);
 		model.put("title", messageSource.getMessage("blog", null, locale));
@@ -229,14 +229,14 @@ public class PostController {
 	}
 
 	@RequestMapping(value = "/post/delete/{id}", method = RequestMethod.POST)
-	public String deleteAction(@PathVariable("id") Long id, ModelMap model) {		
+	public String deleteAction(@PathVariable("id") Long id, ModelMap model) {
 		Post post = this.blogService.findPostById(id);
-		
+
 		if (post == null) {
 			logger.debug("Post not found");
 			throw new PostNotFoundException();
 		}
-		
+
 		this.blogService.deletePost(post);
 
 		return "redirect:/post/";

@@ -28,7 +28,7 @@ public class Post extends BaseEntity {
 
 	private String body;
 
-	private int status;
+	private int stage;
 
 	private int format;
 
@@ -64,12 +64,12 @@ public class Post extends BaseEntity {
 		this.body = body;
 	}
 
-	public int getStatus() {
-		return status;
+	public int getStage() {
+		return stage;
 	}
 
-	public void setStatus(int status) {
-		this.status = status;
+	public void setStage(int stage) {
+		this.stage = stage;
 	}
 
 	public int getFormat() {
@@ -101,7 +101,7 @@ public class Post extends BaseEntity {
 		this.title = form.getTitle();
 		this.slug = form.getSlug();
 		this.body = form.getBody();
-		this.status = form.getStage();
+		this.stage = form.getStage();
 		this.format = form.getFormat();
 
 		this.modifiedDate = new Date();

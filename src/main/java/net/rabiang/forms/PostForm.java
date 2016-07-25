@@ -10,7 +10,7 @@ public class PostForm {
 
 	@NotEmpty
 	private String title;
-
+	
 	@NotEmpty
 	private String slug;
 
@@ -33,7 +33,7 @@ public class PostForm {
 		this.title = post.getTitle();
 		this.slug = post.getSlug();
 		this.body = post.getBody();
-		this.stage = post.getStatus();
+		this.stage = post.getStage();
 		this.format = post.getFormat();
 	}
 
