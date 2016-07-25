@@ -1,6 +1,5 @@
 package net.rabiang.services;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -62,18 +61,12 @@ public class BlogService {
 		return this.postRepository.findById(id);
 	}
 
-	public Post findPostBySlug(String slug) {		
+	public Post findPostBySlug(String slug) {
 		return this.postRepository.findBySlug(slug);
 	}
 
 	@Transactional(readOnly = false)
 	public Post savePost(Post post) throws DataAccessException {
-		if (post.isNew()) {
-			post.setCreatedDate(new Date());
-		}
-
-		post.setModifiedDate(new Date());
-
 		return this.postRepository.save(post);
 	}
 

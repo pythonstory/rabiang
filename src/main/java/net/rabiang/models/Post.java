@@ -10,7 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
-import org.hibernate.validator.constraints.NotEmpty;
+import net.rabiang.forms.PostForm;
 
 @Entity
 public class Post extends BaseEntity {
@@ -22,13 +22,10 @@ public class Post extends BaseEntity {
 	public static final int FORMAT_HTML = 1;
 	public static final int FORMAT_MARKDOWN = 2;
 
-	@NotEmpty
 	private String title;
 
-	@NotEmpty
 	private String slug;
 
-	@NotEmpty
 	private String body;
 
 	private int status;
@@ -38,6 +35,24 @@ public class Post extends BaseEntity {
 	private Date createdDate;
 
 	private Date modifiedDate;
+
+	public Post() {
+	}
+
+	public Post(PostForm form) {
+		this.id = form.getId();
+		this.title = form.getTitle();
+		this.slug = form.getSlug();
+		this.body = form.getBody();
+		this.status = form.getStatus();
+		this.format = form.getFormat();
+
+		this.modifiedDate = new Date();
+		
+		if (this.isNew()) {
+			this.createdDate = new Date();
+		}
+	}
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(joinColumns = @JoinColumn(name = "post_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))

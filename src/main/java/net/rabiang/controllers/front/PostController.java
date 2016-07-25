@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import net.rabiang.forms.PostForm;
 import net.rabiang.models.Post;
 import net.rabiang.services.BlogService;
 import net.rabiang.utils.exceptions.PostNotFoundException;
@@ -100,7 +101,7 @@ public class PostController {
 
 	@RequestMapping(value = "/post/create", method = RequestMethod.GET)
 	public String create(Locale locale, ModelMap model) {
-		Post post = new Post();
+		PostForm form = new PostForm();
 
 		Map<Integer, String> statusList = new HashMap<Integer, String>();
 		statusList.put(Post.STATUS_DRAFT, messageSource.getMessage("blog.draft", null, locale));
@@ -111,7 +112,7 @@ public class PostController {
 		formatList.put(Post.FORMAT_HTML, messageSource.getMessage("blog.format_html", null, locale));
 		formatList.put(Post.FORMAT_MARKDOWN, messageSource.getMessage("blog.format_markdown", null, locale));
 
-		model.put("post", post);
+		model.put("form", form);
 		model.put("statusList", statusList);
 		model.put("formatList", formatList);
 		model.put("title", messageSource.getMessage("blog", null, locale));
@@ -120,9 +121,12 @@ public class PostController {
 	}
 
 	@RequestMapping(value = "/post/save", method = RequestMethod.POST)
-	public String saveAction(Locale locale, @Valid @ModelAttribute Post post, BindingResult result, ModelMap model) {
+	public String saveAction(Locale locale, @Valid @ModelAttribute PostForm form, BindingResult result,
+			ModelMap model) {
 		if (!result.hasErrors()) {
-			this.blogService.savePost(post);
+			Post post = new Post(form);
+
+			post = this.blogService.savePost(post);
 
 			return "redirect:/post/detail/" + post.getId();
 		}
@@ -136,7 +140,7 @@ public class PostController {
 		formatList.put(Post.FORMAT_HTML, messageSource.getMessage("blog.format_html", null, locale));
 		formatList.put(Post.FORMAT_MARKDOWN, messageSource.getMessage("blog.format_markdown", null, locale));
 
-		model.put("post", post);
+		model.put("form", form);
 		model.put("statusList", statusList);
 		model.put("formatList", formatList);
 		model.put("title", messageSource.getMessage("blog", null, locale));
@@ -152,6 +156,8 @@ public class PostController {
 			throw new PostNotFoundException();
 		}
 
+		PostForm form = new PostForm(post);
+
 		Map<Integer, String> statusList = new HashMap<Integer, String>();
 		statusList.put(Post.STATUS_DRAFT, messageSource.getMessage("blog.draft", null, locale));
 		statusList.put(Post.STATUS_PUBLIC, messageSource.getMessage("blog.public", null, locale));
@@ -161,7 +167,7 @@ public class PostController {
 		formatList.put(Post.FORMAT_HTML, messageSource.getMessage("blog.format_html", null, locale));
 		formatList.put(Post.FORMAT_MARKDOWN, messageSource.getMessage("blog.format_markdown", null, locale));
 
-		model.put("post", post);
+		model.put("form", form);
 		model.put("statusList", statusList);
 		model.put("formatList", formatList);
 		model.put("title", messageSource.getMessage("blog", null, locale));
