@@ -74,3 +74,36 @@
 		</div>
 	</div>
 </form:form>
+
+<script>
+YUI().use(
+	'aui-node',
+	function (Y) {
+	    var title = Y.one('#title');
+	    var slug = Y.one('#slug');
+	    var tag_name = Y.one('#tag');
+	
+	 	// slugify title automatically
+	    title.on(
+	        'keyup',
+	        function () {	        		        	
+	            slug.val(title.val().replace(/(^\s*)|(\s*$)/g, '')
+	            .replace(/[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-.\/:;<=>?@\[\]^_`{|}~]/g, '')
+	            .replace(/\s+/g, '-').toLowerCase());
+	        }
+	    );
+	
+	    // tagify
+	    tag_name.on(
+	   		'keyup',
+        	function() {
+				tag_name.val(tag_name.val()
+				.replace(/(^\s*)|(\s*$)/g, '')
+				.replace(/[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+\-.\/:;<=>?@\[\]^_`{|}~]/g, '')
+				.replace(/\s+/g, '')
+				);
+           }
+	    )
+	}
+);
+</script>

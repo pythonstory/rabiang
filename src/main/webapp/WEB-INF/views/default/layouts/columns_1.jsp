@@ -30,6 +30,8 @@
     <!--[if lt IE 9]>
     <script src="<spring:url value="/vendors/modernizr-2.8.3-respond-1.4.2.min.js"/>"></script>
     <![endif]-->
+    
+    <script src="//cdn.alloyui.com/3.0.1/aui/aui-min.js"></script>
 </head>
 <body>
 <!--[if lt IE 8]>
@@ -53,9 +55,6 @@
 
 <tiles:insertAttribute name="footer"/>
 
-
-<!-- AUI -->
-<script src="//cdn.alloyui.com/3.0.1/aui/aui-min.js"></script>
 <script src="<spring:url value="/resources/default/js/main.js" htmlEscape="true"/>"></script>
 <script src="<spring:url value="/resources/default/js/google_analytics.js" htmlEscape="true"/>"></script>
 </body>
