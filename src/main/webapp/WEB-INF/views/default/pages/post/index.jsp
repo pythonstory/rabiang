@@ -27,8 +27,9 @@
 	<p>
 	    <i class="fa fa-tag" aria-hidden="true"></i>
 	    
-	    <a href="{{ url_for('page.tag_detail', tag_name=tag.name) }}" class="label label-default">tag-name</a>
-	    
+	    <c:forEach var="tag" items="${tags}">
+			<a href="<spring:url value="/post/tag/${tag.name}" htmlEscape="true"/>" class="label label-default">${tag.name}</a>
+		</c:forEach>	    
 	</p>
 	
 	<hr>

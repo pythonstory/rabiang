@@ -5,35 +5,36 @@
 
 <!-- Date/Time, Author, Categories, Tags, ... -->
 <p class="lead">
-<ul class="list-inline post_head">
-    <li>
-    	<i class="fa fa-calendar" aria-hidden="true"></i>
-    	${post.createdDate}
-    </li>
-    <li>
-    	<i class="fa fa-user" aria-hidden="true"></i>
-        <a href="<spring:url value="/post/user/" htmlEscape="true"/>">username</a>
-    </li>
-    <li>
-    	<i class="fa fa-folder-open-o" aria-hidden="true"></i>
-        <a href="<spring:url value="/post/category/" htmlEscape="true"/>">category.name</a>
-    </li>
-    <li>
-    	<i class="fa fa-comments" aria-hidden="true"></i>
-        <a href="<spring:url value="/post/${post.slug}" htmlEscape="true"/>#comments">19</a>
-    </li>
-    <li>
-    	<i class="fa fa-link" aria-hidden="true"></i>
-        <a href="<spring:url value="/post/detail/${post.id}" htmlEscape="true"/>">permalink</a>
-    </li>
-</ul>
+	<ul class="list-inline post_head">
+	    <li>
+	    	<i class="fa fa-calendar" aria-hidden="true"></i>
+	    	${post.createdDate}
+	    </li>
+	    <li>
+	    	<i class="fa fa-user" aria-hidden="true"></i>
+	        <a href="<spring:url value="/post/user/" htmlEscape="true"/>">username</a>
+	    </li>
+	    <li>
+	    	<i class="fa fa-folder-open-o" aria-hidden="true"></i>
+	        <a href="<spring:url value="/post/category/" htmlEscape="true"/>">category.name</a>
+	    </li>
+	    <li>
+	    	<i class="fa fa-comments" aria-hidden="true"></i>
+	        <a href="<spring:url value="/post/${post.slug}" htmlEscape="true"/>#comments">19</a>
+	    </li>
+	    <li>
+	    	<i class="fa fa-link" aria-hidden="true"></i>
+	        <a href="<spring:url value="/post/detail/${post.id}" htmlEscape="true"/>">permalink</a>
+	    </li>
+	</ul>
 </p>
 
 <p>
 	<i class="fa fa-tag" aria-hidden="true"></i>
-	    
-	<a href="{{ url_for('page.tag_detail', tag_name=tag.name) }}" class="label label-default">tag-name</a>
-	    
+	
+	<c:forEach var="tag" items="${tags}">
+		<a href="<spring:url value="/post/tag/${tag.name}" htmlEscape="true"/>" class="label label-default">${tag.name}</a>
+	</c:forEach>	    
 </p>
 	
 <hr>
@@ -46,9 +47,15 @@
 <hr>
 
 <div>
-	<a class="btn btn-primary btn-sm" href="<spring:url value="/post/edit/${post.id}" htmlEscape="true"/>">Edit</a>
-	<a class="btn btn-danger btn-sm" href="<spring:url value="/post/delete/${post.id}" htmlEscape="true"/>">Delete</a>
-    <a class="btn btn-info btn-sm" href="<spring:url value="/post/index" htmlEscape="true"/>">List</a>
+	<a class="btn btn-primary btn-sm" href="<spring:url value="/post/edit/${post.id}" htmlEscape="true"/>">
+		<spring:message code="blog.edit" text="Edit"/>
+	</a>
+	<a class="btn btn-danger btn-sm" href="<spring:url value="/post/delete/${post.id}" htmlEscape="true"/>">
+		<spring:message code="blog.delete" text="Delete"/>
+	</a>
+    <a class="btn btn-info btn-sm" href="<spring:url value="/post/index" htmlEscape="true"/>">
+    	<spring:message code="blog.list" text="List"/>
+	</a>
 </div>
 <hr>
 
@@ -56,10 +63,9 @@
 
 <!-- Comments Form -->
 <div id="comments" class="well">
-    <h4>{{ _('Leave a Comment') }}</h4>
+    <h4><spring:message code="blog.leave_a_comment" text="Leave a comment"/></h4>
     <form action="{{ url_for('page.post_detail_slug', slug=post.slug) }}"
-          method="post" role="form" class="form-horizontal">
-        {{ form.csrf_token }}
+          method="post" role="form" class="form-horizontal">        
         <div class="form-group">
             {{ form.name.label(class='col-sm-2 control-label') }}
             <div class="col-sm-10{% if form.name.errors %} has-error{% endif %}">
@@ -105,8 +111,9 @@
         </div>
         <div class="form-group">
             <div class="col-md-10 col-md-offset-2">
-                <button type="submit"
-                        class="btn btn-primary btn-sm">{{ _('Save') }}</button>
+                <button type="submit" class="btn btn-primary btn-sm">
+                	<spring:message code="blog.save" text="Save"/>
+                </button>
             </div>
         </div>
 
@@ -118,19 +125,18 @@
 <!-- Posted Comments -->
 
 <!-- Comment -->
-{% for comment in comments %}
-    <div class="media spacer-bottom-50" id="comment-{{ comment.id }}">
+<c:forEach var="comment" items="${comments}">
+    <div class="media spacer-bottom-50" id="comment-${comment.id}">
         <a class="pull-left" href="#">
-            <img class="media-object" src="{{ comment.name | gravatar(size=64) }}"
-                 alt="">
+            <img class="media-object" src="" alt="">
         </a>
         <div class="media-body">
             <div class="spacer-left-10">
-                <h4 class="media-heading">{{ comment.name }}
-                    <small>{{ comment.created_timestamp | datetimeformat(format='short') }}</small>
+                <h4 class="media-heading">${comment.name}
+                    <small>${comment.createdDate}</small>
                 </h4>
-                {{ comment.body | markdown }}
+                ${comment.body}
             </div>
         </div>
     </div>
-{% endfor %}
+</c:forEach>
