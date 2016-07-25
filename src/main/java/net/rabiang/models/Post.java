@@ -101,7 +101,7 @@ public class Post extends BaseEntity {
 		this.title = form.getTitle();
 		this.slug = form.getSlug();
 		this.body = form.getBody();
-		this.status = form.getStatus();
+		this.status = form.getStage();
 		this.format = form.getFormat();
 
 		this.modifiedDate = new Date();

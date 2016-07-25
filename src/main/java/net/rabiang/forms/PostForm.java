@@ -17,7 +17,7 @@ public class PostForm {
 	@NotEmpty
 	private String body;
 
-	private int status;
+	private int stage;
 
 	private int format;
 
@@ -33,7 +33,7 @@ public class PostForm {
 		this.title = post.getTitle();
 		this.slug = post.getSlug();
 		this.body = post.getBody();
-		this.status = post.getStatus();
+		this.stage = post.getStatus();
 		this.format = post.getFormat();
 	}
 
@@ -69,12 +69,12 @@ public class PostForm {
 		this.body = body;
 	}
 
-	public int getStatus() {
-		return status;
+	public int getStage() {
+		return stage;
 	}
 
-	public void setStatus(int status) {
-		this.status = status;
+	public void setStage(int stage) {
+		this.stage = stage;
 	}
 
 	public int getFormat() {

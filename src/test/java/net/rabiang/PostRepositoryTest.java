@@ -35,7 +35,7 @@ public class PostRepositoryTest {
 		expected = postRepository.findBySlug("test-post");
 		assertEquals("retrieved by slug", expected.getTitle(), "Test Post");
 
-		postRepository.delete(expected.getId());
+		postRepository.delete(expected);
 		expected = postRepository.findById(1L);
 		assertEquals("deleted", null, expected);
 	}

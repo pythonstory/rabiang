@@ -3,6 +3,7 @@
 <spring:url value="/post/save" htmlEscape="true" var="saveActionUrl"/>
 <form:form method="post" action="${saveActionUrl}" modelAttribute="form" cssClass="form-horizontal">
 	<form:hidden path="id" />
+	
 	<spring:bind path="title">
 		<div class="form-group">
 			<form:label path="title" cssClass="col-sm-2 control-label">
@@ -31,7 +32,7 @@
 	</spring:bind>
 	<spring:bind path="category">
 		<div class="form-group">
-			<form:label path="title" cssClass="col-sm-2 control-label">
+			<form:label path="category" cssClass="col-sm-2 control-label">
 				<spring:message code="blog.category" text="Category"/>
 			</form:label>
 			<div class="col-sm-10${status.error ? ' has-error' : ''}">
@@ -42,15 +43,15 @@
 			</div>
 		</div>
 	</spring:bind>
-	<spring:bind path="status">
+	<spring:bind path="stage">
 		<div class="form-group">
-			<form:label path="category" cssClass="col-sm-2 control-label">
+			<form:label path="stage" cssClass="col-sm-2 control-label">
 				<spring:message code="blog.status" text="status"/>
 			</form:label>
 			<div class="col-sm-10${status.error ? ' has-error' : ''}">
-				<form:select path="category" items="${statusList}" cssClass="form-control"/>
+				<form:select path="stage" items="${statusList}" cssClass="form-control"/>
 				<c:if test="${status.error}">
-					<span class="help-block"><form:errors path="status" /></span>
+					<span class="help-block"><form:errors path="stage" /></span>
 				</c:if>
 			</div>
 		</div>
@@ -89,6 +90,7 @@
 			</div>
 		</div>
 	</spring:bind>
+	
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-10">
 			<button type="submit" class="btn btn-primary">
