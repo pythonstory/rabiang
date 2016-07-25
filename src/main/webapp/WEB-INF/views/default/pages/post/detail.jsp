@@ -32,7 +32,7 @@
 <p>
 	<i class="fa fa-tag" aria-hidden="true"></i>
 	
-	<c:forEach var="tag" items="${tags}">
+	<c:forEach var="tag" items="${post.tags}">
 		<a href="<spring:url value="/post/tag/${tag.name}" htmlEscape="true"/>" class="label label-default">${tag.name}</a>
 	</c:forEach>	    
 </p>

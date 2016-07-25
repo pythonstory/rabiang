@@ -1,8 +1,12 @@
 package net.rabiang.forms;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
 import net.rabiang.models.Post;
+import net.rabiang.models.Tag;
 
 public class PostForm {
 
@@ -10,7 +14,7 @@ public class PostForm {
 
 	@NotEmpty
 	private String title;
-	
+
 	@NotEmpty
 	private String slug;
 
@@ -35,6 +39,15 @@ public class PostForm {
 		this.body = post.getBody();
 		this.stage = post.getStage();
 		this.format = post.getFormat();
+
+		List<String> tags = new ArrayList<String>();
+
+		for (Tag tag : post.getTags()) {
+			tags.add(tag.getName());
+		}
+
+		this.tag = String.join(",", tags);
+
 	}
 
 	public Long getId() {

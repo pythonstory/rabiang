@@ -3,7 +3,10 @@ package net.rabiang.models;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -105,17 +108,27 @@ public class Post extends BaseEntity {
 		this.body = form.getBody();
 		this.stage = form.getStage();
 		this.format = form.getFormat();
-		
-		List<String> tagList = Arrays.asList(form.getTag().split("\\s*(,\\s*)+"));
-		
-		for (String tagName : tagList) {
+
+		Set<String> newTagSet = new HashSet<String>(Arrays.asList(form.getTag().split("\\s*(,\\s*)+")));
+
+		Set<String> oldTagSet = new HashSet<String>();
+
+		for (Tag t : this.tags) {
+			oldTagSet.add(t.getName());
+		}
+
+		newTagSet.removeAll(oldTagSet);
+
+		Iterator<String> iterator = newTagSet.iterator();
+
+		while (iterator.hasNext()) {
 			Tag tag = new Tag();
-			tag.setName(tagName);
-			this.getTags().add(tag);
+			tag.setName(iterator.next());
+			this.tags.add(tag);
 		}
 
 		this.modifiedDate = new Date();
-		
+
 		if (this.isNew()) {
 			this.createdDate = new Date();
 		}
