@@ -1,11 +1,8 @@
 package net.rabiang.models;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -43,7 +40,7 @@ public class Post extends BaseEntity {
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(joinColumns = @JoinColumn(name = "post_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
-	private List<Tag> tags = new ArrayList<Tag>();
+	private Set<Tag> tags = new HashSet<Tag>();
 
 	public String getTitle() {
 		return title;
@@ -112,19 +109,24 @@ public class Post extends BaseEntity {
 		Set<String> newTagSet = new HashSet<String>(Arrays.asList(form.getTag().split("\\s*(,\\s*)+")));
 
 		Set<String> oldTagSet = new HashSet<String>();
-
 		for (Tag t : this.tags) {
 			oldTagSet.add(t.getName());
 		}
 
-		newTagSet.removeAll(oldTagSet);
-
-		Iterator<String> iterator = newTagSet.iterator();
-
-		while (iterator.hasNext()) {
+		// Add new tags
+		for (String name : newTagSet) {
 			Tag tag = new Tag();
-			tag.setName(iterator.next());
+			tag.setName(name);
 			this.tags.add(tag);
+		}
+
+		// Remove unnecessary tags
+		oldTagSet.removeAll(newTagSet);
+
+		for (String name : oldTagSet) {
+			Tag tag = new Tag();
+			tag.setName(name);
+			this.tags.remove(tag);
 		}
 
 		this.modifiedDate = new Date();
@@ -134,11 +136,11 @@ public class Post extends BaseEntity {
 		}
 	}
 
-	public List<Tag> getTags() {
+	public Set<Tag> getTags() {
 		return tags;
 	}
 
-	public void setTags(List<Tag> tags) {
+	public void setTags(Set<Tag> tags) {
 		this.tags = tags;
 	}
 

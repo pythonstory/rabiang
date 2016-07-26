@@ -15,7 +15,7 @@
 * spring-security
 * 캐시 (리소스,  디비)
 
-- 태그 삭제된 것 감지 삭제
+- 중복 태그 삽입 금지
 - LAZY FETCH ?
 
 
