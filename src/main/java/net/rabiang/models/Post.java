@@ -42,7 +42,7 @@ public class Post extends BaseEntity {
 	@Transient
 	private String tagString;
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(joinColumns = @JoinColumn(name = "post_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
 	private Set<Tag> tags;
 

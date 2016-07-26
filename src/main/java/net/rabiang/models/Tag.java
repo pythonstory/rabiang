@@ -18,7 +18,7 @@ public class Tag extends NamedEntity {
 		super.setName(name);
 	}
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "tags")
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "tags")
 	private List<Post> posts = new ArrayList<Post>();
 
 	public List<Post> getPosts() {
