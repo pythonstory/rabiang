@@ -71,7 +71,7 @@
 			<spring:message code="blog.tags" text="Tags"/>
 		</form:label>
 		<div class="col-sm-10">
-			<form:input path="tag" cssClass="form-control"/>
+			<form:input path="tagString" cssClass="form-control"/>
 		</div>
 	</div>
 	<div class="form-group">
@@ -91,7 +91,7 @@ YUI().use(
 	'aui-node',
 	function (Y) {
 	    var slug = Y.one('#slug');
-	    var tag = Y.one('#tag');
+	    var tagString = Y.one('#tagString');
 	
 	 	// slugify title automatically
 	    slug.on(
@@ -106,11 +106,11 @@ YUI().use(
 	    );
 	
 	    // tagify
-	    tag.on(
+	    tagString.on(
 	   		'keyup',
         	function() {
 	   			// Ignores all special characters and whitespaces but ',' comma.
-	   			tag.val(tag.val()
+	   			tagString.val(tagString.val()
 					.replace(/(^\s*)|(\s*$)/g, '')
 					.replace(/[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+\-.\/:;<=>?@\[\]^_`{|}~]/g, '')
 					.replace(/\s+/g, '')

@@ -1,6 +1,5 @@
 package net.rabiang.models;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -11,11 +10,13 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Transient;
 
 import net.rabiang.forms.PostForm;
 
 @Entity
 public class Post extends BaseEntity {
+
 	public static final int STATUS_DRAFT = 0;
 	public static final int STATUS_PUBLIC = 1;
 	public static final int STATUS_DELETED = 2;
@@ -38,9 +39,12 @@ public class Post extends BaseEntity {
 
 	private Date modifiedDate;
 
+	@Transient
+	private String tagString;
+
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(joinColumns = @JoinColumn(name = "post_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
-	private Set<Tag> tags = new HashSet<Tag>();
+	private Set<Tag> tags;
 
 	public String getTitle() {
 		return title;
@@ -98,6 +102,25 @@ public class Post extends BaseEntity {
 		this.modifiedDate = modifiedDate;
 	}
 
+	public String getTagString() {
+		return tagString;
+	}
+
+	public void setTagString(String tagString) {
+		this.tagString = tagString;
+	}
+
+	public Set<Tag> getTags() {
+		if (tags == null) {
+			tags = new HashSet<Tag>();
+		}
+		return tags;
+	}
+
+	public void setTags(Set<Tag> tags) {
+		this.tags = tags;
+	}
+
 	public void populate(PostForm form) {
 		this.id = form.getId();
 		this.title = form.getTitle();
@@ -105,29 +128,7 @@ public class Post extends BaseEntity {
 		this.body = form.getBody();
 		this.stage = form.getStage();
 		this.format = form.getFormat();
-
-		Set<String> newTagSet = new HashSet<String>(Arrays.asList(form.getTag().split("\\s*(,\\s*)+")));
-
-		Set<String> oldTagSet = new HashSet<String>();
-		for (Tag t : this.tags) {
-			oldTagSet.add(t.getName());
-		}
-
-		// Add new tags
-		for (String name : newTagSet) {
-			Tag tag = new Tag();
-			tag.setName(name);
-			this.tags.add(tag);
-		}
-
-		// Remove unnecessary tags
-		oldTagSet.removeAll(newTagSet);
-
-		for (String name : oldTagSet) {
-			Tag tag = new Tag();
-			tag.setName(name);
-			this.tags.remove(tag);
-		}
+		this.tagString = form.getTagString();
 
 		this.modifiedDate = new Date();
 
@@ -136,12 +137,12 @@ public class Post extends BaseEntity {
 		}
 	}
 
-	public Set<Tag> getTags() {
-		return tags;
+	public void addTag(Tag tag) {
+		this.tags.add(tag);
 	}
 
-	public void setTags(Set<Tag> tags) {
-		this.tags = tags;
+	public void removeTag(Tag tag) {
+		this.tags.remove(tag);
 	}
 
 	@Override

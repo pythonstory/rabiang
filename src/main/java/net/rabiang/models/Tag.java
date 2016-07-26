@@ -10,6 +10,13 @@ import javax.persistence.ManyToMany;
 @Entity
 public class Tag extends NamedEntity {
 
+	public Tag() {
+	}
+
+	public Tag(String name) {
+		super.setName(name);
+	}
+
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "tags")
 	private List<Post> posts = new ArrayList<Post>();
 

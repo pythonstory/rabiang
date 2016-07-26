@@ -17,8 +17,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import net.rabiang.models.Post;
+import net.rabiang.models.Tag;
 import net.rabiang.models.specs.PostSpecs;
 import net.rabiang.repositories.PostRepository;
+import net.rabiang.repositories.TagRepository;
 
 @Service
 @Transactional(readOnly = true)
@@ -27,14 +29,13 @@ public class BlogService {
 	@PersistenceContext
 	private EntityManager em;
 
+	@Autowired
 	private PostRepository postRepository;
 
-	public static final int PAGE_SIZE = 5;
-
 	@Autowired
-	public BlogService(PostRepository postRepository) {
-		this.postRepository = postRepository;
-	}
+	private TagRepository tagRepository;
+
+	public static final int PAGE_SIZE = 5;
 
 	public Page<Post> findPosts(int page, String keyword) throws DataAccessException {
 		Specifications<Post> spec = null;
@@ -73,5 +74,19 @@ public class BlogService {
 	@Transactional(readOnly = false)
 	public void deletePost(Post post) throws DataAccessException {
 		this.postRepository.delete(post);
+	}
+	
+	public Tag findTagByName(String name) {
+		return this.tagRepository.findByName(name);
+	}
+
+	@Transactional(readOnly = false)
+	public void saveTag(Tag tag) throws DataAccessException {
+		this.tagRepository.save(tag);
+	}
+
+	@Transactional(readOnly = false)
+	public void deleteTag(Tag tag) throws DataAccessException {
+		this.tagRepository.delete(tag);
 	}
 }

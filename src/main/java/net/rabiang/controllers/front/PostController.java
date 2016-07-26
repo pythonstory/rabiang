@@ -1,8 +1,11 @@
 package net.rabiang.controllers.front;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import net.rabiang.forms.PostForm;
 import net.rabiang.models.Post;
+import net.rabiang.models.Tag;
 import net.rabiang.services.BlogService;
 import net.rabiang.utils.exceptions.PostNotFoundException;
 import net.rabiang.utils.helpers.Breadcrumb;
@@ -141,6 +145,38 @@ public class PostController {
 			}
 
 			post.populate(form);
+
+			Set<String> newTagSet = new HashSet<String>(Arrays.asList(form.getTagString().split("\\s*(,\\s*)+")));
+			Set<String> newTagSetCopy = new HashSet<String>(newTagSet);
+
+			Set<String> oldTagSet = new HashSet<String>();
+			for (Tag tag : post.getTags()) {
+				oldTagSet.add(tag.getName());
+			}
+
+			// Find new tags to add
+			newTagSet.removeAll(oldTagSet);
+
+			for (String name : newTagSet) {
+				Tag tag = this.blogService.findTagByName(name);
+				
+				if (tag == null) {
+					tag = new Tag(name);
+				}
+				
+				post.addTag(tag);				
+			}
+
+			// Find old tags to remove
+			oldTagSet.removeAll(newTagSetCopy);
+
+			for (String name : oldTagSet) {
+				Tag tag = this.blogService.findTagByName(name);
+				
+				if (tag != null) {
+					post.removeTag(tag);
+				}
+			}
 
 			post = this.blogService.savePost(post);
 

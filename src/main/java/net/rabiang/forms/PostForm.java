@@ -25,7 +25,7 @@ public class PostForm {
 
 	private int format;
 
-	private String tag;
+	private String tagString;
 
 	private String category;
 
@@ -46,7 +46,7 @@ public class PostForm {
 			tags.add(tag.getName());
 		}
 
-		this.tag = String.join(",", tags);
+		this.tagString = String.join(",", tags);
 
 	}
 
@@ -98,12 +98,12 @@ public class PostForm {
 		this.format = format;
 	}
 
-	public String getTag() {
-		return tag;
+	public String getTagString() {
+		return tagString;
 	}
 
-	public void setTag(String tag) {
-		this.tag = tag;
+	public void setTagString(String tagString) {
+		this.tagString = tagString;
 	}
 
 	public String getCategory() {
