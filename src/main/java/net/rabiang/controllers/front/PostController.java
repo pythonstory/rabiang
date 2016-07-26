@@ -3,6 +3,7 @@ package net.rabiang.controllers.front;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -156,20 +157,37 @@ public class PostController {
 
 			// Find new tags to add
 			newTagSet.removeAll(oldTagSet);
-
+			
+			List<Tag> tags;
+			
+			tags = this.blogService.findTagsByNames(newTagSet);
+			
 			for (String name : newTagSet) {
-				Tag tag = this.blogService.findTagByName(name);
+				boolean found = false;
 				
-				if (tag == null) {
-					tag = new Tag(name);
+				for (Tag tag : tags) {
+					if (name.equals(tag.getName())) {
+						found = true;						
+						post.addTag(tag);						
+						break;
+					}
 				}
 				
-				post.addTag(tag);				
+				if (!found) {
+					post.addTag(new Tag(name));
+				}
 			}
 
 			// Find old tags to remove
 			oldTagSet.removeAll(newTagSetCopy);
-
+			
+			tags = this.blogService.findTagsByNames(oldTagSet);
+			
+			for (Tag tag : tags) {
+				post.removeTag(tag);
+			}
+			
+			/*
 			for (String name : oldTagSet) {
 				Tag tag = this.blogService.findTagByName(name);
 				
@@ -177,6 +195,7 @@ public class PostController {
 					post.removeTag(tag);
 				}
 			}
+			*/
 
 			post = this.blogService.savePost(post);
 

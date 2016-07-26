@@ -1,6 +1,7 @@
 package net.rabiang.services;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -75,9 +76,13 @@ public class BlogService {
 	public void deletePost(Post post) throws DataAccessException {
 		this.postRepository.delete(post);
 	}
-	
+
 	public Tag findTagByName(String name) {
 		return this.tagRepository.findByName(name);
+	}
+
+	public List<Tag> findTagsByNames(Set<String> names) {
+		return this.tagRepository.findByNameIn(names);
 	}
 
 	@Transactional(readOnly = false)
