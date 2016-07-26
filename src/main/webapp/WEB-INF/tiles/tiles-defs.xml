@@ -22,8 +22,8 @@
 	</definition>
 
 	<!-- Blog Page -->
-	<definition name="*/pages/post/*" extends="{1}.2-cols-definition">
-		<put-attribute name="body" value="/WEB-INF/views/{1}/pages/post/{2}.jsp" />
+	<definition name="*/pages/blog/*/*" extends="{1}.2-cols-definition">
+		<put-attribute name="body" value="/WEB-INF/views/{1}/pages/blog/{2}/{3}.jsp" />
 		<put-attribute name="sidebar" value="/WEB-INF/views/{1}/templates/blog_sidebar.jsp" />
 	</definition>
 

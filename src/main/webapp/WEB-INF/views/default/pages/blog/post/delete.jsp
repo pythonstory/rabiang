@@ -1,5 +1,5 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
-<%@ include file="../../common/inc.jspf"%>
+<%@ include file="../../../common/inc.jspf"%>
 <spring:url value="/post/delete/${post.id}" htmlEscape="true" var="deleteActionUrl"/>
 <form:form action="${deleteActionUrl}" method="post">
 	<fieldset>

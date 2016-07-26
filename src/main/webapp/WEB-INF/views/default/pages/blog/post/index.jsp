@@ -1,5 +1,5 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
-<%@ include file="../../common/inc.jspf" %>
+<%@ include file="../../../common/inc.jspf" %>
 <c:forEach var="post" items="${page.content}">
 	<h2>
 	    <a href="<spring:url value="/post/${post.slug}" htmlEscape="true"/>">${post.title}</a>
@@ -28,7 +28,7 @@
 	    <i class="fa fa-tag" aria-hidden="true"></i>
 	    
 	    <c:forEach var="tag" items="${post.tags}">
-			<a href="<spring:url value="/post/tag/${tag.name}" htmlEscape="true"/>" class="label label-default">${tag.name}</a>
+			<a href="<spring:url value="/tag/${tag.name}" htmlEscape="true"/>" class="label label-default">${tag.name}</a>
 		</c:forEach>	    
 	</p>
 	

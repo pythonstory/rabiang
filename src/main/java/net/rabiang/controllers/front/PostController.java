@@ -55,7 +55,7 @@ public class PostController {
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
 		model.put("recentPosts", this.blogService.findRecentPosts(RECENT_POSTS));
 
-		return "default/pages/post/index";
+		return "default/pages/blog/post/index";
 	}
 
 	@RequestMapping(value = "/post/{slug}", method = RequestMethod.GET)
@@ -78,7 +78,7 @@ public class PostController {
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
 		model.put("recentPosts", this.blogService.findRecentPosts(RECENT_POSTS));
 
-		return "default/pages/post/detail";
+		return "default/pages/blog/post/detail";
 	}
 
 	@RequestMapping(value = "/post/detail/{id}", method = RequestMethod.GET)
@@ -101,7 +101,7 @@ public class PostController {
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
 		model.put("recentPosts", this.blogService.findRecentPosts(RECENT_POSTS));
 
-		return "default/pages/post/detail";
+		return "default/pages/blog/post/detail";
 	}
 
 	@RequestMapping(value = "/post/create", method = RequestMethod.GET)
@@ -130,7 +130,7 @@ public class PostController {
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
 		model.put("recentPosts", this.blogService.findRecentPosts(RECENT_POSTS));
 
-		return "default/pages/post/create_or_edit";
+		return "default/pages/blog/post/create_or_edit";
 	}
 
 	@RequestMapping(value = "/post/save", method = RequestMethod.POST)
@@ -157,22 +157,22 @@ public class PostController {
 
 			// Find new tags to add
 			newTagSet.removeAll(oldTagSet);
-			
+
 			List<Tag> tags;
-			
+
 			tags = this.blogService.findTagsByNames(newTagSet);
-			
+
 			for (String name : newTagSet) {
 				boolean found = false;
-				
+
 				for (Tag tag : tags) {
 					if (name.equals(tag.getName())) {
-						found = true;						
-						post.addTag(tag);						
+						found = true;
+						post.addTag(tag);
 						break;
 					}
 				}
-				
+
 				if (!found) {
 					post.addTag(new Tag(name));
 				}
@@ -180,22 +180,19 @@ public class PostController {
 
 			// Find old tags to remove
 			oldTagSet.removeAll(newTagSetCopy);
-			
+
 			tags = this.blogService.findTagsByNames(oldTagSet);
-			
+
 			for (Tag tag : tags) {
 				post.removeTag(tag);
 			}
-			
+
 			/*
-			for (String name : oldTagSet) {
-				Tag tag = this.blogService.findTagByName(name);
-				
-				if (tag != null) {
-					post.removeTag(tag);
-				}
-			}
-			*/
+			 * for (String name : oldTagSet) { Tag tag =
+			 * this.blogService.findTagByName(name);
+			 * 
+			 * if (tag != null) { post.removeTag(tag); } }
+			 */
 
 			post = this.blogService.savePost(post);
 
@@ -224,7 +221,7 @@ public class PostController {
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
 		model.put("recentPosts", this.blogService.findRecentPosts(RECENT_POSTS));
 
-		return "default/pages/post/create_or_edit";
+		return "default/pages/blog/post/create_or_edit";
 	}
 
 	@RequestMapping(value = "/post/edit/{id}", method = RequestMethod.GET)
@@ -258,7 +255,7 @@ public class PostController {
 		model.put("title", messageSource.getMessage("blog", null, locale));
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
 
-		return "default/pages/post/create_or_edit";
+		return "default/pages/blog/post/create_or_edit";
 	}
 
 	@RequestMapping(value = "/post/delete/{id}", method = RequestMethod.GET)
@@ -280,7 +277,7 @@ public class PostController {
 		model.put("title", messageSource.getMessage("blog", null, locale));
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
 
-		return "default/pages/post/delete";
+		return "default/pages/blog/post/delete";
 	}
 
 	@RequestMapping(value = "/post/delete/{id}", method = RequestMethod.POST)
