@@ -147,7 +147,17 @@ public class PostController {
 
 			post.populate(form);
 
-			Set<String> newTagSet = new HashSet<String>(Arrays.asList(form.getTagString().split("\\s*(,\\s*)+")));
+			String tagString = form.getTagString();
+
+			Set<String> newTagSet;
+
+			// Empty string cannot be the tag. Make sure the empty set.
+			if (tagString != null && !tagString.trim().isEmpty()) {
+				newTagSet = new HashSet<String>(Arrays.asList(form.getTagString().split("\\s*(,\\s*)+")));
+			} else {
+				newTagSet = new HashSet<String>();
+			}
+
 			Set<String> newTagSetCopy = new HashSet<String>(newTagSet);
 
 			Set<String> oldTagSet = new HashSet<String>();
@@ -186,13 +196,6 @@ public class PostController {
 			for (Tag tag : tags) {
 				post.removeTag(tag);
 			}
-
-			/*
-			 * for (String name : oldTagSet) { Tag tag =
-			 * this.blogService.findTagByName(name);
-			 * 
-			 * if (tag != null) { post.removeTag(tag); } }
-			 */
 
 			post = this.blogService.savePost(post);
 
