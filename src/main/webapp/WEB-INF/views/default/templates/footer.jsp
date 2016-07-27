@@ -1,7 +1,7 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ include file="../common/inc.jspf"%>
 <footer>
-    <div class="container">
+    <div class="container footer_height">
         <div class="row">
             <hr>
         </div>

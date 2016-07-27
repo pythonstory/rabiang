@@ -52,3 +52,7 @@ Styles for Layout and Theme
 .sidebar .well h4 {
     margin-top: 0;
 }
+
+.footer_height {
+	height: 120px;
+}
