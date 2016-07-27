@@ -10,6 +10,8 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Transient;
 
 import net.rabiang.forms.PostForm;
@@ -129,12 +131,6 @@ public class Post extends BaseEntity {
 		this.stage = form.getStage();
 		this.format = form.getFormat();
 		this.tagString = form.getTagString();
-
-		this.modifiedDate = new Date();
-
-		if (this.isNew()) {
-			this.createdDate = new Date();
-		}
 	}
 
 	public void addTag(Tag tag) {
@@ -143,6 +139,16 @@ public class Post extends BaseEntity {
 
 	public void removeTag(Tag tag) {
 		this.tags.remove(tag);
+	}
+
+	@PrePersist
+	public void prePersist() {
+		this.modifiedDate = this.createdDate = new Date();
+	}
+
+	@PreUpdate
+	public void preUpdate() {
+		this.modifiedDate = new Date();
 	}
 
 	@Override

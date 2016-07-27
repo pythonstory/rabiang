@@ -1,6 +1,10 @@
 package net.rabiang.models;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 
 @Entity
 public class Comment extends BaseEntity {
@@ -12,6 +16,10 @@ public class Comment extends BaseEntity {
 	private String body;
 
 	private String ipAddress;
+
+	private Date createdDate;
+
+	private Date modifiedDate;
 
 	public String getName() {
 		return name;
@@ -43,5 +51,32 @@ public class Comment extends BaseEntity {
 
 	public void setIpAddress(String ipAddress) {
 		this.ipAddress = ipAddress;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public Date getModifiedDate() {
+		return modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = this.createdDate = new Date();
+	}
+
+	@PrePersist
+	public void prePersist() {
+		this.createdDate = new Date();
+		this.modifiedDate = new Date();
+	}
+
+	@PreUpdate
+	public void preUpdate() {
+		this.modifiedDate = new Date();
 	}
 }
