@@ -20,7 +20,7 @@
     	
 
     	<c:choose>
-    		<c:when test="${currentIndex == 1}">
+    		<c:when test="${page.isFirst()}">
     			<li class="disabled">
 	                <a href="#" aria-label="First"><span aria-hidden="true">First</span></a>
 	            </li>
@@ -57,7 +57,7 @@
         </c:forEach>
 
         <c:choose>
-    		<c:when test="${currentIndex == page.totalPages or page.totalPages == 0}">
+    		<c:when test="${page.isLast()}">
     			<li class="disabled">
 	                <a href="#" aria-label="Next"><span aria-hidden="true">Next</span></a>
 	            </li>
