@@ -28,5 +28,15 @@ public class PostSpecs {
 			}
 		};
 	}
+	
+	public static Specification<Post> stageEqual(final int stage) {
+		return new Specification<Post>() {
+			@Override
+			public Predicate toPredicate(Root<Post> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+				return cb.equal(root.get("stage"), stage);
+			}
+		};
+	}
+	
 
 }

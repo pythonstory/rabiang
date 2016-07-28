@@ -50,7 +50,7 @@ public class PostController {
 		breadcrumb.add(messageSource.getMessage("home", null, locale), "/");
 		breadcrumb.add(messageSource.getMessage("blog", null, locale), null);
 
-		model.put("page", this.blogService.findPosts(p, q));
+		model.put("page", this.blogService.findPosts(Post.STATUS_PUBLIC, p, q));
 		model.put("title", messageSource.getMessage("blog", null, locale));
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
 		model.put("recentPosts", this.blogService.findRecentPosts(RECENT_POSTS));

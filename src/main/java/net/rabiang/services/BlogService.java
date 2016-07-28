@@ -32,11 +32,19 @@ public class BlogService {
 
 	public static final int PAGE_SIZE = 5;
 
-	public Page<Post> findPosts(int page, String keyword) throws DataAccessException {
+	public Page<Post> findPosts(int stage, int page, String keyword) throws DataAccessException {
 		Specifications<Post> spec = null;
-
+		
+		// Due to operator precedence, trailing "or" condition can cause true regardless of stage.
+		
 		if (keyword != null && keyword.trim().length() > 0) {
-			spec = Specifications.where(PostSpecs.titleLike(keyword)).or(PostSpecs.bodyLike(keyword));
+			spec = Specifications.where(PostSpecs.titleLike(keyword)).or(PostSpecs.bodyLike(keyword));;
+		}
+
+		if (spec == null) { 
+			spec = Specifications.where(PostSpecs.stageEqual(stage));
+		} else {
+			spec = spec.and(PostSpecs.stageEqual(stage));
 		}
 
 		Pageable pageable = new PageRequest(page - 1, PAGE_SIZE, Sort.Direction.DESC, "createdDate");
