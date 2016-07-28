@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import net.rabiang.models.Post;
 import net.rabiang.models.Tag;
+import net.rabiang.models.results.TagCount;
 import net.rabiang.models.specs.PostSpecs;
 import net.rabiang.repositories.PostRepository;
 import net.rabiang.repositories.TagRepository;
@@ -70,6 +71,10 @@ public class BlogService {
 	@Transactional(readOnly = false)
 	public void deletePost(Post post) throws DataAccessException {
 		this.postRepository.delete(post);
+	}
+	
+	public List<TagCount> findTags(int stage) {
+		return this.tagRepository.findAll(stage);
 	}
 
 	public Tag findTagByName(String name) {

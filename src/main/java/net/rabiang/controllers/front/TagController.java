@@ -1,5 +1,6 @@
 package net.rabiang.controllers.front;
 
+import java.util.List;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import net.rabiang.models.Post;
+import net.rabiang.models.results.TagCount;
 import net.rabiang.services.BlogService;
 import net.rabiang.utils.helpers.Breadcrumb;
 
@@ -25,12 +28,15 @@ public class TagController {
 	private MessageSource messageSource;
 
 	@RequestMapping(value = { "/tag", "/tag/index" }, method = RequestMethod.GET)
-	public String index(Locale locale, ModelMap model) {
+	public String index(Locale locale, ModelMap model) {		
+		List<TagCount> tags = this.blogService.findTags(Post.STATUS_PUBLIC);
+
 		Breadcrumb breadcrumb = new Breadcrumb();
 
 		breadcrumb.add(messageSource.getMessage("home", null, locale), "/");
 		breadcrumb.add(messageSource.getMessage("blog.tags", null, locale), null);
 
+		model.put("tags", tags);
 		model.put("title", messageSource.getMessage("blog.tags", null, locale));
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
 		model.put("recentPosts", this.blogService.findRecentPosts(RECENT_POSTS));
