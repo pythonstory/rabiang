@@ -64,10 +64,12 @@
 <div class="well">
 	<h4><spring:message code="blog.tags" text="Tags"/></h4>
 	<p>
-		<a href="/page/tag/Flask" class="btn btn-sm btn-default spacer-bottom-10">Flask <span class="badge">1</span></a>
-		<a href="/page/tag/Rabiang" class="btn btn-sm btn-default spacer-bottom-10">Rabiang <span class="badge">1</span></a>
-		<a href="/page/tag/test" class="btn btn-sm btn-default spacer-bottom-10">test <span class="badge">1</span></a>
-		<a href="/page/tag/ttt" class="btn btn-sm btn-default spacer-bottom-10">ttt <span class="badge">1</span></a>
+		<c:forEach var="tag" items="${tags}">
+			<a href="<spring:url value="/tag/${tag.name}" htmlEscape="true"/>" class="btn btn-sm btn-default spacer-bottom-10">
+				${tag.name}
+				<span class="badge">${tag.count}</span>
+			</a>
+		</c:forEach>		
 	</p>
 </div>
 

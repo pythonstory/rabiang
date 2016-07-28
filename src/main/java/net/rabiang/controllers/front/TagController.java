@@ -57,6 +57,7 @@ public class TagController {
 		model.put("title", tagName);
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
 		model.put("recentPosts", this.blogService.findRecentPosts(Post.STATUS_PUBLIC, RECENT_POSTS));
+		model.put("tags", this.blogService.findTags(Post.STATUS_PUBLIC));
 
 		return "default/pages/blog/tag/detail";
 	}

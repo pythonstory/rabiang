@@ -54,6 +54,7 @@ public class PostController {
 		model.put("title", messageSource.getMessage("blog", null, locale));
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
 		model.put("recentPosts", this.blogService.findRecentPosts(Post.STATUS_PUBLIC, RECENT_POSTS));
+		model.put("tags", this.blogService.findTags(Post.STATUS_PUBLIC));
 
 		return "default/pages/blog/post/index";
 	}
@@ -77,6 +78,7 @@ public class PostController {
 		model.put("title", post.getTitle());
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
 		model.put("recentPosts", this.blogService.findRecentPosts(Post.STATUS_PUBLIC, RECENT_POSTS));
+		model.put("tags", this.blogService.findTags(Post.STATUS_PUBLIC));
 
 		return "default/pages/blog/post/detail";
 	}
@@ -100,6 +102,7 @@ public class PostController {
 		model.put("title", post.getTitle());
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
 		model.put("recentPosts", this.blogService.findRecentPosts(Post.STATUS_PUBLIC, RECENT_POSTS));
+		model.put("tags", this.blogService.findTags(Post.STATUS_PUBLIC));
 
 		return "default/pages/blog/post/detail";
 	}
@@ -129,6 +132,7 @@ public class PostController {
 		model.put("title", messageSource.getMessage("blog", null, locale));
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
 		model.put("recentPosts", this.blogService.findRecentPosts(Post.STATUS_PUBLIC, RECENT_POSTS));
+		model.put("tags", this.blogService.findTags(Post.STATUS_PUBLIC));
 
 		return "default/pages/blog/post/create_or_edit";
 	}
@@ -227,6 +231,7 @@ public class PostController {
 		model.put("title", messageSource.getMessage("blog", null, locale));
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
 		model.put("recentPosts", this.blogService.findRecentPosts(Post.STATUS_PUBLIC, RECENT_POSTS));
+		model.put("tags", this.blogService.findTags(Post.STATUS_PUBLIC));
 
 		return "default/pages/blog/post/create_or_edit";
 	}
@@ -261,6 +266,8 @@ public class PostController {
 		model.put("formatList", formatList);
 		model.put("title", messageSource.getMessage("blog", null, locale));
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
+		model.put("recentPosts", this.blogService.findRecentPosts(Post.STATUS_PUBLIC, RECENT_POSTS));
+		model.put("tags", this.blogService.findTags(Post.STATUS_PUBLIC));
 
 		return "default/pages/blog/post/create_or_edit";
 	}
@@ -283,6 +290,8 @@ public class PostController {
 		model.put("post", post);
 		model.put("title", messageSource.getMessage("blog", null, locale));
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
+		model.put("recentPosts", this.blogService.findRecentPosts(Post.STATUS_PUBLIC, RECENT_POSTS));
+		model.put("tags", this.blogService.findTags(Post.STATUS_PUBLIC));
 
 		return "default/pages/blog/post/delete";
 	}
