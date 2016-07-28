@@ -11,6 +11,6 @@ public interface PostRepositoryCustom {
 
 	public List<Post> findRecentPosts(int limit);
 
-	public Page<Post> findByTagName(String tagName, Pageable pageable);
+	public Page<Post> findByStageAndTagName(int stage, String tagName, Pageable pageable);
 
 }

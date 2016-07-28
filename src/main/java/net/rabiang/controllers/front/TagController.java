@@ -53,7 +53,7 @@ public class TagController {
 		breadcrumb.add(messageSource.getMessage("blog.tags", null, locale), "/tag");
 		breadcrumb.add(tagName, null);
 
-		model.put("page", this.blogService.findPostsByTagName(p, tagName));
+		model.put("page", this.blogService.findPostsByTagName(p, Post.STATUS_PUBLIC, tagName));
 		model.put("title", tagName);
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
 		model.put("recentPosts", this.blogService.findRecentPosts(RECENT_POSTS));

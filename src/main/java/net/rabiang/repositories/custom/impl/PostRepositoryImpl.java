@@ -33,7 +33,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
 		return query.getResultList();
 	}
 
-	public Page<Post> findByTagName(String tagName, Pageable pageable) {
+	public Page<Post> findByStageAndTagName(int stage, String tagName, Pageable pageable) {
 
 		long total = (long) em
 				.createQuery("SELECT COUNT(p.id)"
@@ -45,10 +45,11 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
 
 		TypedQuery<Post> query = em
 				.createQuery("SELECT p FROM Post p"
-						+ " JOIN FETCH p.tags t"
-						+ " WHERE t.name = :tagName"
+						+ " JOIN p.tags t"
+						+ " WHERE t.name = :tagName and p.stage = :stage"
 						+ " ORDER BY p.createdDate DESC", Post.class)
 				.setParameter("tagName", tagName)
+				.setParameter("stage", stage)
 				.setFirstResult(pageable.getOffset())
 				.setMaxResults(pageable.getPageSize());
 		

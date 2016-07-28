@@ -52,11 +52,11 @@ public class BlogService {
 		return this.postRepository.findAll(spec, pageable);
 	}
 	
-	public Page<Post> findPostsByTagName(int page, String tagName) throws DataAccessException {
+	public Page<Post> findPostsByTagName(int page, int stage, String tagName) throws DataAccessException {
 		
 		Pageable pageable = new PageRequest(page - 1, PAGE_SIZE);
 		
-		return this.postRepository.findByTagName(tagName, pageable);
+		return this.postRepository.findByStageAndTagName(stage, tagName, pageable);
 	}
 
 	public List<Post> findRecentPosts(int limit) throws DataAccessException {
