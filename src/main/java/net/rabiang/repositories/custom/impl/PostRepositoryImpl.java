@@ -24,27 +24,35 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
 	public List<Post> findRecentPosts(int limit) {
 
 		// Avoids unnecessary "count".
-		TypedQuery<Post> query = em.createQuery("SELECT p FROM Post p ORDER BY p.createdDate DESC", Post.class);
-
-		query.setMaxResults(limit);
+		TypedQuery<Post> query = em
+				.createQuery("SELECT p"
+						+ " FROM Post p"
+						+ " ORDER BY p.createdDate DESC", Post.class)
+				.setMaxResults(limit);
 
 		return query.getResultList();
 	}
 
-	@SuppressWarnings("unchecked")
 	public Page<Post> findByTagName(String tagName, Pageable pageable) {
 
 		long total = (long) em
-				.createQuery("SELECT COUNT(p.id) FROM Post p JOIN p.tags t WHERE t.name = :tagName")
+				.createQuery("SELECT COUNT(p.id)"
+						+ " FROM Post p"
+						+ " JOIN p.tags t"
+						+ " WHERE t.name = :tagName")
 				.setParameter("tagName", tagName)
 				.getSingleResult();
 
-		List<Post> content = (List<Post>) em
-				.createQuery("SELECT p FROM Post p JOIN FETCH p.tags t WHERE t.name = :tagName")
+		TypedQuery<Post> query = em
+				.createQuery("SELECT p FROM Post p"
+						+ " JOIN FETCH p.tags t"
+						+ " WHERE t.name = :tagName"
+						+ " ORDER BY p.createdDate DESC", Post.class)
 				.setParameter("tagName", tagName)
 				.setFirstResult(pageable.getOffset())
-				.setMaxResults(pageable.getPageSize())
-				.getResultList();
+				.setMaxResults(pageable.getPageSize());
+		
+		List<Post> content = query.getResultList();
 		
 		PageImpl<Post> page = new PageImpl<Post>(content, pageable, total);
 
