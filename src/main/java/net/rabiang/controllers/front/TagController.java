@@ -3,8 +3,11 @@ package net.rabiang.controllers.front;
 import java.util.List;
 import java.util.Locale;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,11 +18,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import net.rabiang.models.Post;
 import net.rabiang.models.results.TagCount;
 import net.rabiang.services.BlogService;
+import net.rabiang.utils.exceptions.TagNotFoundException;
 import net.rabiang.utils.helpers.Breadcrumb;
 
 @Controller
 public class TagController {
 	public static final int RECENT_POSTS = 5;
+	
+	private final Logger logger = LoggerFactory.getLogger(TagController.class);
 
 	@Autowired
 	private BlogService blogService;
@@ -46,14 +52,21 @@ public class TagController {
 
 	@RequestMapping(value = "/tag/{tagName}", method = RequestMethod.GET)
 	public String detail(Locale locale, @RequestParam(value = "p", required = false, defaultValue = "1") Integer p,
-			@PathVariable String tagName, ModelMap model) {
+			@PathVariable String tagName, ModelMap model) {		
+		Page<Post> page = this.blogService.findPostsByStageAndTagName(p, Post.STATUS_PUBLIC, tagName);
+		
+		if (page.getTotalPages() == 0) {
+			logger.debug("Tag not found");
+			throw new TagNotFoundException();
+		}
+		
 		Breadcrumb breadcrumb = new Breadcrumb();
 
 		breadcrumb.add(messageSource.getMessage("home", null, locale), "/");
 		breadcrumb.add(messageSource.getMessage("blog.tags", null, locale), "/tag");
 		breadcrumb.add(tagName, null);
 
-		model.put("page", this.blogService.findPostsByStageAndTagName(p, Post.STATUS_PUBLIC, tagName));
+		model.put("page", page);
 		model.put("title", tagName);
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
 		model.put("recentPosts", this.blogService.findRecentPosts(Post.STATUS_PUBLIC, RECENT_POSTS));
