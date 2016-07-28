@@ -32,7 +32,7 @@ public class BlogService {
 
 	public static final int PAGE_SIZE = 5;
 
-	public Page<Post> findPosts(int stage, int page, String keyword) throws DataAccessException {
+	public Page<Post> findPostsByStage(int stage, int page, String keyword) throws DataAccessException {
 		Specifications<Post> spec = null;
 		
 		// Due to operator precedence, trailing "or" condition can cause true regardless of stage.
@@ -52,15 +52,15 @@ public class BlogService {
 		return this.postRepository.findAll(spec, pageable);
 	}
 	
-	public Page<Post> findPostsByTagName(int page, int stage, String tagName) throws DataAccessException {
+	public Page<Post> findPostsByStageAndTagName(int page, int stage, String tagName) throws DataAccessException {
 		
 		Pageable pageable = new PageRequest(page - 1, PAGE_SIZE);
 		
 		return this.postRepository.findByStageAndTagName(stage, tagName, pageable);
 	}
 
-	public List<Post> findRecentPosts(int limit) throws DataAccessException {
-		return this.postRepository.findRecentPosts(limit);
+	public List<Post> findRecentPosts(int stage, int limit) throws DataAccessException {
+		return this.postRepository.findRecentPostsByStage(stage, limit);
 	}
 
 	public Post findPostById(Long id) {

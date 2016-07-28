@@ -21,13 +21,15 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
 	private EntityManager em;
 
 	@Override
-	public List<Post> findRecentPosts(int limit) {
+	public List<Post> findRecentPostsByStage(int stage, int limit) {
 
 		// Avoids unnecessary "count".
 		TypedQuery<Post> query = em
 				.createQuery("SELECT p"
 						+ " FROM Post p"
+						+ " WHERE p.stage = :stage"
 						+ " ORDER BY p.createdDate DESC", Post.class)
+				.setParameter("stage", stage)
 				.setMaxResults(limit);
 
 		return query.getResultList();

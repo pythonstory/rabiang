@@ -9,7 +9,7 @@ import net.rabiang.models.Post;
 
 public interface PostRepositoryCustom {
 
-	public List<Post> findRecentPosts(int limit);
+	public List<Post> findRecentPostsByStage(int stage, int limit);
 
 	public Page<Post> findByStageAndTagName(int stage, String tagName, Pageable pageable);
 
