@@ -184,17 +184,21 @@ public class PostController {
 				}
 
 				if (!found) {
-					post.addTag(new Tag(name));
+					Tag t = new Tag(name);
+					this.blogService.saveTag(t);					
+					post.addTag(t);
 				}
 			}
 
 			// Find old tags to remove
 			oldTagSet.removeAll(newTagSetCopy);
-
-			tags = this.blogService.findTagsByNames(oldTagSet);
-
-			for (Tag tag : tags) {
-				post.removeTag(tag);
+			
+			if (!oldTagSet.isEmpty()) {
+				tags = this.blogService.findTagsByNames(oldTagSet);
+	
+				for (Tag tag : tags) {
+					post.removeTag(tag);
+				}
 			}
 
 			post = this.blogService.savePost(post);
