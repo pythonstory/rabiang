@@ -15,31 +15,23 @@
 
 	<context:component-scan base-package="net.rabiang.controllers" />
 
-	<!-- 
-		- The ContentNegotiatingViewResolver delegates to the InternalResourceViewResolver 
-		- and BeanNameViewResolver, - and uses the requested media type (determined 
-	    - by the path extension) to pick a matching view.
-	    - When the media type is 'text/html', it will delegate to the InternalResourceViewResolver's JstlView, 
-		- otherwise to the BeanNameViewResolver. -->
-	<mvc:view-resolvers>
-		<mvc:content-negotiation use-not-acceptable="true">			
-			<mvc:default-views>
-				<bean class="org.springframework.web.servlet.view.JstlView">
-					<property name="url" value=""/>
-				</bean>
-			</mvc:default-views>
-		</mvc:content-negotiation>
+    <!-- Tiles configuration -->
+ 	<bean class="org.springframework.web.servlet.view.tiles3.TilesViewResolver"/>
+    <bean class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+        <property name="definitions">
+            <list>
+                <value>/WEB-INF/tiles/tiles-defs.xml</value>
+            </list>
+        </property>
+    </bean>
+    
+    <!-- JSP/JSTL configuration -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp" />
+    </bean>
 
-		<!-- Registering ViewResolvers -->
-		<mvc:tiles/>
-		<mvc:bean-name/>
-		<mvc:jsp prefix="/WEB-INF/views/" suffix=".jsp"/>
-	</mvc:view-resolvers>
-	
-	<mvc:tiles-configurer check-refresh="true" validate-definitions="true">
-		<mvc:definitions location="/WEB-INF/tiles/tiles-defs.xml" />
-	</mvc:tiles-configurer>
-	
 	<!--
 		- All resources inside folder src/main/webapp/resources are mapped 
 		- so they can be refered to inside JSP files. -->
