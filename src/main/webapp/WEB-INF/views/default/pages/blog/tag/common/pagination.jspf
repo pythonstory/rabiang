@@ -1,0 +1,82 @@
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
+<%@ include file="../../../../common/inc.jspf" %>
+<!-- Pagination -->
+<nav class="text-center">
+    <ul class="pagination">
+    	<c:set var="currentIndex" value="${page.number + 1}"/>
+    	<c:set var="beginIndex" value="${current - 5 > 0 ? current - 5 : 1}"/>
+    	<c:set var="endIndex" value="${begin + 10 < page.totalPages ? begin + 10 : page.totalPages}"/>
+    	
+    	<spring:url var="firstUrl" value="/post/index"/>
+    	<spring:url var="prevUrl" value="/post/index">
+    		<spring:param name="p" value="${currentIndex - 1}"/>
+    	</spring:url>
+    	<spring:url var="nextUrl" value="/post/index">
+    		<spring:param name="p" value="${currentIndex + 1}"/>
+    	</spring:url>
+    	<spring:url var="lastUrl" value="/post/index">
+    		<spring:param name="p" value="${page.totalPages}"/>
+    	</spring:url>
+    	
+
+    	<c:choose>
+    		<c:when test="${page.isFirst()}">
+    			<li class="disabled">
+	                <a href="#" aria-label="First"><span aria-hidden="true">First</span></a>
+	            </li>
+	            <li class="disabled">
+	                <a href="#" aria-label="Previous"><span aria-hidden="true">Prev</span></a>
+	            </li>
+    		</c:when>
+    		<c:otherwise>
+    			<li>
+	                <a href="${firstUrl}" aria-label="First">
+	                    <span aria-hidden="true">First$</span>
+	                </a>
+	            </li>
+	            <li>
+	                <a href="${prevUrl}" aria-label="Previous">
+	                    <span aria-hidden="true">Prev</span>
+	                </a>
+	            </li>
+    		</c:otherwise>    		
+    	</c:choose>
+    	
+    	<c:forEach var="i" begin="${beginIndex}" end="${endIndex}">
+            <spring:url var="pageUrl" value="/post/index">
+            	<spring:param name="p" value="${i}"/>
+            </spring:url>
+            <c:choose>
+                <c:when test="${i == currentIndex}">
+                    <li class="active"><a href="${pageUrl}"><c:out value="${i}" /> <span class="sr-only">(current)</span></a></li>
+                </c:when>
+                <c:otherwise>
+                    <li><a href="${pageUrl}"><c:out value="${i}" /></a></li>
+                </c:otherwise>
+            </c:choose>
+        </c:forEach>
+
+        <c:choose>
+    		<c:when test="${page.isLast()}">
+    			<li class="disabled">
+	                <a href="#" aria-label="Next"><span aria-hidden="true">Next</span></a>
+	            </li>
+	            <li class="disabled">
+	                <a href="#" aria-label="Last"><span aria-hidden="true">Last</span></a>
+	            </li>
+    		</c:when>
+    		<c:otherwise>
+    			<li>
+	                <a href="${nextUrl}" aria-label="Next">
+	                    <span aria-hidden="true">Next</span>
+	                </a>
+	            </li>
+	            <li>
+	                <a href="${lastUrl}" aria-label="Next">
+	                    <span aria-hidden="true">Last</span>
+	                </a>
+	            </li>
+    		</c:otherwise>
+    	</c:choose>
+    </ul>
+</nav>

@@ -38,17 +38,17 @@ public class TagController {
 		return "default/pages/blog/tag/index";
 	}
 
-	@RequestMapping(value = "/tag/{name}", method = RequestMethod.GET)
+	@RequestMapping(value = "/tag/{tagName}", method = RequestMethod.GET)
 	public String detail(Locale locale, @RequestParam(value = "p", required = false, defaultValue = "1") Integer p,
-			@PathVariable String name, ModelMap model) {
-		
+			@PathVariable String tagName, ModelMap model) {
 		Breadcrumb breadcrumb = new Breadcrumb();
 
 		breadcrumb.add(messageSource.getMessage("home", null, locale), "/");
 		breadcrumb.add(messageSource.getMessage("blog.tags", null, locale), "/tag");
-		breadcrumb.add(name, null);
+		breadcrumb.add(tagName, null);
 
-		model.put("title", name);
+		model.put("page", this.blogService.findPostsByTagName(p, tagName));
+		model.put("title", tagName);
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
 		model.put("recentPosts", this.blogService.findRecentPosts(RECENT_POSTS));
 
