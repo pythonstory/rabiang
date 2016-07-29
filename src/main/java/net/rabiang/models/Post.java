@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Transient;
@@ -47,6 +48,9 @@ public class Post extends BaseEntity {
 	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.DETACH })
 	@JoinTable(joinColumns = @JoinColumn(name = "post_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
 	private Set<Tag> tags;
+
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private PostCategory category;
 
 	public String getTitle() {
 		return title;
@@ -121,6 +125,14 @@ public class Post extends BaseEntity {
 
 	public void setTags(Set<Tag> tags) {
 		this.tags = tags;
+	}
+
+	public PostCategory getCategory() {
+		return category;
+	}
+
+	public void setCategory(PostCategory category) {
+		this.category = category;
 	}
 
 	public void populate(PostForm form) {

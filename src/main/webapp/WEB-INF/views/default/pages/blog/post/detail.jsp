@@ -3,42 +3,8 @@
 <!-- Title -->
 <h1>${post.title}</h1>
 
-<!-- Date/Time, Author, Categories, Tags, ... -->
-<p class="lead">
-	<ul class="list-inline post_head">
-	    <li>
-	    	<i class="fa fa-calendar" aria-hidden="true"></i>
-	    	${post.createdDate}
-	    </li>
-	    <li>
-	    	<i class="fa fa-user" aria-hidden="true"></i>
-	        <a href="<spring:url value="/post/user/" htmlEscape="true"/>">username</a>
-	    </li>
-	    <li>
-	    	<i class="fa fa-folder-open-o" aria-hidden="true"></i>
-	        <a href="<spring:url value="/post/category/" htmlEscape="true"/>">category.name</a>
-	    </li>
-	    <li>
-	    	<i class="fa fa-comments" aria-hidden="true"></i>
-	        <a href="<spring:url value="/post/${post.slug}" htmlEscape="true"/>#comments">19</a>
-	    </li>
-	    <li>
-	    	<i class="fa fa-link" aria-hidden="true"></i>
-	        <a href="<spring:url value="/post/detail/${post.id}" htmlEscape="true"/>">permalink</a>
-	    </li>
-	</ul>
-</p>
-
-<p>
-	<i class="fa fa-tag" aria-hidden="true"></i>
+<%@ include file="./common/post_head.jspf" %>
 	
-	<c:forEach var="tag" items="${post.tags}">
-		<a href="<spring:url value="/tag/${tag.name}" htmlEscape="true"/>" class="label label-default">${tag.name}</a>
-	</c:forEach>	    
-</p>
-	
-<hr>
-
 <!-- Post Content -->
 <div class="page">
     ${post.body}
