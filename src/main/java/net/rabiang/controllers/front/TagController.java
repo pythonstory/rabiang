@@ -72,6 +72,6 @@ public class TagController {
 		model.put("recentPosts", this.blogService.findRecentPosts(Post.STATUS_PUBLIC, RECENT_POSTS));
 		model.put("tags", this.blogService.findTags(Post.STATUS_PUBLIC));
 
-		return "default/pages/blog/tag/detail";
+		return "default/pages/blog/post/index";
 	}
 }

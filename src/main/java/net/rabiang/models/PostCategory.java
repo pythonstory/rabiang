@@ -23,8 +23,8 @@ public class PostCategory extends NamedEntity {
 	@OneToMany(mappedBy = "parent")
 	private Set<PostCategory> children;
 
-	@OneToMany(mappedBy = "category")
-	private List<Post> posts;
+	//@OneToMany(mappedBy = "category")
+	//private List<Post> posts;
 
 	public String getSlug() {
 		return slug;
@@ -61,6 +61,7 @@ public class PostCategory extends NamedEntity {
 		this.children = children;
 	}
 
+	/*
 	public List<Post> getPosts() {
 		return posts;
 	}
@@ -68,6 +69,7 @@ public class PostCategory extends NamedEntity {
 	public void setPosts(List<Post> posts) {
 		this.posts = posts;
 	}
+	*/
 
 	@Override
 	public String toString() {

@@ -63,7 +63,7 @@ public class PostCategoryController {
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
 		model.put("recentPosts", this.blogService.findRecentPosts(Post.STATUS_PUBLIC, RECENT_POSTS));
 
-		return "default/pages/blog/category/detail";
+		return "default/pages/blog/post/index";
 	}
 
 	@RequestMapping(value = "/category/create", method = RequestMethod.GET)
