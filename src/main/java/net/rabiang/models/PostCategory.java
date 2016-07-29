@@ -13,14 +13,34 @@ import javax.persistence.OneToMany;
 @Entity
 public class PostCategory extends NamedEntity {
 
+	private String slug;
+
+	private int order;
+
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
 	private PostCategory parent;
 
 	@OneToMany(mappedBy = "parent")
 	private Set<PostCategory> children;
-	
+
 	@OneToMany(mappedBy = "category")
 	private List<Post> posts;
+
+	public String getSlug() {
+		return slug;
+	}
+
+	public void setSlug(String slug) {
+		this.slug = slug;
+	}
+
+	public int getOrder() {
+		return order;
+	}
+
+	public void setOrder(int order) {
+		this.order = order;
+	}
 
 	public PostCategory getParent() {
 		return parent;
@@ -39,6 +59,14 @@ public class PostCategory extends NamedEntity {
 
 	public void setChildren(Set<PostCategory> children) {
 		this.children = children;
+	}
+
+	public List<Post> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(List<Post> posts) {
+		this.posts = posts;
 	}
 
 	@Override
