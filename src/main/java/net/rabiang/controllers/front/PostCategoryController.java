@@ -28,21 +28,21 @@ public class PostCategoryController {
 	@RequestMapping(value = { "/category", "/category/index" }, method = RequestMethod.GET)
 	public String index(Locale locale, ModelMap model) {
 
-		Node<String> root = new Node<String>("root");
+		Node<String> root = new Node<String>("post");
 		root.addChild("node0");
 		root.addChild("node1");
 		Node<String> node2 = root.addChild("node2");
-		
+
 		Node<String> node20 = node2.addChild("node20");
 		node2.addChild("node21");
-		
+
 		node20.addChild("node210");
 
 		Breadcrumb breadcrumb = new Breadcrumb();
 
 		breadcrumb.add(messageSource.getMessage("home", null, locale), "/");
 		breadcrumb.add(messageSource.getMessage("blog.categories", null, locale), null);
-		
+
 		model.put("node", root);
 		model.put("title", messageSource.getMessage("blog.categories", null, locale));
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
@@ -68,11 +68,14 @@ public class PostCategoryController {
 
 	@RequestMapping(value = "/category/create", method = RequestMethod.GET)
 	public String create(Locale locale, ModelMap model) {
+		//CategoryForm form = new CategoryForm();
+
 		Breadcrumb breadcrumb = new Breadcrumb();
 
 		breadcrumb.add(messageSource.getMessage("home", null, locale), "/");
 		breadcrumb.add(messageSource.getMessage("blog.categories", null, locale), null);
 
+		//model.put("form", form);
 		model.put("title", messageSource.getMessage("blog.categories", null, locale));
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
 		model.put("recentPosts", this.blogService.findRecentPosts(Post.STATUS_PUBLIC, RECENT_POSTS));
@@ -82,6 +85,8 @@ public class PostCategoryController {
 
 	@RequestMapping(value = "/category/save", method = RequestMethod.POST)
 	public String saveAction(Locale locale, ModelMap model) {
+		
+
 		Breadcrumb breadcrumb = new Breadcrumb();
 
 		breadcrumb.add(messageSource.getMessage("home", null, locale), "/");

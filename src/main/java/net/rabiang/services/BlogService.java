@@ -34,14 +34,16 @@ public class BlogService {
 
 	public Page<Post> findPostsByStage(int stage, int page, String keyword) throws DataAccessException {
 		Specifications<Post> spec = null;
-		
-		// Due to operator precedence, trailing "or" condition can cause true regardless of stage.
-		
+
+		// Due to operator precedence, trailing "or" condition can cause true
+		// regardless of stage.
+
 		if (keyword != null && keyword.trim().length() > 0) {
-			spec = Specifications.where(PostSpecs.titleLike(keyword)).or(PostSpecs.bodyLike(keyword));;
+			spec = Specifications.where(PostSpecs.titleLike(keyword)).or(PostSpecs.bodyLike(keyword));
+			;
 		}
 
-		if (spec == null) { 
+		if (spec == null) {
 			spec = Specifications.where(PostSpecs.stageEqual(stage));
 		} else {
 			spec = spec.and(PostSpecs.stageEqual(stage));
@@ -51,11 +53,11 @@ public class BlogService {
 
 		return this.postRepository.findAll(spec, pageable);
 	}
-	
+
 	public Page<Post> findPostsByStageAndTagName(int page, int stage, String tagName) throws DataAccessException {
-		
+
 		Pageable pageable = new PageRequest(page - 1, PAGE_SIZE);
-		
+
 		return this.postRepository.findByStageAndTagName(stage, tagName, pageable);
 	}
 
@@ -63,11 +65,11 @@ public class BlogService {
 		return this.postRepository.findRecentPostsByStage(stage, limit);
 	}
 
-	public Post findPostById(Long id) {
+	public Post findPostById(Long id) throws DataAccessException {
 		return this.postRepository.findById(id);
 	}
 
-	public Post findPostBySlug(String slug) {
+	public Post findPostBySlug(String slug) throws DataAccessException {
 		return this.postRepository.findBySlug(slug);
 	}
 
@@ -80,22 +82,22 @@ public class BlogService {
 	public void deletePost(Post post) throws DataAccessException {
 		this.postRepository.delete(post);
 	}
-	
-	public List<TagCount> findTags(int stage) {
+
+	public List<TagCount> findTags(int stage) throws DataAccessException {
 		return this.tagRepository.findAll(stage);
 	}
 
-	public Tag findTagByName(String name) {
+	public Tag findTagByName(String name) throws DataAccessException {
 		return this.tagRepository.findByName(name);
 	}
 
-	public List<Tag> findTagsByNames(Set<String> names) {
+	public List<Tag> findTagsByNames(Set<String> names) throws DataAccessException {
 		return this.tagRepository.findByNameIn(names);
 	}
 
 	@Transactional(readOnly = false)
-	public void saveTag(Tag tag) throws DataAccessException {
-		this.tagRepository.save(tag);
+	public Tag saveTag(Tag tag) throws DataAccessException {
+		return this.tagRepository.save(tag);
 	}
 
 	@Transactional(readOnly = false)
