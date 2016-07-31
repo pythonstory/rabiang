@@ -13,10 +13,12 @@ import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import net.rabiang.models.Category;
 import net.rabiang.models.Post;
 import net.rabiang.models.Tag;
 import net.rabiang.models.results.TagCount;
 import net.rabiang.models.specs.PostSpecs;
+import net.rabiang.repositories.CategoryRepository;
 import net.rabiang.repositories.PostRepository;
 import net.rabiang.repositories.TagRepository;
 
@@ -29,6 +31,9 @@ public class BlogService {
 
 	@Autowired
 	private TagRepository tagRepository;
+
+	@Autowired
+	private CategoryRepository categoryRepository;
 
 	public static final int PAGE_SIZE = 5;
 
@@ -103,5 +108,14 @@ public class BlogService {
 	@Transactional(readOnly = false)
 	public void deleteTag(Tag tag) throws DataAccessException {
 		this.tagRepository.delete(tag);
+	}
+
+	public Category findCategoryById(Long id) throws DataAccessException {
+		return this.categoryRepository.findById(id);
+	}
+
+	@Transactional(readOnly = false)
+	public Category saveCategory(Category category) throws DataAccessException {
+		return this.categoryRepository.save(category);
 	}
 }

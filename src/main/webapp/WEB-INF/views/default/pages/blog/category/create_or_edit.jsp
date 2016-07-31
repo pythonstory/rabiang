@@ -31,29 +31,29 @@
 					</div>
 				</div>
 			</spring:bind>
-			<spring:bind path="order">
+			<spring:bind path="position">
 				<div class="form-group">
-					<form:label path="order" cssClass="col-sm-3 control-label">
+					<form:label path="position" cssClass="col-sm-3 control-label">
 						<spring:message code="blog.sort_order" text="Sort order"/>
 					</form:label>
 					<div class="col-sm-9${status.error ? ' has-error' : ''}">
-						<form:input path="order" cssClass="form-control"/>
+						<form:input path="position" cssClass="form-control"/>
 						<c:if test="${status.error}">
-							<form:errors path="order" cssClass="help-block"/>
+							<form:errors path="position" cssClass="help-block"/>
 						</c:if>
 					</div>
 				</div>
 			</spring:bind>
-			<spring:bind path="parent">
+			<spring:bind path="parent.id">
 				<div class="form-group">
 					<form:label path="parent" cssClass="col-sm-3 control-label">
 						<spring:message code="blog.parent_category" text="Parent category"/>
 					</form:label>
 					<div
 						class="col-sm-9${status.error ? ' has-error' : ''}">
-						<form:input path="parent" cssClass="form-control"/>
+						<form:input path="parent.id" cssClass="form-control"/>
 						<c:if test="${status.error}">
-							<form:errors path="parent" cssClass="help-block"/>
+							<form:errors path="parent.id" cssClass="help-block"/>
 						</c:if>
 					</div>
 				</div>

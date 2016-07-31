@@ -147,6 +147,11 @@ public class PostController {
 				post = new Post();
 			} else {
 				post = this.blogService.findPostById(form.getId());
+				
+				if (post == null) {
+					logger.debug("Post not found");
+					throw new PostNotFoundException();
+				}
 			}
 
 			post.populate(form);

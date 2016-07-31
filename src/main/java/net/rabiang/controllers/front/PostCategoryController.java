@@ -2,22 +2,33 @@ package net.rabiang.controllers.front;
 
 import java.util.Locale;
 
+import javax.validation.Valid;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import net.rabiang.forms.CategoryForm;
+import net.rabiang.models.Category;
 import net.rabiang.models.Post;
 import net.rabiang.services.BlogService;
+import net.rabiang.utils.exceptions.CategoryNotFoundException;
 import net.rabiang.utils.helpers.Breadcrumb;
 import net.rabiang.utils.helpers.Node;
 
 @Controller
 public class PostCategoryController {
 	public static final int RECENT_POSTS = 5;
+	
+	private final Logger logger = LoggerFactory.getLogger(PostCategoryController.class);
 
 	@Autowired
 	private BlogService blogService;
@@ -68,14 +79,14 @@ public class PostCategoryController {
 
 	@RequestMapping(value = "/category/create", method = RequestMethod.GET)
 	public String create(Locale locale, ModelMap model) {
-		//CategoryForm form = new CategoryForm();
+		CategoryForm form = new CategoryForm();
 
 		Breadcrumb breadcrumb = new Breadcrumb();
 
 		breadcrumb.add(messageSource.getMessage("home", null, locale), "/");
 		breadcrumb.add(messageSource.getMessage("blog.categories", null, locale), null);
 
-		//model.put("form", form);
+		model.put("form", form);
 		model.put("title", messageSource.getMessage("blog.categories", null, locale));
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
 		model.put("recentPosts", this.blogService.findRecentPosts(Post.STATUS_PUBLIC, RECENT_POSTS));
@@ -84,8 +95,47 @@ public class PostCategoryController {
 	}
 
 	@RequestMapping(value = "/category/save", method = RequestMethod.POST)
-	public String saveAction(Locale locale, ModelMap model) {
-		
+	public String saveAction(Locale locale, @ModelAttribute("form") @Valid CategoryForm form, BindingResult result, ModelMap model) {
+		if (!result.hasErrors()) {
+			Category category;
+
+			if (form.getId() == null) {
+				category = new Category();
+			} else {
+				category = this.blogService.findCategoryById(form.getId());
+				
+				if (category == null) {
+					logger.debug("Category not found");
+					throw new CategoryNotFoundException();
+				}
+			}
+
+			category.populate(form);
+			
+			// Category parent setup
+			
+			logger.debug(form.getParent().toString());
+			
+			if (form.getParent().getId() == null) {
+				category.setParent(null);
+			} else {
+				Category parent = this.blogService.findCategoryById(form.getParent().getId());
+				
+				if (parent == null) {
+					logger.debug("Parent category not found");
+					throw new CategoryNotFoundException();
+				}
+				
+				category.setParent(parent);
+			}
+			
+			logger.debug(form.toString());
+			logger.debug(category.toString());
+			
+			category = this.blogService.saveCategory(category);
+
+			return "redirect:/category/index";			
+		}
 
 		Breadcrumb breadcrumb = new Breadcrumb();
 
