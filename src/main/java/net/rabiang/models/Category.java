@@ -18,7 +18,7 @@ public class Category extends NamedEntity {
 
 	private int position;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
+	@ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE })
 	private Category parent;
 
 	@OneToMany(mappedBy = "parent")

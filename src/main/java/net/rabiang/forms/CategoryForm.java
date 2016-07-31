@@ -20,6 +20,14 @@ public class CategoryForm {
 
 	public CategoryForm() {
 	}
+	
+	public CategoryForm(Category category) {
+		this.id = category.getId();
+		this.name = category.getName();
+		this.slug = category.getSlug();
+		this.position = category.getPosition();		
+		this.parent = category.getParent();
+	}
 
 	public Long getId() {
 		return id;
