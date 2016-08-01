@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import net.rabiang.forms.PostForm;
 import net.rabiang.models.Post;
 import net.rabiang.models.Tag;
+import net.rabiang.models.results.TagCount;
 import net.rabiang.services.BlogService;
 import net.rabiang.utils.exceptions.PostNotFoundException;
 import net.rabiang.utils.helpers.Breadcrumb;
@@ -66,6 +67,16 @@ public class PostController {
 		return formatList;
 	}
 
+	@ModelAttribute("recentPosts")
+	public List<Post> populateRecentPosts() {
+		return this.blogService.findRecentPosts(Post.STATUS_PUBLIC, RECENT_POSTS);
+	}
+
+	@ModelAttribute("tags")
+	public List<TagCount> populateTags() {
+		return this.blogService.findTags(Post.STATUS_PUBLIC);
+	}
+
 	@RequestMapping(value = { "/post", "/post/index" }, method = RequestMethod.GET)
 	public String index(Locale locale, @RequestParam(value = "p", required = false, defaultValue = "1") Integer p,
 			@RequestParam(value = "q", required = false) String q, ModelMap model) {
@@ -77,8 +88,6 @@ public class PostController {
 		model.put("page", this.blogService.findPostsByStage(Post.STATUS_PUBLIC, p, q));
 		model.put("title", messageSource.getMessage("blog", null, locale));
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
-		model.put("recentPosts", this.blogService.findRecentPosts(Post.STATUS_PUBLIC, RECENT_POSTS));
-		model.put("tags", this.blogService.findTags(Post.STATUS_PUBLIC));
 
 		return "default/pages/blog/post/index";
 	}
@@ -101,8 +110,6 @@ public class PostController {
 		model.put("post", post);
 		model.put("title", post.getTitle());
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
-		model.put("recentPosts", this.blogService.findRecentPosts(Post.STATUS_PUBLIC, RECENT_POSTS));
-		model.put("tags", this.blogService.findTags(Post.STATUS_PUBLIC));
 
 		return "default/pages/blog/post/detail";
 	}
@@ -125,8 +132,6 @@ public class PostController {
 		model.put("post", post);
 		model.put("title", post.getTitle());
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
-		model.put("recentPosts", this.blogService.findRecentPosts(Post.STATUS_PUBLIC, RECENT_POSTS));
-		model.put("tags", this.blogService.findTags(Post.STATUS_PUBLIC));
 
 		return "default/pages/blog/post/detail";
 	}
@@ -144,8 +149,6 @@ public class PostController {
 		model.put("form", form);
 		model.put("title", messageSource.getMessage("blog", null, locale));
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
-		model.put("recentPosts", this.blogService.findRecentPosts(Post.STATUS_PUBLIC, RECENT_POSTS));
-		model.put("tags", this.blogService.findTags(Post.STATUS_PUBLIC));
 
 		return "default/pages/blog/post/createOrEditForm";
 	}
@@ -241,11 +244,8 @@ public class PostController {
 		breadcrumb.add(messageSource.getMessage("blog.write", null, locale), null);
 
 		model.put("form", form);
-
 		model.put("title", messageSource.getMessage("blog", null, locale));
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
-		model.put("recentPosts", this.blogService.findRecentPosts(Post.STATUS_PUBLIC, RECENT_POSTS));
-		model.put("tags", this.blogService.findTags(Post.STATUS_PUBLIC));
 
 		return "default/pages/blog/post/createOrEditForm";
 	}
@@ -266,11 +266,9 @@ public class PostController {
 		breadcrumb.add(messageSource.getMessage("blog", null, locale), "/post");
 		breadcrumb.add(messageSource.getMessage("blog.edit", null, locale), null);
 
-		model.put("form", form);		
+		model.put("form", form);
 		model.put("title", messageSource.getMessage("blog", null, locale));
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
-		model.put("recentPosts", this.blogService.findRecentPosts(Post.STATUS_PUBLIC, RECENT_POSTS));
-		model.put("tags", this.blogService.findTags(Post.STATUS_PUBLIC));
 
 		return "default/pages/blog/post/createOrEditForm";
 	}
@@ -293,8 +291,6 @@ public class PostController {
 		model.put("post", post);
 		model.put("title", messageSource.getMessage("blog", null, locale));
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
-		model.put("recentPosts", this.blogService.findRecentPosts(Post.STATUS_PUBLIC, RECENT_POSTS));
-		model.put("tags", this.blogService.findTags(Post.STATUS_PUBLIC));
 
 		return "default/pages/blog/post/delete";
 	}
