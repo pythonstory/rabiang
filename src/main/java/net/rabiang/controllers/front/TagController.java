@@ -10,6 +10,8 @@ import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,7 +26,7 @@ import net.rabiang.utils.helpers.Breadcrumb;
 @Controller
 public class TagController {
 	public static final int RECENT_POSTS = 5;
-	
+
 	private final Logger logger = LoggerFactory.getLogger(TagController.class);
 
 	@Autowired
@@ -33,8 +35,13 @@ public class TagController {
 	@Autowired
 	private MessageSource messageSource;
 
+	@InitBinder
+	public void setAllowedFields(WebDataBinder dataBinder) {
+		dataBinder.setDisallowedFields("id");
+	}
+
 	@RequestMapping(value = { "/tag", "/tag/index" }, method = RequestMethod.GET)
-	public String index(Locale locale, ModelMap model) {		
+	public String index(Locale locale, ModelMap model) {
 		List<TagCount> tags = this.blogService.findTags(Post.STATUS_PUBLIC);
 
 		Breadcrumb breadcrumb = new Breadcrumb();
@@ -52,14 +59,14 @@ public class TagController {
 
 	@RequestMapping(value = "/tag/{tagName}", method = RequestMethod.GET)
 	public String detail(Locale locale, @RequestParam(value = "p", required = false, defaultValue = "1") Integer p,
-			@PathVariable String tagName, ModelMap model) {		
+			@PathVariable String tagName, ModelMap model) {
 		Page<Post> page = this.blogService.findPostsByStageAndTagName(p, Post.STATUS_PUBLIC, tagName);
-		
+
 		if (page.getTotalPages() == 0) {
 			logger.debug("Tag not found");
 			throw new TagNotFoundException();
 		}
-		
+
 		Breadcrumb breadcrumb = new Breadcrumb();
 
 		breadcrumb.add(messageSource.getMessage("home", null, locale), "/");

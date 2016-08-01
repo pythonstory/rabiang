@@ -17,6 +17,8 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,6 +43,11 @@ public class PostController {
 
 	@Autowired
 	private MessageSource messageSource;
+
+	@InitBinder
+	public void setAllowedFields(WebDataBinder dataBinder) {
+		dataBinder.setDisallowedFields("id");
+	}
 
 	@RequestMapping(value = { "/post", "/post/index" }, method = RequestMethod.GET)
 	public String index(Locale locale, @RequestParam(value = "p", required = false, defaultValue = "1") Integer p,
@@ -147,13 +154,13 @@ public class PostController {
 				post = new Post();
 			} else {
 				post = this.blogService.findPostById(form.getId());
-				
+
 				if (post == null) {
 					logger.debug("Post not found");
 					throw new PostNotFoundException();
 				}
 			}
-			
+
 			post.setId(form.getId());
 			post.setTitle(form.getTitle());
 			post.setSlug(form.getSlug());
@@ -200,17 +207,17 @@ public class PostController {
 
 				if (!found) {
 					Tag t = new Tag(name);
-					this.blogService.saveTag(t);					
+					this.blogService.saveTag(t);
 					post.addTag(t);
 				}
 			}
 
 			// Find old tags to remove
 			oldTagSet.removeAll(newTagSetCopy);
-			
+
 			if (!oldTagSet.isEmpty()) {
 				tags = this.blogService.findTagsByNames(oldTagSet);
-	
+
 				for (Tag tag : tags) {
 					post.removeTag(tag);
 				}
