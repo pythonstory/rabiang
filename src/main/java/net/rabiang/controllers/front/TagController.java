@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -40,6 +41,16 @@ public class TagController {
 		dataBinder.setDisallowedFields("id");
 	}
 
+	@ModelAttribute("recentPosts")
+	public List<Post> populateRecentPosts() {
+		return this.blogService.findRecentPosts(Post.STATUS_PUBLIC, RECENT_POSTS);
+	}
+
+	@ModelAttribute("tags")
+	public List<TagCount> populateTags() {
+		return this.blogService.findTags(Post.STATUS_PUBLIC);
+	}
+
 	@RequestMapping(value = { "/tag", "/tag/index" }, method = RequestMethod.GET)
 	public String index(Locale locale, ModelMap model) {
 		List<TagCount> tags = this.blogService.findTags(Post.STATUS_PUBLIC);
@@ -52,7 +63,6 @@ public class TagController {
 		model.put("tags", tags);
 		model.put("title", messageSource.getMessage("blog.tags", null, locale));
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
-		model.put("recentPosts", this.blogService.findRecentPosts(Post.STATUS_PUBLIC, RECENT_POSTS));
 
 		return "default/pages/blog/tag/index";
 	}
@@ -76,8 +86,6 @@ public class TagController {
 		model.put("page", page);
 		model.put("title", tagName);
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
-		model.put("recentPosts", this.blogService.findRecentPosts(Post.STATUS_PUBLIC, RECENT_POSTS));
-		model.put("tags", this.blogService.findTags(Post.STATUS_PUBLIC));
 
 		return "default/pages/blog/post/index";
 	}

@@ -1,5 +1,6 @@
 package net.rabiang.controllers.front;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.validation.Valid;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import net.rabiang.forms.CategoryForm;
 import net.rabiang.models.Category;
 import net.rabiang.models.Post;
+import net.rabiang.models.results.TagCount;
 import net.rabiang.services.BlogService;
 import net.rabiang.utils.exceptions.CategoryNotFoundException;
 import net.rabiang.utils.helpers.Breadcrumb;
@@ -42,6 +44,16 @@ public class PostCategoryController {
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
+	}
+
+	@ModelAttribute("recentPosts")
+	public List<Post> populateRecentPosts() {
+		return this.blogService.findRecentPosts(Post.STATUS_PUBLIC, RECENT_POSTS);
+	}
+
+	@ModelAttribute("tags")
+	public List<TagCount> populateTags() {
+		return this.blogService.findTags(Post.STATUS_PUBLIC);
 	}
 
 	@RequestMapping(value = { "/category", "/category/index" }, method = RequestMethod.GET)
@@ -65,7 +77,6 @@ public class PostCategoryController {
 		model.put("node", root);
 		model.put("title", messageSource.getMessage("blog.categories", null, locale));
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
-		model.put("recentPosts", this.blogService.findRecentPosts(Post.STATUS_PUBLIC, RECENT_POSTS));
 
 		return "default/pages/blog/category/index";
 	}
@@ -80,7 +91,6 @@ public class PostCategoryController {
 
 		model.put("title", messageSource.getMessage("blog.categories", null, locale));
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
-		model.put("recentPosts", this.blogService.findRecentPosts(Post.STATUS_PUBLIC, RECENT_POSTS));
 
 		return "default/pages/blog/post/index";
 	}
@@ -97,7 +107,6 @@ public class PostCategoryController {
 		model.put("form", form);
 		model.put("title", messageSource.getMessage("blog.categories", null, locale));
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
-		model.put("recentPosts", this.blogService.findRecentPosts(Post.STATUS_PUBLIC, RECENT_POSTS));
 
 		return "default/pages/blog/category/createOrEditForm";
 	}
@@ -154,7 +163,6 @@ public class PostCategoryController {
 
 		model.put("title", messageSource.getMessage("blog.categories", null, locale));
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
-		model.put("recentPosts", this.blogService.findRecentPosts(Post.STATUS_PUBLIC, RECENT_POSTS));
 
 		return "default/pages/blog/category/createOrEditForm";
 	}
@@ -177,7 +185,6 @@ public class PostCategoryController {
 		model.put("form", form);
 		model.put("title", messageSource.getMessage("blog.categories", null, locale));
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
-		model.put("recentPosts", this.blogService.findRecentPosts(Post.STATUS_PUBLIC, RECENT_POSTS));
 
 		return "default/pages/blog/category/createOrEditForm";
 	}
@@ -191,7 +198,6 @@ public class PostCategoryController {
 
 		model.put("title", messageSource.getMessage("blog.categories", null, locale));
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
-		model.put("recentPosts", this.blogService.findRecentPosts(Post.STATUS_PUBLIC, RECENT_POSTS));
 
 		return "default/pages/blog/category/delete";
 	}
