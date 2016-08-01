@@ -14,8 +14,6 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Transient;
 
-import net.rabiang.forms.PostForm;
-
 @Entity
 public class Post extends BaseEntity {
 
@@ -121,16 +119,6 @@ public class Post extends BaseEntity {
 
 	public void setTags(Set<Tag> tags) {
 		this.tags = tags;
-	}
-
-	public void populate(PostForm form) {
-		this.id = form.getId();
-		this.title = form.getTitle();
-		this.slug = form.getSlug();
-		this.body = form.getBody();
-		this.stage = form.getStage();
-		this.format = form.getFormat();
-		this.tagString = form.getTagString();
 	}
 
 	public void addTag(Tag tag) {

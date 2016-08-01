@@ -153,8 +153,14 @@ public class PostController {
 					throw new PostNotFoundException();
 				}
 			}
-
-			post.populate(form);
+			
+			post.setId(form.getId());
+			post.setTitle(form.getTitle());
+			post.setSlug(form.getSlug());
+			post.setBody(form.getBody());
+			post.setStage(form.getStage());
+			post.setFormat(form.getFormat());
+			post.setTagString(form.getTagString());
 
 			String tagString = form.getTagString();
 

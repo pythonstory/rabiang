@@ -9,8 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import net.rabiang.forms.CategoryForm;
-
 @Entity
 public class Category extends NamedEntity {
 
@@ -46,16 +44,6 @@ public class Category extends NamedEntity {
 
 	public void setParent(Category parent) {
 		this.parent = parent;
-	}
-
-	public void populate(CategoryForm form) {
-		this.id = form.getId();
-		this.slug = form.getSlug();
-		this.position = form.getPosition();
-
-		this.setName(form.getName());
-
-		// parent must be explicitly set.
 	}
 
 	@Override

@@ -112,12 +112,12 @@ public class PostCategoryController {
 				}
 			}
 
-			category.populate(form);
+			category.setId(form.getId());
+			category.setName(form.getName());
+			category.setSlug(form.getSlug());
+			category.setPosition(form.getPosition());
 
 			// Category parent setup
-
-			logger.debug(form.getParent().toString());
-
 			if (form.getParent().getId() == null) {
 				category.setParent(null);
 			} else {
@@ -132,6 +132,7 @@ public class PostCategoryController {
 			}
 
 			logger.debug(form.toString());
+			logger.debug(form.getParent().toString());
 			logger.debug(category.toString());
 
 			category = this.blogService.saveCategory(category);
