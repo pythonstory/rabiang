@@ -49,6 +49,23 @@ public class PostController {
 		dataBinder.setDisallowedFields("id");
 	}
 
+	@ModelAttribute("statusList")
+	public Map<Integer, String> populateStatusList(Locale locale) {
+		Map<Integer, String> statusList = new HashMap<Integer, String>();
+		statusList.put(Post.STATUS_DRAFT, messageSource.getMessage("blog.draft", null, locale));
+		statusList.put(Post.STATUS_PUBLIC, messageSource.getMessage("blog.public", null, locale));
+		return statusList;
+	}
+
+	@ModelAttribute("formatList")
+	public Map<Integer, String> populateFormatList(Locale locale) {
+		Map<Integer, String> formatList = new HashMap<Integer, String>();
+		formatList.put(Post.FORMAT_TEXT, messageSource.getMessage("blog.format_text", null, locale));
+		formatList.put(Post.FORMAT_HTML, messageSource.getMessage("blog.format_html", null, locale));
+		formatList.put(Post.FORMAT_MARKDOWN, messageSource.getMessage("blog.format_markdown", null, locale));
+		return formatList;
+	}
+
 	@RequestMapping(value = { "/post", "/post/index" }, method = RequestMethod.GET)
 	public String index(Locale locale, @RequestParam(value = "p", required = false, defaultValue = "1") Integer p,
 			@RequestParam(value = "q", required = false) String q, ModelMap model) {
@@ -118,15 +135,6 @@ public class PostController {
 	public String create(Locale locale, ModelMap model) {
 		PostForm form = new PostForm();
 
-		Map<Integer, String> statusList = new HashMap<Integer, String>();
-		statusList.put(Post.STATUS_DRAFT, messageSource.getMessage("blog.draft", null, locale));
-		statusList.put(Post.STATUS_PUBLIC, messageSource.getMessage("blog.public", null, locale));
-
-		Map<Integer, String> formatList = new HashMap<Integer, String>();
-		formatList.put(Post.FORMAT_TEXT, messageSource.getMessage("blog.format_text", null, locale));
-		formatList.put(Post.FORMAT_HTML, messageSource.getMessage("blog.format_html", null, locale));
-		formatList.put(Post.FORMAT_MARKDOWN, messageSource.getMessage("blog.format_markdown", null, locale));
-
 		Breadcrumb breadcrumb = new Breadcrumb();
 
 		breadcrumb.add(messageSource.getMessage("home", null, locale), "/");
@@ -134,8 +142,6 @@ public class PostController {
 		breadcrumb.add(messageSource.getMessage("blog.write", null, locale), null);
 
 		model.put("form", form);
-		model.put("statusList", statusList);
-		model.put("formatList", formatList);
 		model.put("title", messageSource.getMessage("blog", null, locale));
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
 		model.put("recentPosts", this.blogService.findRecentPosts(Post.STATUS_PUBLIC, RECENT_POSTS));
@@ -228,15 +234,6 @@ public class PostController {
 			return "redirect:/post/detail/" + post.getId();
 		}
 
-		Map<Integer, String> statusList = new HashMap<Integer, String>();
-		statusList.put(Post.STATUS_DRAFT, messageSource.getMessage("blog.draft", null, locale));
-		statusList.put(Post.STATUS_PUBLIC, messageSource.getMessage("blog.public", null, locale));
-
-		Map<Integer, String> formatList = new HashMap<Integer, String>();
-		formatList.put(Post.FORMAT_TEXT, messageSource.getMessage("blog.format_text", null, locale));
-		formatList.put(Post.FORMAT_HTML, messageSource.getMessage("blog.format_html", null, locale));
-		formatList.put(Post.FORMAT_MARKDOWN, messageSource.getMessage("blog.format_markdown", null, locale));
-
 		Breadcrumb breadcrumb = new Breadcrumb();
 
 		breadcrumb.add(messageSource.getMessage("home", null, locale), "/");
@@ -244,8 +241,7 @@ public class PostController {
 		breadcrumb.add(messageSource.getMessage("blog.write", null, locale), null);
 
 		model.put("form", form);
-		model.put("statusList", statusList);
-		model.put("formatList", formatList);
+
 		model.put("title", messageSource.getMessage("blog", null, locale));
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
 		model.put("recentPosts", this.blogService.findRecentPosts(Post.STATUS_PUBLIC, RECENT_POSTS));
@@ -264,24 +260,13 @@ public class PostController {
 
 		PostForm form = new PostForm(post);
 
-		Map<Integer, String> statusList = new HashMap<Integer, String>();
-		statusList.put(Post.STATUS_DRAFT, messageSource.getMessage("blog.draft", null, locale));
-		statusList.put(Post.STATUS_PUBLIC, messageSource.getMessage("blog.public", null, locale));
-
-		Map<Integer, String> formatList = new HashMap<Integer, String>();
-		formatList.put(Post.FORMAT_TEXT, messageSource.getMessage("blog.format_text", null, locale));
-		formatList.put(Post.FORMAT_HTML, messageSource.getMessage("blog.format_html", null, locale));
-		formatList.put(Post.FORMAT_MARKDOWN, messageSource.getMessage("blog.format_markdown", null, locale));
-
 		Breadcrumb breadcrumb = new Breadcrumb();
 
 		breadcrumb.add(messageSource.getMessage("home", null, locale), "/");
 		breadcrumb.add(messageSource.getMessage("blog", null, locale), "/post");
 		breadcrumb.add(messageSource.getMessage("blog.edit", null, locale), null);
 
-		model.put("form", form);
-		model.put("statusList", statusList);
-		model.put("formatList", formatList);
+		model.put("form", form);		
 		model.put("title", messageSource.getMessage("blog", null, locale));
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
 		model.put("recentPosts", this.blogService.findRecentPosts(Post.STATUS_PUBLIC, RECENT_POSTS));
