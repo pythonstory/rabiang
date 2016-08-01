@@ -92,7 +92,7 @@ public class PostCategoryController {
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
 		model.put("recentPosts", this.blogService.findRecentPosts(Post.STATUS_PUBLIC, RECENT_POSTS));
 
-		return "default/pages/blog/category/create_or_edit";
+		return "default/pages/blog/category/createOrEditForm";
 	}
 
 	@RequestMapping(value = "/category/save", method = RequestMethod.POST)
@@ -149,7 +149,7 @@ public class PostCategoryController {
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
 		model.put("recentPosts", this.blogService.findRecentPosts(Post.STATUS_PUBLIC, RECENT_POSTS));
 
-		return "default/pages/blog/category/create_or_edit";
+		return "default/pages/blog/category/createOrEditForm";
 	}
 
 	@RequestMapping(value = "/category/edit/{id}", method = RequestMethod.GET)
@@ -172,7 +172,7 @@ public class PostCategoryController {
 		model.put("breadcrumb", breadcrumb.getBreadcrumb());
 		model.put("recentPosts", this.blogService.findRecentPosts(Post.STATUS_PUBLIC, RECENT_POSTS));
 
-		return "default/pages/blog/category/create_or_edit";
+		return "default/pages/blog/category/createOrEditForm";
 	}
 
 	@RequestMapping(value = "/category/delete/{id}", method = RequestMethod.GET)

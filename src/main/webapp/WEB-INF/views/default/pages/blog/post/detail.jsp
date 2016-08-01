@@ -3,7 +3,7 @@
 <!-- Title -->
 <h1>${post.title}</h1>
 
-<%@ include file="./common/post_head.jspf" %>
+<%@ include file="./common/postHead.jspf" %>
 	
 <!-- Post Content -->
 <div class="page">

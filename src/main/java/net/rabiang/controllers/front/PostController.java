@@ -134,7 +134,7 @@ public class PostController {
 		model.put("recentPosts", this.blogService.findRecentPosts(Post.STATUS_PUBLIC, RECENT_POSTS));
 		model.put("tags", this.blogService.findTags(Post.STATUS_PUBLIC));
 
-		return "default/pages/blog/post/create_or_edit";
+		return "default/pages/blog/post/createOrEditForm";
 	}
 
 	@RequestMapping(value = "/post/save", method = RequestMethod.POST)
@@ -244,7 +244,7 @@ public class PostController {
 		model.put("recentPosts", this.blogService.findRecentPosts(Post.STATUS_PUBLIC, RECENT_POSTS));
 		model.put("tags", this.blogService.findTags(Post.STATUS_PUBLIC));
 
-		return "default/pages/blog/post/create_or_edit";
+		return "default/pages/blog/post/createOrEditForm";
 	}
 
 	@RequestMapping(value = "/post/edit/{id}", method = RequestMethod.GET)
@@ -280,7 +280,7 @@ public class PostController {
 		model.put("recentPosts", this.blogService.findRecentPosts(Post.STATUS_PUBLIC, RECENT_POSTS));
 		model.put("tags", this.blogService.findTags(Post.STATUS_PUBLIC));
 
-		return "default/pages/blog/post/create_or_edit";
+		return "default/pages/blog/post/createOrEditForm";
 	}
 
 	@RequestMapping(value = "/post/delete/{id}", method = RequestMethod.GET)

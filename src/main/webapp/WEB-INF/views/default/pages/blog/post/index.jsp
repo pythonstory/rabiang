@@ -5,7 +5,7 @@
 	    <a href="<spring:url value="/post/${post.slug}" htmlEscape="true"/>">${post.title}</a>
 	</h2>
 	
-	<%@ include file="./common/post_head.jspf" %>
+	<%@ include file="./common/postHead.jspf" %>
 
 	<p>${post.body}</p>
 	<p class="lead">
